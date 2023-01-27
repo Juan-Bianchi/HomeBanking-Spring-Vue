@@ -21,7 +21,7 @@ public class Client {
     private String email;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
-    Set<Account>  accounts = new HashSet<>();
+    private Set<Account> accounts = new HashSet<>();
 
     //CONSTRUCTORS
     public  Client(){}
@@ -67,9 +67,6 @@ public class Client {
         this.email = email;
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
 
     //SPECIFIC METHODS
     @Override
@@ -79,6 +76,12 @@ public class Client {
             "lastName: " + this.lastName + ",\n" +
             "email: " + this.email + ",\n" +
             "id: " + this.id;
-        }
+    }
+
+    public void addAccount(Account account){
+        account.setClient(this);
+        accounts.add(account);
+    }
 }
+
 

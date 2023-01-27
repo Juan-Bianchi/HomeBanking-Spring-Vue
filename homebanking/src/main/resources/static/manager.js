@@ -17,7 +17,7 @@ createApp({
     },
 
     created() {
-        this.url = "http://localhost:8080/clients";
+        this.url = "http://localhost:8080/rest/clients";
         this.loadData();
     },
 

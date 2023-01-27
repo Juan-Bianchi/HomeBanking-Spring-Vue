@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.models;
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,7 +24,7 @@ public class Account {
 
     public Account(){}
 
-    public Account(LocalDateTime creationDate, String number, double balance){
+    public Account( String number, LocalDateTime creationDate, double balance){
         this.number = number;
         this.balance = balance;
         this.creationDate = creationDate;
@@ -66,6 +67,7 @@ public class Account {
         return this.creationDate;
     }
 
+    @JsonIgnore
     public Client getClient() {
         return this.client;
     }
