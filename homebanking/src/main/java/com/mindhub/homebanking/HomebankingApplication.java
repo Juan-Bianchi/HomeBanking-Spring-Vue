@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -29,6 +30,9 @@ public class HomebankingApplication {
 			clientRepository.save(cli1);
 			accountRepository.save(acc1);
 			accountRepository.save(acc2);
+
+			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com");
+			clientRepository.save(cli2);
 
 
 		};
