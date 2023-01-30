@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*   /   LOADER /        */
+
+.loader-main{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #06283D;
+    overflow: hidden;
+}
+
+.loader {
+    width: 10em;
+    height: 10em;
+    font-size: 25px;
+    box-sizing: border-box;
+    border-top: 0.3em solid #8FE3CF;
+    border-radius: 50%;
+    position: relative;
+    animation: rotating 2s ease-in-out infinite;
+    --direction: 1;
+}
+
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    box-sizing: border-box;
+    top: -0.2em;
+}
+
+.loader::before {
+    border-top: 0.3em solid #256D85;
+    transform: rotate(120deg);
+}
+
+.loader::after {
+    border-top: 0.3em solid #47B5FF;
+    transform: rotate(240deg);
+}
+
+.loader span {
+    position: absolute;
+    color: white;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    line-height: 10em;
+    font-family: sans-serif;
+    animation: rotating 2s linear infinite;
+    --direction: -1;
+}
+
+@keyframes rotating {
+    50% {
+        transform: rotate(calc(180deg * var(--direction)));
+    }
+
+    100% {
+        transform: rotate(calc(360deg * var(--direction)));
+    }
+}
+
+
+
+/*     /         ACCOUNTS             /     */
+
+.nav-and-head{
+    background-color: #256D85;
+    min-height: 18vh;
+    justify-content: space-between;
+}
+
+.logo-white {
+    height: 8rem;
+    padding-right: 1rem;
+}
+
+.logo-white-arbol {
+    height: 7rem;
+    padding-right: 0.8rem;
+}
+
+.h1-accounts {
+    color: white;
+    padding-left: 1rem;
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    background-color: #06283D;
+    min-height: 5vh;
+}
+
+.a-header-options{
+    text-decoration: none;
+    color: white;
+}
+
+.menu-h3{
+    color: white;
+}
+
+.dropdown-menu{
+    background-color: #256D85;
+}
+
+.menu-logged-in {
+    background-color: #256D85;
+}
+
+.a-menu{
+    font-weight: bolder;
+    font-size: larger;
+}
+
+
+.a-menu:hover{
+    background-color: #256D85;
+    color: white;
+}
+
+.buttom-menu{
+    color: #fff;
+	position: absolute;
+	left: 95%;
+	top: 8px;
+	border-radius: 3px;
+	background: #256D85;
+	-webkit-transition: left .2s;
+	-o-transition: left .2s;
+	transition: left .2s;
+}
+
+.buttom-menu:hover{
+	left: 98%;
+	cursor: pointer;
+}
+
+/*         MEDIA QUERY                     */
+
+@media(max-width: 340px) {
+    .logo-white-arbol {
+        height: 5rem;
+        padding-right: 0rem;
+    }
+}
+
+
+
