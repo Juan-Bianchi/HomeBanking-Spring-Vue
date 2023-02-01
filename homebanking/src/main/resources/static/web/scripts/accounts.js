@@ -23,7 +23,6 @@ createApp( {
             axios.get("http://localhost:8080/api/clients/1")
                  .then(response => {
                     this.client = {... response.data};
-                    console.log(this.client);
                     this.accounts = this.client.accounts.map(account => account);
                  })
                  .catch(err => console.error(err.message));

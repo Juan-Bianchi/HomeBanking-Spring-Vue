@@ -13,6 +13,7 @@ public class AccountDTO {
     public AccountDTO(){}
 
     public AccountDTO( Account account){
+        this.id = account.getId();
         this.number = account.getNumber();
         this.balance = account.getBalance();
         this.creationDate = account.getCreationDate();
