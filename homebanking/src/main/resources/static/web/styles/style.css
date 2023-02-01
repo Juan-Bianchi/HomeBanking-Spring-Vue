@@ -1,0 +1,400 @@
+@font-face {
+    font-family: Montserrat;
+    src: url(../fonts/static/Montserrat-Medium.ttf);
+
+    font-family: Montserrat Regular;
+    src: url(../fonts/static/Montserrat-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main{
+    min-height: 70vh;
+}
+
+ul{
+    list-style-type:none;
+    padding: 0;
+}
+
+/*----------------------------FOOTER-------------------------------------------*/
+
+footer{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    text-align: center;
+    background-color: #2B4865;
+    color: white;
+    font-size: small;
+    gap: 4vw;
+    font-family: Montserrat;
+}
+
+.sustentable-footer{
+    background-color: white;
+    height: 7vh;
+    width: 100%;
+    gap: 3vw;
+    padding: 5px 0 5px 0;
+}
+
+.sustentable-footer img{
+    height: 100%;
+}
+
+.tree-footer{
+    height: 8em;
+}
+
+.copyright{
+    width: 100%;
+    color: #06283D;
+    font-size: small;
+    background-color: white;
+    margin: 0;
+}
+
+.footer-div{
+    text-align: start;
+    align-self: flex-start;
+}
+
+.footer-div h5{
+    width: 100%;
+}
+
+.quickLinksA{
+    text-decoration: none;
+    color: white;
+}
+
+.quickLinksA:hover{
+    color: white;
+}
+
+/*----------------------------LOADER-------------------------------------------*/
+
+.loader-main{
+    height: 100vh;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    background-color: #06283D;
+    overflow: hidden;
+    gap: 6vh;
+}
+
+.icon-loader{
+    width: 50%
+}
+
+.loader {
+    width: 10em;
+    height: 10em;
+    font-size: 25px;
+    box-sizing: border-box;
+    border-top: 0.3em solid #8FE3CF;
+    border-radius: 50%;
+    position: relative;
+    animation: rotating 2s ease-in-out infinite;
+    --direction: 1;
+}
+
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    box-sizing: border-box;
+    top: -0.2em;
+}
+
+.loader::before {
+    border-top: 0.3em solid #256D85;
+    transform: rotate(120deg);
+}
+
+.loader::after {
+    border-top: 0.3em solid #47B5FF;
+    transform: rotate(240deg);
+}
+
+.loader span {
+    position: absolute;
+    color: white;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    line-height: 10em;
+    font-family: sans-serif;
+    animation: rotating 2s linear infinite;
+    --direction: -1;
+}
+
+@keyframes rotating {
+    50% {
+        transform: rotate(calc(180deg * var(--direction)));
+    }
+
+    100% {
+        transform: rotate(calc(360deg * var(--direction)));
+    }
+}
+
+
+
+/*-------------------------------------ACCOUNTS-----------------------------------------*/
+.body-account {
+    background-color: #EFEFEF;
+}
+
+.nav-and-head{
+    background-color: #256D85;
+    min-height: 18vh;
+    justify-content: space-between;
+    border-bottom: #06283D solid 6px;
+}
+
+.logo-white {
+    height: 8rem;
+    padding-right: 1rem;
+}
+
+.logo-white-arbol, .logo-white-letters {
+    height: 7rem;
+    padding-right: 0.8rem;
+}
+
+.h1-accounts {
+    color: white;
+}
+
+.header-options {
+    display: flex;
+    align-items: center;
+    background-color: #06283D;
+    min-height: 5vh;
+}
+
+.accounts{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5vh;
+}
+
+.accounts-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    color: #0D4C92;
+}
+
+.a-header-options{
+    text-decoration: none;
+    color: white;
+}
+
+.menu-h3{
+    color: white;
+    font-family: Montserrat-Regular;
+}
+
+.dropdown-menu{
+    background-color: #256D85;
+}
+
+.menu-logged-in {
+    background-color: #256D85;
+}
+
+.a-menu{
+    font-weight: bolder;
+    font-size: larger;
+    font-family: Montserrat;
+}
+
+
+.a-menu:hover{
+    background-color: #256D85;
+    color: white;
+}
+
+.buttom-menu{
+    color: #fff;
+	position: relative;
+	left: 13%;
+	top: 25vh;
+	border-radius: 3px;
+	background: #256D85;
+	-webkit-transition: left .2s;
+	-o-transition: left .2s;
+	transition: left .2s;
+}
+
+.buttom-menu:hover{
+	left: 10%;
+	cursor: pointer;
+}
+
+.button-offcanvas{
+    color: #fff;
+    padding: 0.5em;
+    padding-left: 1em;
+	border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+	background: #256D85;
+    cursor: pointer;
+    -webkit-transition: left .2s;
+	-o-transition: left .2s;
+	transition: left .2s;
+}
+
+.button-offcanvas:hover{
+    cursor: pointer;
+    scale: 1.1;
+}
+
+#carousel-top-main{
+    background-color: #06283D;
+    min-height: 3vh;
+    width: 85%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
+    z-index: 1000;
+}
+
+.p-car, .a-car {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 1;
+    margin: 0;
+    text-align: center;
+}
+
+.a-car:hover{
+    color: white;
+}
+
+.new-account{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 8px;
+    padding: 0.4em;
+    transition: all 0.8s;
+    cursor: pointer;
+}
+
+.new-account:hover{
+    transform: scale(1.05);
+}
+
+.accounts-container{
+    width: 85%;
+}
+
+.accounts-all{
+    width: 100%;
+}
+
+.card-account, .drop-account{
+    background-color: white;
+    padding: 0.4em 0 0.4em 0;
+    --bs-dropdown-link-active-bg:  #256D85;;
+}
+
+.solapa{
+    background-color: #256D85;
+    gap: 4vh;
+    padding: 10px;
+    border-radius: 8px;
+}
+.accounts-all h3{
+    color:  #06283D;
+}
+
+.account-card-header{
+    padding-bottom: 0.5em;
+    border-bottom:#0D4C92 solid 1px;
+}
+
+.account-card-details a{
+    text-decoration: none;
+    color: #0D4C92;
+}
+
+.drop-item:hover{
+    background-color: #256D85;
+    color: white;
+}
+
+.table-accounts, .tr-accounts{
+    border: 1px solid #06283D;
+    border-collapse: collapse;
+    width: 25vw;
+    height: 8vh;
+    text-align: center;
+    background-color: white;
+}
+
+/*-------------------------------- MEDIA QUERY---------------------------------------------------*/
+
+@media(max-width: 340px) {
+    .logo-white-arbol {
+        height: 5rem;
+        padding-right: 0rem;
+    }
+}
+
+@media(max-width: 425px) {
+    .buttom-menu{
+        left: 5%;
+    }
+}
+
+@media(min-width: 769px) {
+
+    .nav-and-head {
+        justify-content: space-around;
+    }
+
+    .accounts-container{
+        justify-content: space-between;
+    }
+
+    .accounts{
+        width: 65%;
+    }
+
+    .navAccount {
+        position: absolute;
+        left: -1.25%;
+        top: 28vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .h1-accounts {
+        padding-left: 1rem;
+    }
+}
+
+
