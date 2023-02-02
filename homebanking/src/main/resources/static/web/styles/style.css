@@ -24,8 +24,6 @@ ul{
 /*----------------------------FOOTER-------------------------------------------*/
 
 footer{
-    display: flex;
-    justify-content: space-evenly;
     flex-wrap: wrap;
     text-align: center;
     background-color: #2B4865;
@@ -38,7 +36,7 @@ footer{
     background-color: white;
     height: 7vh;
     width: 100%;
-    gap: 3vw;
+    gap: 10vw;
     padding: 5px 0 5px 0;
     border-top: solid 1px #d39200;
 }
@@ -157,7 +155,8 @@ footer{
 
 .nav-and-head{
     background: rgb(37,109,133);
-    background: linear-gradient(111deg, rgba(37,109,133,1) 0%, rgba(123,211,221,1) 86%, rgba(240,239,234,1) 100%);    border-bottom: #d39200 solid 1px;
+    background: linear-gradient(111deg, rgba(37,109,133,1) 0%, rgba(123,211,221,1) 100%);    
+    border-bottom: #d39200 solid 1px;
 }
 
 .logo-white {
@@ -273,7 +272,6 @@ footer{
     border-bottom-right-radius: 10px;
     padding-left: 5%;
     padding-right: 5%;
-    z-index: 1000;
 }
 
 .p-car, .a-car {
@@ -355,35 +353,7 @@ footer{
     background-color: white;
 }
 
-.tr-accounts-content:hover{
-    height: 20vh;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.354);
-    background-blend-mode: darken;
-    font-size:xx-large;
-}
 
-tbody>tr:nth-child(1):hover {
-    background-image: url(../images/travel.jpg);
-}
-
-tbody>tr:nth-child(2):hover {
-    background-image: url(../images/tax.jpg);
-}
-
-tbody>tr:nth-child(3):hover {
-    background-image: url(../images/commerce.jpg);
-}
-
-tbody>tr:nth-child(4):hover {
-    background-image: url(../images/foreign-transfer.jpg);
-}
-
-tbody>tr:nth-child(5):hover {
-    background-image: url(../images/points.jpg);
-}
 
 /*-------------------------------- MEDIA QUERY---------------------------------------------------*/
 
@@ -425,6 +395,38 @@ tbody>tr:nth-child(5):hover {
     .h1-accounts {
         padding-left: 1rem;
     }
+
+
+    .tr-accounts-content:hover{
+        height: 20vh;
+        background-size: cover;
+        background-position: center;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.354);
+        background-blend-mode: darken;
+        font-size:xx-large;
+    }
+    
+    tbody>tr:nth-child(1):hover {
+        background-image: url(../images/travel.jpg);
+    }
+    
+    tbody>tr:nth-child(2):hover {
+        background-image: url(../images/tax.jpg);
+    }
+    
+    tbody>tr:nth-child(3):hover {
+        background-image: url(../images/commerce.jpg);
+    }
+    
+    tbody>tr:nth-child(4):hover {
+        background-image: url(../images/foreign-transfer.jpg);
+    }
+    
+    tbody>tr:nth-child(5):hover {
+        background-image: url(../images/points.jpg);
+    }
+
 }
 
 

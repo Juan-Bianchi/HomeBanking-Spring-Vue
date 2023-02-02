@@ -47,7 +47,7 @@
             </a>
           </section>
 
-          <section class="nav-and-head d-flex align-items-center">
+          <section class="nav-and-head d-flex justify-content-evenly align-items-center">
 
             <!-- MENU LATERAL -->
             <nav class="navbar navbar-dark navAccount">
@@ -241,6 +241,7 @@
                 </div>
             </nav>
             <!-- FIN MENU LATERAL -->
+
             <template v-if="windowWidth > 768">
               <img class="logo-white-letters" src="./images/darkModeLgInconLetters.png" alt="">
             </template>
@@ -319,6 +320,8 @@
             
             </section>
 
+            <!-- TABLA LATERAL -->
+
             <section class="world-wide-promotions" v-if="windowWidth > 768">
 
               <table class="table-accounts">
@@ -390,7 +393,9 @@
     
       </template>
 
-      <footer>
+      <!-- FOOTER -->
+
+      <footer class="d-flex justify-content-evenly">
         <div class="sustentable-footer d-flex justify-content-center footer-div">
           <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
           <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
