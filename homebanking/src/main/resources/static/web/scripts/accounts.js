@@ -1,7 +1,5 @@
 const {createApp} = Vue;
 
-
-
 createApp( {
     data(){
         return{
@@ -26,6 +24,7 @@ createApp( {
                  .then(response => {
                     this.client = {... response.data};
                     this.accounts = this.client.accounts.map(account => account);
+                    console.log(this.accounts);
                  })
                  .catch(err => console.error(err.message));
         },

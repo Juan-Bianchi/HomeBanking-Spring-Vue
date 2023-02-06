@@ -13,7 +13,7 @@
 }
 
 main{
-    min-height: 70vh;
+    min-height: 50vh;
 }
 
 ul{
@@ -21,13 +21,346 @@ ul{
     padding: 0;
 }
 
-/*----------------------------FOOTER-------------------------------------------*/
+h4 {
+    width: 100%;
+    text-align: start;
+    padding-left: 3vw;
+}
+
+.nav-item{
+    gap: 1vw;
+}
+
+/*-------------------------------------ACCOUNTS-----------------------------------------*/
+/*----------------------------HEADER ACCOUNTS-------------------------------------------*/
+
+.header-options {
+    align-items: center;
+    background-color: #06283D;
+    min-height: 5vh;
+}
+
+.nav-and-head{
+    background: linear-gradient(111deg, rgba(37,109,133,1) 0%, rgba(123,211,221,1) 100%);    
+    border-bottom: #d39200 solid 1px;
+}
+
+.logo-white {
+    height: 8rem;
+    padding-right: 1rem;
+}
+
+.logo-white-arbol, .logo-white-letters {
+    height: 7rem;
+    padding-right: 0.8rem;
+}
+
+.h1-accounts {
+    color: white;
+}
+
+/*DESKTOP BUTTON*/
+.button-offcanvas{
+    color: #fff;
+    padding: 0.5em;
+    padding-left: 0.7em;
+	border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+	background: #256D85;
+	-o-transition: left .2s;
+	transition: left .2s;
+    z-index: 1;
+}
+
+.button-offcanvas:hover{
+    cursor: pointer;
+    scale: 1.1;
+}
+
+.menu-logged-in {
+    background-color: #256D85;
+}
+
+.a-menu{
+    font-weight: bolder;
+    font-size: larger;
+    font-family: Montserrat;
+}
+
+.a-menu:hover{
+    background-color: #256D85;
+    color: white;
+}
+
+.a-header-options{
+    text-decoration: none;
+    color: white;
+}
+
+.buttom-menu{
+    color: #fff;
+	position: relative;
+	left: 10%;
+	top: 25vh;
+	border-radius: 50%;
+	background: #256D85;
+	-webkit-transition: left .2s;
+	-o-transition: left .2s;
+	transition: left .2s;
+}
+
+.buttom-menu:hover{
+	left: 12%;
+	cursor: pointer;
+}
+
+.menu-h3{
+    color: white;
+    font-family: Montserrat-Regular;
+}
+
+.dropdown-menu{
+    background-color: #256D85;
+}
+
+/*----------------------------MAIN ACCOUNTS--------------------------------------------*/
+
+.accounts-main{
+    background: url(../images/fondo.png);
+    background-size: cover;
+    background-position: top left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    color: #0D4C92;
+    padding-bottom: 4vh;
+    position: relative;
+}
+
+#carousel-top-main{
+    background-color: #06283D;
+    min-height: 3vh;
+    width: 85%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.p-car, .a-car {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 1;
+    margin: 0;
+    text-align: center;
+}
+
+.a-car:hover{
+    color: white;
+}
+
+
+
+.accounts-container{
+    min-height: 90%;
+    width: 85%;
+    position: relative;
+    z-index: 1;
+}
+
+.accounts{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5vh;
+}
+
+.new-account{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    border: solid 1px #d39200;
+    align-items: center;
+    width: 100%;
+    border-radius: 8px;
+    padding: 0.4em;
+    transition: all 0.8s;
+    cursor: pointer;
+}
+
+.new-account:hover{
+    transform: scale(1.05);
+}
+
+.accounts-all{
+    width: 100%;
+    gap: 3vh;
+}
+
+.accounts-all h4{
+    color:  white;
+}
+
+.solapa{
+    flex-direction: column;
+    width: 100%;
+    padding: 15px 0 15px 0;
+    border-radius: 8px;
+}
+
+.card-wrapper{
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 98%;
+    gap: 3vh;
+}
+
+.card-account{
+    background-color: #8fc6e3;
+    padding: 0.4em;
+    --bs-dropdown-link-active-bg:  #256D85;
+    width: 90%;
+}
+
+.drop-account{
+    background-color: white;
+    padding: 0.4em;
+    --bs-dropdown-link-active-bg:  #256D85;
+}
+
+.card-innactive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DDDDDD;
+    width: 90%;
+    text-align: center;
+    min-height: 8vh;
+}
+
+.account-card-details a{
+    text-decoration: none;
+    color: #0D4C92;
+}
+
+
+.drop-item:hover{
+    background-color: #256D85;
+    color: white;
+}
+
+
+.table-accounts, .tr-accounts{
+    border: 1px solid #d39200;
+    border-collapse: collapse;
+    width: 30vw;
+    height: 8vh;
+    text-align: center;
+    background-color: white;
+}
+
+.tree-transactions{
+    position: absolute;
+    right: 10vw;
+    bottom: 4vh;
+    z-index: 0;
+}
+
+/*----------------------------HEADER ACCOUNT-------------------------------------------*/
+
+
+/*----------------------------MAIN ACCOUNT----------------------------------------------*/
+
+.main-transactions{
+    background: url(../images/fondo.png);
+    background-size: 100vw 100vh;
+    position: relative;
+    background-position: right top;
+    min-height: 80vh;
+}
+
+#content{
+    transition: margin-left 1s;
+    padding: 1rem;
+}
+
+.button-menu-transaction{
+    background-color: #256D85;
+    position: absolute;
+    right: -1.6vw;
+    z-index: 1;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.button-menu-transaction:hover{
+    right: -1.3vw;
+}
+
+
+.sidebar {
+    position: absolute;
+    color: white;
+    height: 100%;
+    width: fit-content;
+    top: 0;
+    left: 0;
+    background: #256D85; 
+    transition: 1s;
+    padding: 1rem;
+}
+
+.mini-logo-tree{
+    height: 4rem;
+}
+
+.button-small-menu-transaction{
+    background-color: #256D85;
+    position: absolute;
+    right: -1.3vw;
+    z-index: 1;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.button-small-menu-transaction:hover{
+    right: -1.6vw;
+}
+
+.small-menu-transaction{
+    height: 100%;
+    position: absolute;
+    width: fit-content;
+    top: -100vh;
+    left: 0;
+    background: #256D85; 
+    transition: 1s;
+    padding: 1rem;
+}
+
+.tree-transaction{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.tree-blue{
+    height: 15rem;
+    z-index: -1;
+}
+/*----------------------------FOOTER----------------------------------------------------*/
 
 footer{
     flex-wrap: wrap;
-    text-align: center;
     background-color: #2B4865;
-    gap: 4vw;
+    gap: 2vw;
     font-family: Montserrat;
     color: #d39200;
 }
@@ -55,6 +388,8 @@ footer{
     font-size: small;
     background-color: white;
     margin: 0;
+    text-align: center
+    ;
 }
 
 .footer-div{
@@ -78,282 +413,25 @@ footer{
 /*----------------------------LOADER-------------------------------------------*/
 
 .loader-main{
-    height: 100vh;
+    height: 97vh;
     color: white;
     align-items: center;
     justify-content: center;
-    background-color: #06283D;
+    background-color: #256D85;
     overflow: hidden;
     gap: 6vh;
 }
 
 .icon-loader{
-    width: 50%
-}
-
-.loader {
-    width: 10em;
-    height: 10em;
-    font-size: 25px;
-    box-sizing: border-box;
-    border-top: 0.3em solid #8FE3CF;
-    border-radius: 50%;
-    position: relative;
-    animation: rotating 2s ease-in-out infinite;
-    --direction: 1;
-}
-
-.loader::before,
-.loader::after {
-    content: '';
+    width: 10rem;
     position: absolute;
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
-    box-sizing: border-box;
-    top: -0.2em;
+    left: 2vw;
+    top: 10vh;
 }
 
-.loader::before {
-    border-top: 0.3em solid #256D85;
-    transform: rotate(120deg);
+.piggy {
+    height: 95%;
 }
-
-.loader::after {
-    border-top: 0.3em solid #47B5FF;
-    transform: rotate(240deg);
-}
-
-.loader span {
-    position: absolute;
-    color: white;
-    width: inherit;
-    height: inherit;
-    text-align: center;
-    line-height: 10em;
-    font-family: sans-serif;
-    animation: rotating 2s linear infinite;
-    --direction: -1;
-}
-
-@keyframes rotating {
-    50% {
-        transform: rotate(calc(180deg * var(--direction)));
-    }
-
-    100% {
-        transform: rotate(calc(360deg * var(--direction)));
-    }
-}
-
-
-
-/*-------------------------------------ACCOUNTS-----------------------------------------*/
-.body-account {
-    background: #f0efea;
-}
-
-.nav-and-head{
-    background: rgb(37,109,133);
-    background: linear-gradient(111deg, rgba(37,109,133,1) 0%, rgba(123,211,221,1) 100%);    
-    border-bottom: #d39200 solid 1px;
-}
-
-.logo-white {
-    height: 8rem;
-    padding-right: 1rem;
-}
-
-.logo-white-arbol, .logo-white-letters {
-    height: 7rem;
-    padding-right: 0.8rem;
-}
-
-.h1-accounts {
-    color: white;
-}
-
-.header-options {
-    display: flex;
-    align-items: center;
-    background-color: #06283D;
-    min-height: 5vh;
-}
-
-.accounts{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5vh;
-}
-
-.accounts-main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5vh;
-    color: #0D4C92;
-}
-
-.a-header-options{
-    text-decoration: none;
-    color: white;
-}
-
-.menu-h3{
-    color: white;
-    font-family: Montserrat-Regular;
-}
-
-.dropdown-menu{
-    background-color: #256D85;
-}
-
-.menu-logged-in {
-    background-color: #256D85;
-}
-
-.a-menu{
-    font-weight: bolder;
-    font-size: larger;
-    font-family: Montserrat;
-}
-
-
-.a-menu:hover{
-    background-color: #256D85;
-    color: white;
-}
-
-.buttom-menu{
-    color: #fff;
-	position: relative;
-	left: 13%;
-	top: 25vh;
-	border-radius: 3px;
-	background: #256D85;
-	-webkit-transition: left .2s;
-	-o-transition: left .2s;
-	transition: left .2s;
-}
-
-.buttom-menu:hover{
-	left: 10%;
-	cursor: pointer;
-}
-
-.button-offcanvas{
-    color: #fff;
-    padding: 0.5em;
-    padding-left: 1em;
-	border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-	background: #256D85;
-    cursor: pointer;
-    -webkit-transition: left .2s;
-	-o-transition: left .2s;
-	transition: left .2s;
-}
-
-.button-offcanvas:hover{
-    cursor: pointer;
-    scale: 1.1;
-}
-
-#carousel-top-main{
-    background-color: #06283D;
-    min-height: 3vh;
-    width: 85%;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.p-car, .a-car {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 1;
-    margin: 0;
-    text-align: center;
-}
-
-.a-car:hover{
-    color: white;
-}
-
-.new-account{
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    border: solid 1px #d39200;
-    align-items: center;
-    width: 100%;
-    border-radius: 8px;
-    padding: 0.4em;
-    transition: all 0.8s;
-    cursor: pointer;
-}
-
-.new-account:hover{
-    transform: scale(1.05);
-}
-
-.accounts-container{
-    width: 85%;
-}
-
-.accounts-all{
-    width: 100%;
-}
-
-.card-account, .drop-account{
-    background-color: white;
-    padding: 0.4em 0 0.4em 0;
-    --bs-dropdown-link-active-bg:  #256D85;;
-}
-
-.solapa{
-    background-color: #256D85;
-    gap: 4vh;
-    padding: 10px;
-    border-radius: 8px;
-}
-.accounts-all h3{
-    color:  #06283D;
-}
-
-.account-card-header{
-    padding-bottom: 0.5em;
-    border-bottom:#0D4C92 solid 1px;
-}
-
-.account-card-details a{
-    text-decoration: none;
-    color: #0D4C92;
-}
-
-.drop-item:hover{
-    background-color: #256D85;
-    color: white;
-}
-
-
-.table-accounts, .tr-accounts{
-    border: 1px solid #d39200;
-    border-collapse: collapse;
-    width: 25vw;
-    height: 8vh;
-    text-align: center;
-    background-color: white;
-}
-
-
 
 /*-------------------------------- MEDIA QUERY---------------------------------------------------*/
 
@@ -370,7 +448,7 @@ footer{
     }
 }
 
-@media(min-width: 769px) {
+@media(min-width: 768px) {
 
     .nav-and-head {
         justify-content: space-around;
@@ -381,7 +459,11 @@ footer{
     }
 
     .accounts{
-        width: 65%;
+        width: 55%;
+    }
+
+    .new-account{
+        width: 90%;
     }
 
     .navAccount {
@@ -392,6 +474,10 @@ footer{
 }
 
 @media (min-width: 1024px) {
+    .accounts-all{
+        align-items: center;
+    }
+
     .h1-accounts {
         padding-left: 1rem;
     }
@@ -427,6 +513,14 @@ footer{
         background-image: url(../images/points.jpg);
     }
 
+    @media (min-width: 1440px){
+        .card-account {
+            width: 45%;
+        }
+
+        .card-innactive{
+            width: 45%;
+        }
+    }
+
 }
-
-

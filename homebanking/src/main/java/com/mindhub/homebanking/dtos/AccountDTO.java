@@ -46,4 +46,8 @@ public class AccountDTO {
         return this.creationDate;
     }
 
+    public Set<TransactionDTO> getTransactions(){
+        return this.transactions;
+    }
+
 }
