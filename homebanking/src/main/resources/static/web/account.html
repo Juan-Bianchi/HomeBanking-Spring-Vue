@@ -376,7 +376,9 @@
                                     
                 </section>
 
-                <div style="width: 340px; height: 80vh" v-if="windowWidth >= 1024" class="relleno"></div>
+                <div v-if="windowWidth >= 1024" class="relleno">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit non voluptatibus ducimus in excepturi? Mollitia, inventore, laboriosam est necessitatibus modi officiis, non dolores labore quasi explicabo recusandae cupiditate? Delectus, nam.</p>
+                </div>
 
                 <!-- ENCABEZADO -->
 
@@ -434,7 +436,7 @@
                           <label class="form-check-label" for="flexSwitchCheckChecked">{{type}}</label>
                         </div>
                         <select class="form-select select-transaction" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions">
-                          <option selected value="10">Last ten movements</option>
+                          <option selected value="10">Last movements</option>
                           <option value="30">Last 30 days</option>
                           <option value="60">Last 60 days</option>
                           <option value="90">Last 90 days</option>

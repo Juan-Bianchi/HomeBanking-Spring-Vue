@@ -342,16 +342,17 @@ h4 {
     right: -1.3vw;
 }
 
-
 .sidebar {
-    position: absolute;
-    height: 100%;
+    position: fixed;
+    height: 90%;
     width: 280px;
-    top: 0;
-    left: 0;
+    top: 4vh;
+    left: 2vw;
     background: #256D85; 
     transition: 1s;
     padding: 1rem;
+    border-radius: 20px;
+    border: #d39200 1px solid;
 }
 
 .mini-logo-tree{
@@ -372,14 +373,16 @@ h4 {
 }
 
 .small-menu-transaction{
-    height: 100%;
-    position: absolute;
+    position: fixed;
+    height: 90%;
+    left: 2vw;
     width: 100px;
     top: -1000vh;
-    left: 0;
+    border-radius: 20px;
     background: #256D85; 
     transition: 1s;
     padding: 1rem;
+    border: #d39200 1px solid;
 }
 
 .card-wrapper-transaction{
@@ -458,6 +461,16 @@ h4 {
 
 .chevron-page-transaction {
     cursor: pointer;
+}
+
+.relleno{
+   
+}
+
+.relleno p{
+    color: transparent;
+    display: block;
+    width: 320px;
 }
 
 
@@ -632,6 +645,10 @@ footer{
     
     .tbody-accounts>tr:nth-child(5):hover {
         background-image: url(../images/points.jpg);
+    }
+
+    .main-transactions{
+        min-height: 100vh;
     }
 
 }

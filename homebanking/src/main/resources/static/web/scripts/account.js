@@ -65,7 +65,7 @@ createApp({
             switch(this.dateFilter){
                 case 10:       
                     let i = 0;
-                    while(i < 10 && i < firstFilter.length){
+                    while(i < 6 && i < firstFilter.length){
                         this.filteredTransactions.push(firstFilter[i]);
                         i++;
                     }
@@ -121,17 +121,15 @@ createApp({
             let sidebar = document.getElementById("sidebar");
             let smallMenu = document.querySelector(".small-menu-transaction");
             let contentWrapper = document.querySelector(".transaction-wrapper");
-            let fill = document.querySelector('.relleno');
-
-            fill.style.width = "280px"
+            
             if(this.barOpen){
                 sidebar.style.left = "-100vw";
-                smallMenu.style.top = "0";
+                smallMenu.style.top = "4vh";
                 contentWrapper.style.width = `${this.windowWidth - 280}px`;
                 this.barOpen = false;
             }
             else {
-                sidebar.style.left = "0";
+                sidebar.style.left = "2vw";
                 smallMenu.style.top = "-1000vh";
                 contentWrapper.style.width = `${this.windowWidth - 280}px`;
                 this.barOpen = true;
