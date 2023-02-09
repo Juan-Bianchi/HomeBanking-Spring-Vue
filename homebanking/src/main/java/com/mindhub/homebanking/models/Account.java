@@ -26,6 +26,8 @@ public class Account {
     private Set<Transaction> transactions = new HashSet<>();
 
 
+    // CONSTRUCTORS
+
     public Account(){}
 
     public Account( String number, LocalDateTime creationDate, double balance){
@@ -35,7 +37,7 @@ public class Account {
     }
 
 
-    //METODOS SETTERS
+    // SETTER METHODS
 
     public void setNumber (String number){
         this.number = number;
@@ -53,8 +55,7 @@ public class Account {
         this.client = client;
     }
 
-    //METODOS GETTERS
-
+    // GETTER METHODS
     public long getId(){
         return this.id;
     }

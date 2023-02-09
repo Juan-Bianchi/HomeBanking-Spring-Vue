@@ -6,6 +6,35 @@
     src: url(../fonts/static/Montserrat-Regular.ttf);
 }
 
+:root {
+    --font-color1 : white;
+    --font-color2: #0D4C92;
+}
+
+.font1-color{
+    color: var(--font-color1);
+}
+
+.font2-color{
+    color: var(--font-color2);
+}
+
+.red-color{
+    color: red;
+}
+
+.green-color{
+    color: green;
+}
+
+.white-color{
+    color: white;
+}
+
+#totalHavingsChart{
+    z-index: 100;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -55,13 +84,8 @@ h4 {
     padding-right: 0.8rem;
 }
 
-.h1-accounts {
-    color: white;
-}
-
 /*DESKTOP BUTTON*/
 .button-offcanvas{
-    color: #fff;
     padding: 0.5em;
     padding-left: 0.7em;
 	border-top-right-radius: 8px;
@@ -96,11 +120,9 @@ h4 {
 
 .a-header-options{
     text-decoration: none;
-    color: white;
 }
 
 .buttom-menu{
-    color: #fff;
 	position: relative;
 	left: 10%;
 	top: 25vh;
@@ -117,7 +139,6 @@ h4 {
 }
 
 .menu-h3{
-    color: white;
     font-family: Montserrat-Regular;
 }
 
@@ -135,7 +156,6 @@ h4 {
     flex-direction: column;
     align-items: center;
     gap: 5vh;
-    color: #0D4C92;
     padding-bottom: 4vh;
     position: relative;
 }
@@ -152,7 +172,6 @@ h4 {
 
 .p-car, .a-car {
     text-decoration: none;
-    color: white;
     display: block;
     padding: 1;
     margin: 0;
@@ -221,12 +240,15 @@ h4 {
     gap: 3vh;
 }
 
-.card-account{
+.card-account, .card-transfer{
     background-color: #8fc6e3;
     padding: 0.4em;
     --bs-dropdown-link-active-bg:  #256D85;
     width: 90%;
+    box-shadow: -6px 6px 8px 2px #8fe3e2;
+    transition: .5s;
 }
+
 
 .drop-account{
     background-color: white;
@@ -272,13 +294,30 @@ h4 {
     z-index: 0;
 }
 
+#totalHavingsChart {
+    border-radius: 8px;
+    box-shadow: -6px 6px 8px 2px #8fe3e2;
+    min-height: 40vh;
+    background-color: #8fc6e3;
+    border: #d39200 solid 1px;
+}
+
+.div-panda{
+    width: 30vw;
+}
+
+.div-panda img{
+    width: 100%;
+}
+
+
 /*----------------------------HEADER ACCOUNT-------------------------------------------*/
 
 
 /*----------------------------MAIN ACCOUNT----------------------------------------------*/
 
 .main-transactions{
-    background: url(../images/fondo.png);
+    /*background: url(../images/fondo.png);*/
     background-size: 100vw 100vh;
     position: relative;
     background-position: right top;
@@ -306,9 +345,8 @@ h4 {
 
 .sidebar {
     position: absolute;
-    color: white;
     height: 100%;
-    width: fit-content;
+    width: 280px;
     top: 0;
     left: 0;
     background: #256D85; 
@@ -336,25 +374,80 @@ h4 {
 .small-menu-transaction{
     height: 100%;
     position: absolute;
-    width: fit-content;
-    top: -100vh;
+    width: 100px;
+    top: -1000vh;
     left: 0;
     background: #256D85; 
     transition: 1s;
     padding: 1rem;
 }
 
+.card-wrapper-transaction{
+    width: 100%;
+}
+
+.card-transfer {
+    padding: 0;
+}
+
+.transaction-wrapper{
+    width: 100%;
+    gap:4vh
+}
+
 .tree-transaction{
     position: absolute;
-    right: 0;
+    right: 8px;
     bottom: 0;
-    z-index: -1;
+    z-index: 0;
 }
 
 .tree-blue{
     height: 15rem;
-    z-index: -1;
+    z-index: 0;
 }
+
+.table-transactions{
+    width: 90%;
+    z-index: 1;
+    margin-left: 5vw;
+}
+
+.select-transaction{
+    width: auto;
+    border: none;
+}
+
+.collapse-td{
+    padding: 0 !important;
+}
+
+.transactions-display-options{
+    width: 90%;
+    flex-wrap: wrap;
+}
+
+.transaction-details{
+    justify-content: center;
+}
+
+.form-check-input:checked {
+    background-color: #256D85;
+}
+
+.panda-transaction{
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+    z-index: 0;
+}
+
+.panda-standing{
+    height: 15rem;
+    z-index: 0;
+}
+
+
 /*----------------------------FOOTER----------------------------------------------------*/
 
 footer{
@@ -388,8 +481,7 @@ footer{
     font-size: small;
     background-color: white;
     margin: 0;
-    text-align: center
-    ;
+    text-align: center;
 }
 
 .footer-div{
@@ -403,18 +495,18 @@ footer{
 
 .quickLinksA{
     text-decoration: none;
-    color: white;
 }
 
 .quickLinksA:hover{
     color: white;
 }
 
+
+
 /*----------------------------LOADER-------------------------------------------*/
 
 .loader-main{
     height: 97vh;
-    color: white;
     align-items: center;
     justify-content: center;
     background-color: #256D85;
@@ -471,6 +563,14 @@ footer{
         left: -1.25%;
         top: 28vh;
     }
+
+    .table-transactions{
+        width: 70%;
+    }
+
+    .transactions-display-options {
+        width: 80%;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -493,34 +593,38 @@ footer{
         font-size:xx-large;
     }
     
-    tbody>tr:nth-child(1):hover {
+    .tbody-accounts>tr:nth-child(1):hover {
         background-image: url(../images/travel.jpg);
     }
     
-    tbody>tr:nth-child(2):hover {
+    .tbody-accounts>tr:nth-child(2):hover {
         background-image: url(../images/tax.jpg);
     }
     
-    tbody>tr:nth-child(3):hover {
+    .tbody-accounts>tr:nth-child(3):hover {
         background-image: url(../images/commerce.jpg);
     }
     
-    tbody>tr:nth-child(4):hover {
+    .tbody-accounts>tr:nth-child(4):hover {
         background-image: url(../images/foreign-transfer.jpg);
     }
     
-    tbody>tr:nth-child(5):hover {
+    .tbody-accounts>tr:nth-child(5):hover {
         background-image: url(../images/points.jpg);
     }
 
-    @media (min-width: 1440px){
-        .card-account {
-            width: 45%;
-        }
+}
 
-        .card-innactive{
-            width: 45%;
-        }
+@media (min-width: 1440px){
+    .card-account {
+        width: 45%;
     }
 
+    .card-innactive{
+        width: 45%;
+    }
+
+    .card-transfer{
+        width: 75%;
+    }
 }
