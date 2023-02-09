@@ -447,6 +447,19 @@ h4 {
     z-index: 0;
 }
 
+.page-transactions{
+    width: 90%;
+}
+
+.display-transaction-wrapper{
+    width: 100%;
+    align-items: center;
+}
+
+.chevron-page-transaction {
+    cursor: pointer;
+}
+
 
 /*----------------------------FOOTER----------------------------------------------------*/
 
@@ -571,6 +584,14 @@ footer{
     .transactions-display-options {
         width: 80%;
     }
+
+    .page-transactions{
+        width: 73%;
+    }
+
+    .display-transaction-wrapper{
+        align-items: start;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -626,5 +647,9 @@ footer{
 
     .card-transfer{
         width: 75%;
+    }
+
+    .page-transactions{
+        width: 71%;
     }
 }

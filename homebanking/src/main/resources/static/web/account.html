@@ -403,18 +403,46 @@
                   </div>
 
                   <div class="d-flex flex-column justify-content-start align-items-start w-100">
-                    <div class="transactions-display-options d-flex justify-content-around" v-if="typesOfTransaction.length">
-                      <div class="form-check form-switch d-flex align-items-center justify-content-center" v-for="type of typesOfTransaction">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
-                        <label class="form-check-label" for="flexSwitchCheckChecked">{{type}}</label>
+                  
+                    <div class="d-flex flex-column display-transaction-wrapper">
+                      <div v-if="totalPages > 1" class="d-flex justify-content-end align-items-center page-transactions">
+                        <span>Page {{pageNumber}} of {{totalPages}}</span>
+                        <svg v-if="pageNumber > 1" @click="changePage(-1)" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left chevron-page-transaction" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <polyline points="15 6 9 12 15 18" />
+                        </svg>
+  
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <polyline points="15 6 9 12 15 18" />
+                        </svg>
+  
+                        <svg v-if="totalPages > pageNumber" @click="changePage(1)" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right chevron-page-transaction" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <polyline points="9 6 15 12 9 18" />
+                        </svg>
+  
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <polyline points="9 6 15 12 9 18" />
+                        </svg>
                       </div>
-                      <select class="form-select select-transaction" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions">
-                        <option selected value="10">Last ten movements</option>
-                        <option value="30">Last 30 days</option>
-                        <option value="60">Last 60 days</option>
-                        <option value="90">Last 90 days</option>
-                      </select>
+                      
+                      <div class="transactions-display-options d-flex justify-content-around" v-if="typesOfTransaction.length">
+                        <div class="form-check form-switch d-flex align-items-center justify-content-center" v-for="type of typesOfTransaction">
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
+                          <label class="form-check-label" for="flexSwitchCheckChecked">{{type}}</label>
+                        </div>
+                        <select class="form-select select-transaction" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions">
+                          <option selected value="10">Last ten movements</option>
+                          <option value="30">Last 30 days</option>
+                          <option value="60">Last 60 days</option>
+                          <option value="90">Last 90 days</option>
+                        </select>
+                      </div>
                     </div>
+                    
+                    
   
                     <div class="transaction-details w-100 d-flex justify-content-start">
                       <table class="table table-transactions" v-if="filteredTransactions.length">
@@ -427,7 +455,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <template v-for="transaction of filteredTransactions">
+                          <template v-for="transaction of visibleTransactions">
                             <tr :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">
                               <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <div class="accordion-item">                            

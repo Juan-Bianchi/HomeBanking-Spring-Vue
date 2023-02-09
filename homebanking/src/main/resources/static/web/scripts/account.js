@@ -10,7 +10,9 @@ createApp({
             orderedTransactions: [],
             typesOfTransaction: [],
             filteredTransactions: [],
-            visibleTransactions:[],
+            visibleTransactions: [],
+            totalPages: 1,
+            pageNumber: 1,
             activeChecks:['DEBIT', 'CREDIT'],
             dateFilter: 10,
         }
@@ -82,12 +84,29 @@ createApp({
                     break;  
             }
 
-            renderTransactions();
+            this.renderTransactions();
 
         },
 
-        renderTransaction: function(){
+        renderTransactions: function(){
+
+            let size = this.filteredTransactions.length;
+            let counter = 0;
+            let transactionsArray = [];
+
+            while(counter < size){
+                transactionsArray.push(this.filteredTransactions.slice(counter, counter+=10));
+            }
+
+            this.visibleTransactions = transactionsArray[this.pageNumber - 1];
+            this.totalPages = transactionsArray.length;
             
+            
+        },
+
+        changePage: function(movement){
+            this.pageNumber += movement;
+            this.filterTransactions();
         },
 
 
