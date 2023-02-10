@@ -1,11 +1,10 @@
 package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.LoanRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
@@ -25,7 +27,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository) {
 		return (args) -> {
 			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			Account acc1 = new Account("VIN001", LocalDateTime.now(), 50000);
@@ -45,8 +47,19 @@ public class HomebankingApplication {
 			Transaction tr13 = new Transaction(CREDIT, 1000, "Transfer", LocalDateTime.now().plusDays(-43));
 			Transaction tr14 = new Transaction(DEBIT, -4300, "Purchase", LocalDateTime.now().plusDays(-64));
 
+
+			Loan ln1 = new Loan("Mortgage", 500000, Arrays.asList(6,12,24,36));
+			Loan ln2 = new Loan("Personal", 100000, Arrays.asList(6,12,24));
+			Loan ln3 = new Loan("Automotive", 300000, Arrays.asList(6,12,24,36));
+
+			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
+			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);
+			System.out.println(tr11);
+
 			cli1.addAccount(acc1);
 			cli1.addAccount(acc2);
+			cli1.addClientLoan(clLoan1);
+			cli1.addClientLoan(clLoan2);
 			acc1.addTransaction(tr1);
 			acc1.addTransaction(tr2);
 			acc1.addTransaction(tr3);
@@ -61,6 +74,13 @@ public class HomebankingApplication {
 			acc1.addTransaction(tr12);
 			acc2.addTransaction(tr13);
 			acc2.addTransaction(tr14);
+			ln1.addClientLoan(clLoan1);
+			ln2.addClientLoan(clLoan2);
+
+			loanRepository.save(ln1);
+			loanRepository.save(ln2);
+			loanRepository.save(ln3);
+
 			clientRepository.save(cli1);
 			accountRepository.save(acc1);
 			accountRepository.save(acc2);
@@ -79,14 +99,26 @@ public class HomebankingApplication {
 			transactionRepository.save(tr13);
 			transactionRepository.save(tr14);
 
+
+
 			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com");
 			Account acc3 = new Account("VIN003", LocalDateTime.now(), 50000);
 			Account acc4 = new Account("VIN004", LocalDateTime.now().plusDays(1), 75000);
+			ClientLoan clLoan3 = new ClientLoan(cli2, ln2, 100000, 24);
+			ClientLoan clLoan4 = new ClientLoan(cli2, ln3, 200000, 36);
 			cli2.addAccount(acc3);
 			cli2.addAccount(acc4);
+			cli2.addClientLoan(clLoan3);
+			cli2.addClientLoan(clLoan4);
+			ln2.addClientLoan(clLoan3);
+			ln3.addClientLoan(clLoan4);
+
+
 			clientRepository.save(cli2);
 			accountRepository.save(acc3);
 			accountRepository.save(acc4);
+
+
 
 
 

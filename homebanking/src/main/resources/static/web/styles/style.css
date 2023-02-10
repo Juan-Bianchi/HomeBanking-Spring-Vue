@@ -332,7 +332,7 @@ h4 {
 .button-menu-transaction{
     background-color: #256D85;
     position: absolute;
-    right: -1.6vw;
+    right: -1.1vw;
     z-index: 1;
     border-radius: 50%;
     cursor: pointer;
@@ -362,14 +362,14 @@ h4 {
 .button-small-menu-transaction{
     background-color: #256D85;
     position: absolute;
-    right: -1.3vw;
+    right: -1.1vw;
     z-index: 1;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .button-small-menu-transaction:hover{
-    right: -1.6vw;
+    right: -1.3vw;
 }
 
 .small-menu-transaction{
@@ -414,6 +414,8 @@ h4 {
     width: 90%;
     z-index: 1;
     margin-left: 5vw;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .select-transaction{
@@ -432,6 +434,7 @@ h4 {
 
 .transaction-details{
     justify-content: center;
+    position: relative;
 }
 
 .form-check-input:checked {
@@ -473,6 +476,11 @@ h4 {
     width: 320px;
 }
 
+/*----------------------------FOOTER ACCOUNT-------------------------------------------*/
+.footer-transactions{
+    position: relative;
+}
+
 
 /*----------------------------FOOTER----------------------------------------------------*/
 
@@ -508,6 +516,7 @@ footer{
     background-color: white;
     margin: 0;
     text-align: center;
+    position: relative;
 }
 
 .footer-div{
