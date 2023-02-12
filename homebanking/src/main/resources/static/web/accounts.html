@@ -71,12 +71,7 @@
                   <div class="offcanvas offcanvas-start menu-logged-in" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" v-if="client">
                     <div class="offcanvas-header">
                       <h3 class="menu-h3 font1-color">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <circle cx="12" cy="12" r="9" />
-                          <circle cx="12" cy="10" r="3" />
-                          <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                        </svg>
+                        <img class="avatar" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
                         Welcome {{client.firstName + " " + client.lastName + "!"}}
                       </h3>
                       
@@ -141,7 +136,7 @@
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
+                          <a class="nav-link a-menu font1-color" href="./loans.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <ellipse cx="16" cy="6" rx="5" ry="3" />
@@ -265,25 +260,13 @@
                 <a class="a-car font1-color" href="#">How to protect yourself from pishing?</a>
               </div>
               <div class="carousel-item">
-                <a class="a-car font1-color" href="#">A preferencial rate loan just for you!</a>
+                <a class="a-car font1-color" href="./loans.html">A preferencial rate loan just for you!</a>
               </div>
             </div>
           </div>
 
           <div class="accounts-container d-flex">
             <div class="accounts">
-
-              <!-- BOTON NEW ACCOUNT -->
-              <section class="new-account">
-                <h4>Add a new account</h4>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                  <circle cx="12" cy="12" r="9" />
-                  <line x1="9" y1="12" x2="15" y2="12" />
-                  <line x1="12" y1="9" x2="12" y2="15" />
-                </svg>
-              </section>
-  
   
               <!-- ACCOUNTS -->
               <section class="d-flex justify-content-between flex-column accounts-all">
@@ -326,6 +309,17 @@
                     </div>
                   </div>
                 </div>
+              
+                <!-- BOTON NEW ACCOUNT -->
+                <div v-if="accounts.length < 4"  class="new-account">
+                  <h4>Add a new account</h4>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="9" y1="12" x2="15" y2="12" />
+                    <line x1="12" y1="9" x2="12" y2="15" />
+                  </svg>
+                </div>
 
                 <!-- CHECKS -->
 
@@ -340,7 +334,7 @@
                     </div>
                   </div>
                 </div>
-              </section>     
+              </section>   
             
             </div>
 
@@ -410,24 +404,80 @@
                 </tbody>
               </table> 
               
-              <!-- <div class="div-panda" v-if="windowWidth >= 768 && windowWidth < 1024">
+              <div class="div-panda" v-if="windowWidth >= 768 && windowWidth < 1440">
                 <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
-              </div> -->
+              </div>
   
             </section>       
           </div>
 
-          <div class="d-flex justify-content-center flex-column align-items-center" style="min-width: 320px;">
-            <h4 style="color: white; ">Total balance</h4>
-            <div id="totalHavingsChart">
+          <div class="d-flex justify-content-between align-items-start diagram-wrapper">
 
+            <div class="d-flex justify-content-center align-items-end diagram">
+              <div class="d-flex justify-content-center flex-column align-items-center" style="min-width: 310px;">
+                <h5 class="font2-color">Total balance</h5>
+                <div id="totalHavingsChart"> </div>
+              </div>
+  
+              <div class="div-panda" v-if="windowWidth >= 1440">
+                <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
+              </div>    
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center tree-and-loan">
+              <div v-if="orderedLoans.length" class="loans-wrapper d-flex flex-column">
+                <h5 class="font2-color">Active Loans</h5>
+                <div v-if="orderedLoans.length < 4" class="new-account">
+                  <a class="nav-link" href="./loans.html"><h6>Add a new loan</h6></a>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="9" y1="12" x2="15" y2="12" />
+                    <line x1="12" y1="9" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <table class="table" v-if="orderedLoans.length" style="text-align: center;">
+                  <thead>
+                    <tr>
+                      <th>Type of loan</th>
+                      <th>Amount</th>
+                      <th>Payments</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template v-for="loan of orderedLoans">
+                      <tr>                        
+                          <td>{{loan.name}}</td>
+                          <td>${{loan.amount}}</td>
+                          <td>{{loan.payments}}</td>                 
+                      </tr>
+                    </template>
+                    
+                  </tbody>
+                </table>
+              </div>
+
+              <div v-else >
+                <h5 class="font2-color">No active Loans</h5>
+                <p>Know more about our loans. Ask for a new lone to fullfil your dreams!</p>
+                <div class="new-account">
+                  <a class="nav-link" href="./loans.html"><h6>Add a new loan</h6></a>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="9" y1="12" x2="15" y2="12" />
+                    <line x1="12" y1="9" x2="12" y2="15" />
+                  </svg>
+                </div>
+              </div>
+              
+
+              <div class="tree-transactions d-flex align-items-center" v-if="windowWidth >=1024">
+                <img class="tree-blue" src="./images/treeBlue.png" alt="">
+              </div>
             </div>
           </div>
-          
-            
-          <div class="tree-transactions" v-if="windowWidth >=1024 && windowWidth <= 1920">
-            <img class="tree-blue" src="./images/treeBlue.png" alt="">
-          </div>
+
         </main>
     
       

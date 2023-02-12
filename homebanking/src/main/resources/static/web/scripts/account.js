@@ -4,6 +4,7 @@ createApp({
     data(){
         return{
             account: undefined,
+            client: undefined,
             transactions: undefined,
             windowWidth: window.innerWidth,
             barOpen: true,
@@ -33,13 +34,15 @@ createApp({
             const urlString = location.search;
             const parameters = new URLSearchParams(urlString);
             const id = parameters.get('id');
-            axios.get(`http://localhost:8080/api/accounts/${id}`)
-                 .then(response => {
-                    this.account = {... response.data};
+            promiseAccount = axios.get(`http://localhost:8080/api/accounts/${id}`);
+            promiseClient = axios.get(`http://localhost:8080/api/clients/1`);
+            Promise.all([promiseAccount, promiseClient]).then(response => {
+                    this.account = {... response[0].data};
+                    this.client = {... response[1].data};
                     this.transactions = [...this.account.transactions].map(transaction => transaction);
                     this.manageData();
                 })
-                 //.catch(err => console.error(err.message));
+                .catch(err => console.error(err.message));
         },
 
         manageData: function(){

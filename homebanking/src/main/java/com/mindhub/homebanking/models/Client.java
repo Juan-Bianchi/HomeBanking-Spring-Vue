@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.models;
 
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,9 +20,10 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
-
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     //CONSTRUCTORS
     public  Client(){}
@@ -36,21 +38,21 @@ public class Client {
     public String getFirstName() {
         return this.firstName;
     }
-
     public String getLastName(){
         return this.lastName;
     }
-
     public String getEmail(){
         return this.email;
     }
-    
     public long getId(){
         return this.id;
     }
-
+    @JsonIgnore
     public Set<Account> getAccounts() {
         return this.accounts;
+    }
+    public Set<ClientLoan> getLoans(){
+        return this.clientLoans;
     }
 
     //SETTER METHODS
@@ -72,15 +74,22 @@ public class Client {
     @Override
     public String toString(){
         return
-            "firsName: " + this.firstName + ",\n" +
-            "lastName: " + this.lastName + ",\n" +
-            "email: " + this.email + ",\n" +
-            "id: " + this.id;
+                "Client {\n\t" +
+                    "id: " + this.id + ",\n\t" +
+                    "firsName: " + this.firstName + ",\n\t" +
+                    "lastName: " + this.lastName + ",\n\t" +
+                    "email: " + this.email
+                    +" \n}";
     }
 
     public void addAccount(Account account){
         account.setClient(this);
         accounts.add(account);
+    }
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
     }
 }
 
