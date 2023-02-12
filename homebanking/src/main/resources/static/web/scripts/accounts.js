@@ -7,6 +7,8 @@ createApp( {
             windowWidth: window.innerWidth,
             accounts: [],
             orderedAccounts: [],
+            loans: [],
+            orderedLoans: [],
 
         }
     },
@@ -26,8 +28,10 @@ createApp( {
                  .then(response => {
                     this.client = {... response.data};
                     this.accounts = this.client.accounts.map(account => account);
+                    this.loans = this.client.loans.map(loan => loan);
                     this.createPieChart();
                     this.orderAccounts();
+                    this.orderLoans();
                  })
                  .catch(err => console.error(err.message));
         },
@@ -50,7 +54,7 @@ createApp( {
 
                 chart: {
                     width: 380,
-                    type: 'donut',
+                    type: 'pie',
                 },
 
                 labels: label,
@@ -96,8 +100,12 @@ createApp( {
         orderAccounts: function(){
             this.orderedAccounts = this.accounts.map(account => ({... account}));
             this.orderedAccounts.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
-            console.log(this.orderedAccounts);
-        }
+        },
+
+        orderLoans: function(){
+            this.orderedLoans = this.loans.map(loan => ({... loan}));
+            this.orderedLoans.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
+        },
 
     },
 

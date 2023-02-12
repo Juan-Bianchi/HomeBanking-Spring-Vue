@@ -2,10 +2,7 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +24,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
 		return (args) -> {
 			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			Account acc1 = new Account("VIN001", LocalDateTime.now(), 50000);
@@ -48,13 +45,13 @@ public class HomebankingApplication {
 			Transaction tr14 = new Transaction(DEBIT, -4300, "Purchase", LocalDateTime.now().plusDays(-64));
 
 
-			Loan ln1 = new Loan("Mortgage", 500000, Arrays.asList(6,12,24,36));
+			Loan ln1 = new Loan("Mortgage", 500000, Arrays.asList(6,12,24,36,48,60));
 			Loan ln2 = new Loan("Personal", 100000, Arrays.asList(6,12,24));
 			Loan ln3 = new Loan("Automotive", 300000, Arrays.asList(6,12,24,36));
 
 			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
 			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);
-			System.out.println(tr11);
+
 
 			cli1.addAccount(acc1);
 			cli1.addAccount(acc2);
@@ -98,6 +95,9 @@ public class HomebankingApplication {
 			transactionRepository.save(tr12);
 			transactionRepository.save(tr13);
 			transactionRepository.save(tr14);
+			clientLoanRepository.save(clLoan1);
+			clientLoanRepository.save(clLoan2);
+
 
 
 
@@ -117,6 +117,8 @@ public class HomebankingApplication {
 			clientRepository.save(cli2);
 			accountRepository.save(acc3);
 			accountRepository.save(acc4);
+			clientLoanRepository.save(clLoan3);
+			clientLoanRepository.save(clLoan4);
 
 
 

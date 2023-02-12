@@ -1,6 +1,5 @@
 package com.mindhub.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -83,10 +82,12 @@ public class Account {
     @Override
     public String toString(){
         return
-            "number: " + this.number + ",\n" +
-            "creationDate: " + this.creationDate + ",\n" +
-            "balance: " + this.balance + ",\n" +
-            "id: " + this.id;
+
+                "Account: { \n\t" +
+                    "number: " + this.number + ",\n\t" +
+                    "creationDate: " + this.creationDate + ",\n\t" +
+                    "balance: " + this.balance + ",\n\t" +
+                    "id: " + this.id;
     }
 
     public void addTransaction(Transaction transaction) {

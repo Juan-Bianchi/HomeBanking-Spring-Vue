@@ -1,14 +1,12 @@
 package com.mindhub.homebanking.models;
 
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static java.util.stream.Collectors.toList;
 
 
 @Entity
@@ -40,25 +38,21 @@ public class Client {
     public String getFirstName() {
         return this.firstName;
     }
-
     public String getLastName(){
         return this.lastName;
     }
-
     public String getEmail(){
         return this.email;
     }
-    
     public long getId(){
         return this.id;
     }
-
+    @JsonIgnore
     public Set<Account> getAccounts() {
         return this.accounts;
     }
-
-    public List<Loan> getLoans(){
-        return this.clientLoans.stream().map(clientLoan -> clientLoan.getLoan()).collect(toList());
+    public Set<ClientLoan> getLoans(){
+        return this.clientLoans;
     }
 
     //SETTER METHODS
@@ -80,10 +74,12 @@ public class Client {
     @Override
     public String toString(){
         return
-            "firsName: " + this.firstName + ",\n" +
-            "lastName: " + this.lastName + ",\n" +
-            "email: " + this.email + ",\n" +
-            "id: " + this.id;
+                "Client {\n\t" +
+                    "id: " + this.id + ",\n\t" +
+                    "firsName: " + this.firstName + ",\n\t" +
+                    "lastName: " + this.lastName + ",\n\t" +
+                    "email: " + this.email
+                    +" \n}";
     }
 
     public void addAccount(Account account){

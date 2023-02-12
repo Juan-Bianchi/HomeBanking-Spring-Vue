@@ -60,6 +60,18 @@ h4 {
     gap: 1vw;
 }
 
+.avatar{
+    height: 3rem;
+}
+
+.avatar1{
+    height: 2rem;
+}
+
+.h2-logout{
+    margin-right: 8%;
+}
+
 /*-------------------------------------ACCOUNTS-----------------------------------------*/
 /*----------------------------HEADER ACCOUNTS-------------------------------------------*/
 
@@ -149,7 +161,7 @@ h4 {
 /*----------------------------MAIN ACCOUNTS--------------------------------------------*/
 
 .accounts-main{
-    background: url(../images/fondo.png);
+    /* background: url(../images/fondoGris.jpg); */
     background-size: cover;
     background-position: top left;
     display: flex;
@@ -217,13 +229,19 @@ h4 {
     transform: scale(1.05);
 }
 
+
 .accounts-all{
     width: 100%;
     gap: 3vh;
+    align-items: center;
 }
 
 .accounts-all h4{
-    color:  white;
+    color: #0D4C92;
+}
+
+.new-account h4{
+    color: #0D4C92;
 }
 
 .solapa{
@@ -287,13 +305,6 @@ h4 {
     background-color: white;
 }
 
-.tree-transactions{
-    position: absolute;
-    right: 10vw;
-    bottom: 4vh;
-    z-index: 0;
-}
-
 #totalHavingsChart {
     border-radius: 8px;
     box-shadow: -6px 6px 8px 2px #8fe3e2;
@@ -302,12 +313,34 @@ h4 {
     border: #d39200 solid 1px;
 }
 
-.div-panda{
-    width: 30vw;
+.tree-blue{
+    height: 13rem;
+    z-index: 0;
 }
 
+
 .div-panda img{
+    width: 200px;
+}
+
+.diagram-wrapper{
+    flex-wrap: wrap;
+    width: 90%;
+    gap: 3vh;
+}
+
+.diagram{
     width: 100%;
+}
+
+.tree-and-loan{
+    gap: 3vw;
+    width: 100%;
+}
+
+.loans-wrapper{
+    width: 100%;
+    gap: 3vh;
 }
 
 
@@ -317,10 +350,10 @@ h4 {
 /*----------------------------MAIN ACCOUNT----------------------------------------------*/
 
 .main-transactions{
-    /*background: url(../images/fondo.png);*/
-    background-size: 100vw 100vh;
+    /* background: url(../images/fondoGris.jpg); */
+    background-size: cover;
+    background-position: top left;
     position: relative;
-    background-position: right top;
     min-height: 80vh;
 }
 
@@ -385,6 +418,15 @@ h4 {
     border: #d39200 1px solid;
 }
 
+.headings-account{
+    background:linear-gradient(#8fe3e2b6, #8fe3e2b6), url(../images/copaMind.jpg);
+    background-size: cover;
+    background-position: center right;
+    min-height: 15vh;
+    border-radius: 8px;
+    width: 90%;
+}
+
 .card-wrapper-transaction{
     width: 100%;
 }
@@ -398,29 +440,16 @@ h4 {
     gap:4vh
 }
 
-.tree-transaction{
-    position: absolute;
-    right: 8px;
-    bottom: 0;
-    z-index: 0;
-}
-
-.tree-blue{
-    height: 15rem;
-    z-index: 0;
-}
-
 .table-transactions{
     width: 90%;
     z-index: 1;
     margin-left: 5vw;
-    background-color: white;
-    border-radius: 10px;
 }
 
 .select-transaction{
     width: auto;
     border: none;
+    background-color: transparent;
 }
 
 .collapse-td{
@@ -434,6 +463,7 @@ h4 {
 
 .transaction-details{
     justify-content: center;
+    align-items: center;
     position: relative;
 }
 
@@ -441,12 +471,12 @@ h4 {
     background-color: #256D85;
 }
 
-.panda-transaction{
+/* .panda-transaction{
     position: absolute;
     right: 15px;
     bottom: 0;
     z-index: 0;
-}
+} */
 
 .panda-standing{
     height: 15rem;
@@ -466,10 +496,6 @@ h4 {
     cursor: pointer;
 }
 
-.relleno{
-   
-}
-
 .relleno p{
     color: transparent;
     display: block;
@@ -480,6 +506,41 @@ h4 {
 .footer-transactions{
     position: relative;
 }
+
+
+/*-------------------------------MAIN LOANS--------------------------------------------*/
+
+.loan-list-main{
+    width: 80%;
+}
+
+.details-loans{
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.loans-ul {
+    list-style-type: circle;
+}
+
+.banner-wrapper{
+    width: 80%;
+}
+
+.banner-loan{
+    width: 100%;
+    height: 30vh;
+    background: url(../images/newhouse.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.title-loans-details{
+    color:#0D4C92;
+    font-size: 50px;
+    text-align: center;
+}
+
 
 
 /*----------------------------FOOTER----------------------------------------------------*/
@@ -614,12 +675,13 @@ footer{
     .display-transaction-wrapper{
         align-items: start;
     }
+
+    .div-details-loans{
+        width: 30%;
+    }
 }
 
 @media (min-width: 1024px) {
-    .accounts-all{
-        align-items: center;
-    }
 
     .h1-accounts {
         padding-left: 1rem;
@@ -660,6 +722,12 @@ footer{
         min-height: 100vh;
     }
 
+    .diagram-wrapper{
+        width: 80%;
+        gap: 4vw;
+        flex-wrap: nowrap;
+    }
+
 }
 
 @media (min-width: 1440px){
@@ -677,5 +745,9 @@ footer{
 
     .page-transactions{
         width: 71%;
+    }
+
+    .banner-loan{ 
+        height: 50vh;
     }
 }

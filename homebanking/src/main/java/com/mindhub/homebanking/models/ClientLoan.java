@@ -24,10 +24,10 @@ public class ClientLoan {
     public ClientLoan(){};
 
     public ClientLoan(Client client, Loan loan, double amount, int payments){
-        this.amount = amount;
-        this.payments = payments;
         this.client = client;
         this.loan = loan;
+        this.amount = amount;
+        this.payments = payments;
     }
 
 
@@ -63,11 +63,12 @@ public class ClientLoan {
         return this.client;
     }
 
+    public double getAmount(){
+        return this.amount;
+    }
+
     public Loan getLoan(){
         return this.loan;
     }
 
-    public double getAmount(){
-        return this.amount;
-    }
 }
