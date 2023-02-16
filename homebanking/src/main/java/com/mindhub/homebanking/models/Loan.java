@@ -37,6 +37,28 @@ public class Loan {
     }
 
 
+
+    // OTHER METHODS
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setLoan(this);
+        this.clientLoans.add(clientLoan);
+
+    }
+
+    @Override
+    public String toString(){
+        return
+                "Loan: { \n " +
+                        "id: " + this.id + ",\n" +
+                        "name: " + this.name + ",\n" +
+                        "maxAmount: " + this.maxAmount + ",\n" +
+                        "payments: " + this.payments + ",\n" +
+                        "clientLoans: " + this.clientLoans + ",\n" +
+                        "}";
+    }
+
+
     //SETTER METHODS
 
     public void setName(String name){
@@ -73,25 +95,4 @@ public class Loan {
     public List<Client> getClients() {
         return this.clientLoans.stream().map(clientLoan -> clientLoan.getClient()).collect(toList());
     }
-
-    // OTHER METHODS
-
-    public void addClientLoan(ClientLoan clientLoan){
-        clientLoan.setLoan(this);
-        this.clientLoans.add(clientLoan);
-
-    }
-
-    @Override
-    public String toString(){
-        return
-                "Loan: { \n " +
-                        "id: " + this.id + ",\n" +
-                        "name: " + this.name + ",\n" +
-                        "maxAmount: " + this.maxAmount + ",\n" +
-                        "payments: " + this.payments + ",\n" +
-                        "clientLoans: " + this.clientLoans + ",\n" +
-                "}";
-    }
-
 }

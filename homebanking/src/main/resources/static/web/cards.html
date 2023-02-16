@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Loans | MB Bank</title>
+    <title>Your Cards | MB Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/style.css"/>
 </head>
 <body>
     <div id="app">
 
       <!-- LOADER -->
-      <template v-if="!loans.length">
+      <template v-if="creditCards.lentgh == 0">
         <main class="loader-main d-flex flex-column font1-color">
           <span class="d-flex justify-content-center"><img class="icon-loader" src="./images/darkModeSmIcon.png" alt="blue-tree" title="blue-tree"></span>
           <img class="piggy" src="./images/loader.gif" alt="loader" title="loader">
@@ -23,7 +27,7 @@
         
       <!-- FIN LOADER -->
 
-        <div v-show = "client">
+        <div v-show = "creditCards.length">
             <!-- HEADER -->
 
             <header>
@@ -111,7 +115,7 @@
                                 </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link a-menu font1-color" href="./cards.html">
+                                <a class="nav-link a-menu font1-color" href="#">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <rect x="3" y="5" width="18" height="14" rx="3" />
@@ -139,7 +143,7 @@
                                 </a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link a-menu font1-color" href="#">
+                                <a class="nav-link a-menu font1-color" href="./loans.html">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                       <ellipse cx="16" cy="6" rx="5" ry="3" />
@@ -243,7 +247,7 @@
                     <img class="logo-white-letters" src="./images/darkModeLgInconLetters.png" alt="">
                   </template>
       
-                  <h1 class="h1-accounts font1-color">LOANS</h1>
+                  <h1 class="h1-accounts font1-color">CARDS</h1>
                   <img class="logo-white-arbol" src="./images/blueFavicon.png" alt="logo-white" title="logo">
       
                   
@@ -267,142 +271,68 @@
                     </div>
                 </div>
 
-                <!-- LOANS LIST -->
+                <!-- CARDS -->
 
-                <div class="d-flex justify-content-between align-items-center tree-and-loan loan-list-main">
-                    <div v-if="loans.length" class="loans-wrapper d-flex flex-column">
-                      <h5 class="font2-color">Currently Active Loans</h5>
-                      <div v-if="loans.length < 4" class="new-account">
-                        <h6>Add a new loan</h6>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <circle cx="12" cy="12" r="9" />
-                          <line x1="9" y1="12" x2="15" y2="12" />
-                          <line x1="12" y1="9" x2="12" y2="15" />
-                        </svg>
-                      </div>
-                      <table class="table" v-if="loans.length < 4" style="text-align: center;">
-                        <thead>
-                          <tr>
-                            <th>Type of loan</th>
-                            <th>Amount</th>
-                            <th>Payments</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <template v-for="loan of loans">
-                            <tr>                        
-                                <td>{{loan.name}}</td>
-                                <td>${{loan.amount}}</td>
-                                <td>{{loan.payments}}</td>                 
-                            </tr>
-                          </template>
-                          
-                        </tbody>
-                      </table>
-                    </div>
-      
-                    <div v-else-if="!loans.length" >
-                      <h5 class="font2-color">No active Loans</h5>
-                      <p>Know more about our loans. Ask for a new lone to fullfil your dreams!</p>
-                      <div class="new-account">
-                        <h6>Add a new loan</h6>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <circle cx="12" cy="12" r="9" />
-                          <line x1="9" y1="12" x2="15" y2="12" />
-                          <line x1="12" y1="9" x2="12" y2="15" />
-                        </svg>
-                      </div>
-                    </div>
+                <section class="cards-bank">
 
-                    <div v-else class="card card-innactive">                       
-                        <h5 class="card-title text-muted">Already have all our loans</h5>
-                        <h5 class="card-title text-muted">Ready to fulfill your dreams!</h5>
-                    </div>
+                    <section class="d-flex flex-column">
+                        <h5 class="font2-color">Credit Cards</h5>
+                        <div class="d-flex credit-card-wrapper align-items-center">
+                            <div class="card cardCredit" :class="'card-'+card.color.toLowerCase()" v-if="creditCards.length" v-for="card of creditCards">
+                                <figure class="card__figure">
+                                  <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                  <span class="card__figureName">{{card.color}}</span>
+                                </figure>
+                              <div class="card__reader">
+                                <div class="card__reader--risk card__reader--risk-one"></div>
+                                <div class="card__reader--risk card__reader--risk-two"></div>
+                                <div class="card__reader--risk card__reader--risk-three"></div>
+                                <div class="card__reader--risk card__reader--risk-four"></div>
+                              </div>
+                              <p class="card__number cred">{{ splitNumber(card.number) }}</p>
+                              <div class="card__dates cred">
+                                <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                              </div>
+                              <span class="card__name cred">{{card.cardHolder.toUpperCase()}}</span>
+                              <div class="card__flag">
+                                <div class="card__flag--globe"></div>
+                                <div class="card__flag--red"></div>
+                                <div class="card__flag--yellow"></div>
+                              </div>
+                            </div>
+                        </div>
+                    </section>
                     
+                    <section class="d-flex flex-column">
+                        <h5 class="font2-color">Debit Cards</h5>
+                        <div class="d-flex credit-card-wrapper align-items-center">
+                            <div class="card cardDebit" :class="'card-'+card.color.toLowerCase()" v-if="debitCards.length" v-for="card of debitCards">
+                                <figure class="card__figure">
+                                  <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                  <span class="card__figureName">{{card.color}}</span>
+                                </figure>
+                              <div class="card__reader">
+                                <div class="card__reader--risk card__reader--risk-one"></div>
+                                <div class="card__reader--risk card__reader--risk-two"></div>
+                                <div class="card__reader--risk card__reader--risk-three"></div>
+                                <div class="card__reader--risk card__reader--risk-four"></div>
+                              </div>
+                              <p class="card__number">{{splitNumber(card.number)}}</p>
+                              <div class="card__dates">
+                                <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                              </div>
+                              <span class="card__name">{{card.cardHolder.toUpperCase()}}</span>
+                              <img class="visa-icon" src="./images/visa.png" alt="visa">
+                              <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
+                            </div>
+                        </div>    
+                    </section>
                     
-      
-                    <div class="tree-transactions d-flex align-items-center" v-if="windowWidth >=1024">
-                      <img class="tree-blue" src="./images/treeBlue.png" alt="">
-                    </div>
-                </div>
-
-                <div class="banner-wrapper">
-                    <div class="banner-loan">
-                    </div>
-
-                    <div class="title-loans-details" v-if="windowWidth > 768">
-                        <p class="font2-color">Fullfil your dreams!</p>
-                        <p class="font2-color">Achieve your goals!</p>
-                    </div>
-
-                    <div style="height: 5vh;">
-                    </div>
-                </div>
+                </section>
 
                 
-
-                <div class="details-loans d-flex justify-content-between">
-
-                    <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Features</h3>
-                        <h5 class="font2-color">Personal loans</h5>
-                        <ul class="loans-ul">
-                            <li>Loan amounts from $10,000 to $100,000</li>
-                            <li>Fixed rates of 10% - 24% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a response in less than 60 seconds</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
-                            <li>You can repay your loan over 6, 12 or 24 months.</li>
-                        </ul>
-                        <h5 class="font2-color">Automotive loans</h5>
-                        <ul class="loans-ul">
-                            <li>Loan amounts from $30,000 to $300,000</li>
-                            <li>Fixed rates of 7% - 20% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a response in less than 60 seconds</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
-                            <li>You can repay your loan over 6, 12, 24, or 36 months.</li>
-                        </ul>
-                        <ul class="loans-ul">
-                            <h5 class="font2-color">Mortgages</h5>
-                            <li>Loan amounts from $100,000 to $500,000</li>
-                            <li>Fixed rates of 5% - 12% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a personal meeting with a bank executive in less than a week</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
-                            <li>You can repay your loan over 6, 12, 24, 36, 48 or 60 months.</li>
-                        </ul>
-                    </div>
-                    <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Benefits</h3>
-                        <ul class="loans-ul">
-                            <li>Predictable monthly payments</li>
-                            <li>Quick access to your funds</li>
-                            <li>Simple application process</li>
-                            <li>Setting up monthly payments with Auto Deduct at time of origination helps you to qualify for a lower rate and simplifies the repayment process.</li>
-                        </ul>
-                    </div>
-                    <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Requirements</h3>
-                        <h5 class="font2-color">Personal loans</h5>
-                        <ul class="loans-ul">
-                            <li>Yearly income of at least $10,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mindhub Brothers Banck Personal Loan open at time of application.</li>
-                        </ul>
-                        <h5 class="font2-color">Automotive loans</h5>
-                        <ul class="loans-ul">
-                            <li>Yearly income of at least $15,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mindhub Brothers Banck Automotive Loan open at time of application.</li>
-                        </ul>
-                        <h5 class="font2-color">Mortgages</h5>
-                        <ul class="loans-ul">
-                            <li>Yearly income of at least $85,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mortgage open at time of application.</li>
-                        </ul>
-                    </div>
-                </div>
             </main>
 
             <!-- FOOTER -->
@@ -499,6 +429,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./scripts/loans.js"></script>
+    <script src="./scripts/cards.js"></script>
 </body>
 </html>

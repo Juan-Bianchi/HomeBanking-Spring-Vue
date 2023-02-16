@@ -34,6 +34,24 @@ public class Account {
     }
 
 
+    //OTHER METHODS
+    @Override
+    public String toString(){
+        return
+
+                "Account: { \n\t" +
+                        "number: " + this.number + ",\n\t" +
+                        "creationDate: " + this.creationDate + ",\n\t" +
+                        "balance: " + this.balance + ",\n\t" +
+                        "id: " + this.id;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transaction.setAccount(this);
+        transactions.add(transaction);
+    }
+
+
     // SETTER METHODS
 
     public void setNumber (String number){
@@ -76,26 +94,6 @@ public class Account {
     public Set<Transaction> getTransactions() {
         return transactions;
     }
-
-
-    //OTHER METHODS
-    @Override
-    public String toString(){
-        return
-
-                "Account: { \n\t" +
-                    "number: " + this.number + ",\n\t" +
-                    "creationDate: " + this.creationDate + ",\n\t" +
-                    "balance: " + this.balance + ",\n\t" +
-                    "id: " + this.id;
-    }
-
-    public void addTransaction(Transaction transaction) {
-        transaction.setAccount(this);
-        transactions.add(transaction);
-    }
-
-
 
 
 }
