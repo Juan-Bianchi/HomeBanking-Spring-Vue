@@ -6,7 +6,10 @@
     src: url(../fonts/static/Montserrat-Regular.ttf);
 
     font-family: Raleway;
-    src: url(../fonts/Raleway-VariableFont_wght.ttf)
+    src: url(../fonts/Raleway-VariableFont_wght.ttf);
+
+    font-family: Autography;
+    src: url(../fonts/Autography.otf)
 }
 
 
@@ -54,7 +57,13 @@
 }
 
 main{
-    min-height: 50vh;
+    min-height: 70vh;
+}
+
+body {
+    --baseColor: #c2e59c3d;
+    background: var(--baseColor);
+    background: linear-gradient(to right, #64b3f46e, var(--baseColor));
 }
 
 ul{
@@ -546,17 +555,13 @@ h4 {
 
 /*----------------------------MAIN CARDS------------------------------------------------*/
 
-/*body {
-  --baseColor: #c2e59c;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  background: var(--baseColor);
-  background: linear-gradient(to right, #64b3f4, var(--baseColor));
-}*/
-
 .cards-bank {
-    width: 90%;
+    width: 87%;
+}
+
+.cards-bank h2{
+    text-align: center;
+    margin-bottom: 3vh;
 }
 
 .credit-card-wrapper{
@@ -627,10 +632,6 @@ h4 {
   transform: translate(calc(var(--widthLogo) / 2), 10px);
 }
 
-.card-silver{
-    
-}
-
 .card__reader {
   width: 50px;
   height: 40px;
@@ -685,8 +686,8 @@ h4 {
 .card__number::before,
 .card__number::after {
   font-family: Arial;
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 0.4em;
+  color: var(--white);
+  font-size: 0.5em;
   position: absolute;
   letter-spacing: 0px;
   text-shadow: none;
@@ -807,24 +808,85 @@ h4 {
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
-.assign {
-  text-align: center;
-  margin-top: 113px;
-  font-family: var(--masterFont);
-  color: #fff;
-  font-size: 0.8em;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
-}
 
-.assign a {
-  text-decoration: none;
-  font-weight: 700;
-  color: #FFF;
-}
+/*FLIP CARD BACK*/
+.flip-card {
+    background-color: transparent;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  }
+  
+  /* This container is needed to position the front and back side */
+  .flip-card-inner {
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  /* horizontal flip when you move the mouse over the flip box container */
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  /* Position the front and back side */
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .flip-card-front {
+    border-radius: 10px;
+  }
+  
+  /* Style the back side */
+  .flip-card-back {
+    transform: rotateY(180deg);
+    border-radius: 10px;
+  }
 
-.assign a:hover {
-  color: var(--purple);
-}
+  .magnetic-band{
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    height: 50px;
+    background: url(../images/fondoGris.jpg)
+  }
+
+  .cvv-andSignature{
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    width: 70%;
+    height: 35px;
+    background: repeating-linear-gradient(
+    0deg,
+    #dbd1dc,
+    #dbd1dc 5px,
+    #b2aab5 7px,
+    #b2aab5 5px);
+    color: black;
+  }
+
+  .signature {
+    font-family: Autography;
+    font-size: 25px;
+  }
+
+  .card-legend{
+    position: absolute;
+    bottom: 5%;
+    left: 7%;
+    width: 90%;
+    color: var(--white);
+    font-size: 12px;
+  }
+
+  .card-legend p{
+    margin: 0;
+  }
 
 
 /*----------------------------FOOTER----------------------------------------------------*/
