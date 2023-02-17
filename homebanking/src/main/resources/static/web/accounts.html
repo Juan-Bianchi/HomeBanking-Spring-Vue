@@ -108,7 +108,7 @@
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
+                          <a class="nav-link a-menu font1-color" href="./cards.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <rect x="3" y="5" width="18" height="14" rx="3" />
@@ -311,7 +311,7 @@
                 </div>
               
                 <!-- BOTON NEW ACCOUNT -->
-                <div v-if="accounts.length < 4"  class="new-account">
+                <div v-if="accounts.length < 3"  class="new-account">
                   <h4>Add a new account</h4>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -427,7 +427,7 @@
             <div class="d-flex justify-content-between align-items-center tree-and-loan">
               <div v-if="orderedLoans.length" class="loans-wrapper d-flex flex-column">
                 <h5 class="font2-color">Active Loans</h5>
-                <div v-if="orderedLoans.length < 4" class="new-account">
+                <div v-if="orderedLoans.length < 3" class="new-account">
                   <a class="nav-link" href="./loans.html"><h6>Add a new loan</h6></a>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -435,6 +435,9 @@
                     <line x1="9" y1="12" x2="15" y2="12" />
                     <line x1="12" y1="9" x2="12" y2="15" />
                   </svg>
+                </div>
+                <div v-else class="new-account">
+                  <a class="nav-link" href="./loans.html"><h6>See my loans in detail</h6></a>
                 </div>
                 <table class="table" v-if="orderedLoans.length" style="text-align: center;">
                   <thead>

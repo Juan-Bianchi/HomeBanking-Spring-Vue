@@ -1,6 +1,5 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
@@ -8,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,11 +24,12 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			Account acc1 = new Account("VIN001", LocalDateTime.now(), 50000);
 			Account acc2 = new Account("VIN002", LocalDateTime.now().plusDays(1), 75000);
+			Account acc5 = new Account("VIN005", LocalDateTime.now().plusDays(2), 20000);
 			Transaction tr1 = new Transaction(CREDIT, 1000, "Transfer", LocalDateTime.now().plusDays(-3));
 			Transaction tr2 = new Transaction(DEBIT, -800, "Purchase", LocalDateTime.now().plusDays(-3));
 			Transaction tr3 = new Transaction(CREDIT, 100, "Transfer", LocalDateTime.now().plusDays(-4));
@@ -52,11 +53,25 @@ public class HomebankingApplication {
 			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
 			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);
 
+			Card crd1 = new Card(CardType.DEBIT, CardColor.GOLD, "1111-2222-3333-4444", 123, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd2 = new Card(CardType.CREDIT, CardColor.TITANIUM, "1110-0022-3343-4454", 333, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd4 = new Card(CardType.DEBIT, CardColor.TITANIUM, "1010-0020-3843-7754", 968, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd5 = new Card(CardType.CREDIT, CardColor.SILVER, "1770-0020-9343-1454", 252, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd6 = new Card(CardType.DEBIT, CardColor.SILVER, "1180-0012-4343-4354", 140, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd7 = new Card(CardType.CREDIT, CardColor.GOLD, "1360-1022-3743-4754", 320, LocalDate.now(), LocalDate.now().plusYears(5));
+
 
 			cli1.addAccount(acc1);
 			cli1.addAccount(acc2);
+			/*cli1.addAccount(acc5);*/
 			cli1.addClientLoan(clLoan1);
 			cli1.addClientLoan(clLoan2);
+			cli1.addCard(crd1);
+			cli1.addCard(crd2);
+			cli1.addCard(crd4);
+			cli1.addCard(crd5);
+			cli1.addCard(crd6);
+			/*cli1.addCard(crd7);*/
 			acc1.addTransaction(tr1);
 			acc1.addTransaction(tr2);
 			acc1.addTransaction(tr3);
@@ -81,6 +96,7 @@ public class HomebankingApplication {
 			clientRepository.save(cli1);
 			accountRepository.save(acc1);
 			accountRepository.save(acc2);
+			accountRepository.save(acc5);
 			transactionRepository.save(tr1);
 			transactionRepository.save(tr2);
 			transactionRepository.save(tr3);
@@ -97,6 +113,12 @@ public class HomebankingApplication {
 			transactionRepository.save(tr14);
 			clientLoanRepository.save(clLoan1);
 			clientLoanRepository.save(clLoan2);
+			cardRepository.save(crd1);
+			cardRepository.save(crd2);
+			cardRepository.save(crd4);
+			cardRepository.save(crd5);
+			cardRepository.save(crd6);
+			cardRepository.save(crd7);
 
 
 
@@ -106,12 +128,16 @@ public class HomebankingApplication {
 			Account acc4 = new Account("VIN004", LocalDateTime.now().plusDays(1), 75000);
 			ClientLoan clLoan3 = new ClientLoan(cli2, ln2, 100000, 24);
 			ClientLoan clLoan4 = new ClientLoan(cli2, ln3, 200000, 36);
+			Card crd3 = new Card(CardType.CREDIT, CardColor.SILVER, "9999-8888-7777-6666", 987, LocalDate.now(), LocalDate.now().plusYears(5));
+
 			cli2.addAccount(acc3);
 			cli2.addAccount(acc4);
 			cli2.addClientLoan(clLoan3);
 			cli2.addClientLoan(clLoan4);
+			cli2.addCard(crd3);
 			ln2.addClientLoan(clLoan3);
 			ln3.addClientLoan(clLoan4);
+
 
 
 			clientRepository.save(cli2);
@@ -119,6 +145,7 @@ public class HomebankingApplication {
 			accountRepository.save(acc4);
 			clientLoanRepository.save(clLoan3);
 			clientLoanRepository.save(clLoan4);
+			cardRepository.save(crd3);
 
 
 

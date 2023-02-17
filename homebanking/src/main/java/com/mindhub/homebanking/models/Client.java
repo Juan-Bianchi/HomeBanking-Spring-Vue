@@ -1,12 +1,15 @@
 package com.mindhub.homebanking.models;
 
 
-import net.minidev.json.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 
 @Entity
@@ -24,6 +27,10 @@ public class Client {
     private Set<Account> accounts = new HashSet<>();
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
+
 
     //CONSTRUCTORS
     public  Client(){}
@@ -33,6 +40,34 @@ public class Client {
         this.lastName = last;
         this.email = email;
     }
+
+    //SPECIFIC METHODS
+    @Override
+    public String toString(){
+        return
+                "Client {\n\t" +
+                        "id: " + this.id + ",\n\t" +
+                        "firsName: " + this.firstName + ",\n\t" +
+                        "lastName: " + this.lastName + ",\n\t" +
+                        "email: " + this.email
+                        +" \n}";
+    }
+
+    public void addAccount(Account account){
+        account.setClient(this);
+        accounts.add(account);
+    }
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
+    }
+
+    public void addCard(Card card){
+        card.setClient(this);
+        this.cards.add(card);
+    }
+
 
     //GETTER METHODS
     public String getFirstName() {
@@ -54,6 +89,16 @@ public class Client {
     public Set<ClientLoan> getLoans(){
         return this.clientLoans;
     }
+    @JsonIgnore
+    public Set<Loan> getLoan() {
+        return clientLoans.stream().map(clientLoan -> clientLoan.getLoan()).collect(toSet());
+    }
+
+    @JsonIgnore
+    public Set<Card> getCards(){
+        return this.cards;
+    }
+
 
     //SETTER METHODS
 
@@ -70,27 +115,7 @@ public class Client {
     }
 
 
-    //SPECIFIC METHODS
-    @Override
-    public String toString(){
-        return
-                "Client {\n\t" +
-                    "id: " + this.id + ",\n\t" +
-                    "firsName: " + this.firstName + ",\n\t" +
-                    "lastName: " + this.lastName + ",\n\t" +
-                    "email: " + this.email
-                    +" \n}";
-    }
 
-    public void addAccount(Account account){
-        account.setClient(this);
-        accounts.add(account);
-    }
-
-    public void addClientLoan(ClientLoan clientLoan){
-        clientLoan.setClient(this);
-        this.clientLoans.add(clientLoan);
-    }
 }
 
 

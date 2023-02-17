@@ -29,9 +29,9 @@ createApp( {
                     this.client = {... response.data};
                     this.accounts = this.client.accounts.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
-                    this.createPieChart();
                     this.orderAccounts();
                     this.orderLoans();
+                    this.createPieChart();
                  })
                  .catch(err => console.error(err.message));
         },
@@ -42,8 +42,8 @@ createApp( {
 
         createPieChart() {
 
-            let serie = [... this.accounts.map(account => account.balance)];
-            let label = [... this.accounts.map(account => account.number)];
+            let serie = [... this.orderedAccounts.map(account => account.balance)];
+            let label = [... this.orderedAccounts.map(account => account.number)];
 
             console.log(serie);
             console.log(label);
@@ -61,7 +61,7 @@ createApp( {
               
                 colors: (function(length){
                         let arrayColor =[];
-                        let colors = ['#d39200', '#06283D', 'red'];
+                        let colors = ['#d39200', '#06283D', '#cd6aaa'];
                         for(let i=0; i < length; i++){
                             arrayColor.push(colors[i]);
                         }
@@ -71,7 +71,7 @@ createApp( {
                 fill: {
                     colors: (function(length){
                         let arrayColor =[];
-                        let colors = ['#d39200', '#06283D', 'red'];
+                        let colors = ['#d39200', '#06283D', '#cd6aaa'];
                         for(let i=0; i < length; i++){
                             arrayColor.push(colors[i]);
                         }
