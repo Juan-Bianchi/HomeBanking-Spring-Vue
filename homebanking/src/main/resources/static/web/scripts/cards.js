@@ -9,6 +9,7 @@ createApp({
             creditCards: [],
             debitCards: [],
             windowWidth: screen.width,
+            showInfoCards : true,
         }
     },
 
@@ -23,7 +24,7 @@ createApp({
     methods:{
 
         loadData: function(){
-            axios.get(`http://localhost:8080/api/clients/1`)
+            axios.get(`http://localhost:8080/api/clients/current`)
                  .then(response => {
                     this.client = {... response.data};
                     this.cards = this.client.cards.map(card => ({...card}));
@@ -33,6 +34,7 @@ createApp({
 
         manageData(){
             this.filterCards();
+
         },
 
         filterCards: function(){
@@ -42,9 +44,18 @@ createApp({
             this.debitCards = debit.sort((c1, c2) => c2.color > c1.color? -1: 1);
         },
 
+
         splitNumber: function(number){
             const reg = /-/g;
             return number.replace(reg, ' ');
+        },
+
+        hideCardNumber: function(number){
+            let splittedNumber = number.split('-');
+            for(let i=0; i < 3; i++){
+                splittedNumber[i] = '••••';
+            }
+            return splittedNumber.join(' ');
         },
 
         getCardDate: function(date){
@@ -52,11 +63,28 @@ createApp({
             return arrayDate[1] + "/" + arrayDate[0];
         },
 
+        reset_animation() {
+            let elements = document.querySelectorAll('.card-anim');
+            for(el of elements){
+                el.style.animation = 'none';
+                el.offsetHeight; /* trigger reflow */
+                el.style.animation = null; 
+            }
+        },
+
 
         // WHEN MOUNTED
 
         onResize(event) {
             this.windowWidth = screen.width;
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
         },
 
     },

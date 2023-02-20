@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your Accounts | MB Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+  <body class="body-account">
+    <div id="app">
+
+        <main>
+            
+            <div class="section">
+                <div class="container">
+                    <div class="row full-height justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                                <h6 class="mb-0 pb-3 title-log-in"><span>Log In </span><span>Sign Up</span></h6>
+                                  <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" v-on:change="resetBooleans()" />
+                                  <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3 title-log-in">Log In</h4>
+                                                    <div class="form-group">
+                                                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off" v-model="emailLog">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>	
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" v-model="passwordLog" @keyup.enter="loginWithEnter()">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <span @click="login()" class="submit btn mt-4">submit</span>
+                                                    <p class="mb-0 mt-4 text-center forget"><a href="#" class="link">Forgot your password?</a></p>
+                                                    <p v-if="errorFound" class="mb-0 mt-4 text-center red-color">⋆Your Email or you password is incorrect</p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        <div v-if="!registered" class="card-back">
+                                            <div class="center-wrap">
+                                                <div class="section text-center">
+                                                    <h4 class="mb-4 pb-3 title-log-in">Sign Up</h4>
+                                                    <div class="form-group">
+                                                        <input type="text" name="logfirstname" class="form-style form-style-signup" placeholder="Your First Names" id="logfirstname" autocomplete="off" v-model="firstName">
+                                                        <i class="input-icon uil uil-user"></i>
+                                                    </div>	
+                                                    <div class="form-group mt-2">
+                                                        <input type="text" name="loglastname" class="form-style form-style-signup" placeholder="Your Last Names" id="loglastname" autocomplete="off" v-model="lastName">
+                                                        <i class="input-icon uil uil-user"></i>
+                                                    </div>	
+                                                    <div class="form-group mt-2">
+                                                        <input type="email" name="logemail" class="form-style form-style-signup" placeholder="Your Email" id="signmail" autocomplete="off" v-model="email">
+                                                        <i class="input-icon uil uil-at"></i>
+                                                    </div>	
+                                                    <div class="form-group mt-2">
+                                                        <input type="password" name="logpass" class="form-style form-style-signup" placeholder="Your Password" id="signpass" autocomplete="off" v-model="password">
+                                                        <i class="input-icon uil uil-lock-alt"></i>
+                                                    </div>
+                                                    <p @click="signIn()" class="submit btn mt-4">submit</p>
+                                                    <p v-show="errorFoundSign" class="mb-0 mt-4 text-center red-color signin-error-message"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="card-back d-flex justify-content-center align-items-center">
+                                            <div class="registered-view">
+                                                <h2 class="font-color2">Client registered!</h2>
+                                                <h2 class="font-color2">Log in to enjoy your products!</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+      
+
+        <!-- FOOTER -->
+
+        <footer class="d-flex justify-content-evenly">
+          <div class="sustentable-footer d-flex justify-content-center footer-div">
+            <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
+            <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
+            <a href="https://www.unepfi.org/banking/bankingprinciples/"><img src="./images/footer3.png" alt="unep" title="unep"></a>       
+          </div>
+
+          <div class="d-flex align-items-center">
+            <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
+          </div>
+
+          <div class="d-flex align-items-start flex-column mt-3">
+
+            <h5>Costumer Service</h5>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+              </svg>
+                <a class="quickLinksA font1-color" href="tel:0800-MINDHUBBROS">0800-MINDHUBBROS</a>
+            </p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <polyline points="3 7 12 13 21 7" />
+              </svg>
+              <a class="quickLinksA font1-color" href="mailto:info@mindhubbank.com">info@mindhubbank.com</a>
+            </p>
+
+          </div>
+
+          <div class="d-flex align-items-start flex-column mt-3 footer-div">
+
+            <ul>
+              <h5>Quick Links</h5>
+              <li><a class="quickLinksA font1-color" href="./index.html">- Home</a></li>
+              <li><a class="quickLinksA font1-color" href="">- Contact Us</a></li>
+              <li><a class="quickLinksA font1-color" href="">- News</a></li>
+              <li><a class="quickLinksA font1-color" href="">- About Us</a></li>
+              <li><a class="quickLinksA font1-color" href="#">- ATMs for sightless people</a></li>
+            </ul>
+
+          </div>
+
+          <div class="d-flex align-items-start flex-column mt-3 footer-div">
+            <h5>Follow Us</h5>
+            <div class="d-flex justify-content-between w-100">
+              <a href="https://www.facebook.com">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                </svg>
+              </a>
+              
+              <a href="https://twitter.com">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+                </svg>
+              </a>
+              
+              <a href="https://www.instagram.com">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <rect x="4" y="4" width="16" height="16" rx="4" />
+                  <circle cx="12" cy="12" r="3" />
+                  <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                </svg>
+              </a>
+              
+            </div>
+            
+          </div>
+        </footer>
+      
+        <p class="copyright">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+          </svg>
+          Copyright 2023 Juan Alberto Bianchi - All rights reserved
+        </p>
+      </div>
+    
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>

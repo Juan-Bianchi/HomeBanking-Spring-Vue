@@ -143,7 +143,7 @@
                                 <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                                 <path d="M7 12h14l-3 -3m0 6l3 -3" />
                               </svg>
-                              <a class="nav-link a-menu font1-color" href="#">LogOut</a>
+                              <p class="nav-link a-menu font1-color log-out" @click="logout()">LogOut</p>
                             </li>
                           </ul>
                         </div>
@@ -264,7 +264,7 @@
                             <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                             <path d="M7 12h14l-3 -3m0 6l3 -3" />
                           </svg>
-                          <a class="nav-link a-menu font1-color" href="#">LogOut</a>
+                          <p class="nav-link a-menu font1-color log-out" @click="logout()">LogOut</p>
                         </li>
                       </ul>
                   </div>
@@ -359,13 +359,13 @@
                       </svg>
                     </a>
 
-                    <a class="nav-link a-menu font1-color" href="#" title="LogOut">
+                    <p class="nav-link a-menu font1-color log-out" @click="logout()" title="LogOut">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                         <path d="M7 12h14l-3 -3m0 6l3 -3" />
                       </svg>
-                    </a>
+                    </p>
 
                   </div>
                                     
@@ -387,7 +387,7 @@
                         <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                         <path d="M7 12h14l-3 -3m0 6l3 -3" />
                       </svg>
-                      <h6 class="">LogOut</h6>
+                      <h6 @click="logout()" class="log-out">LogOut</h6>
                     </a>
                   </div>                  
                   

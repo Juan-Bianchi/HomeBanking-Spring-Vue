@@ -20,26 +20,36 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
+
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
+
+    private String password;
 
 
 
     //CONSTRUCTORS
     public  Client(){}
 
-    public Client(String first, String last, String email) {
+    public Client(String first, String last, String email, String password) {
         this.firstName = first;
         this.lastName = last;
         this.email = email;
+        this.password = password;
     }
+
 
     //SPECIFIC METHODS
     @Override
@@ -73,22 +83,28 @@ public class Client {
     public String getFirstName() {
         return this.firstName;
     }
+
     public String getLastName(){
         return this.lastName;
     }
+
     public String getEmail(){
         return this.email;
     }
+
     public long getId(){
         return this.id;
     }
+
     @JsonIgnore
     public Set<Account> getAccounts() {
         return this.accounts;
     }
+
     public Set<ClientLoan> getLoans(){
         return this.clientLoans;
     }
+
     @JsonIgnore
     public Set<Loan> getLoan() {
         return clientLoans.stream().map(clientLoan -> clientLoan.getLoan()).collect(toSet());
@@ -97,6 +113,10 @@ public class Client {
     @JsonIgnore
     public Set<Card> getCards(){
         return this.cards;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
 
@@ -114,7 +134,9 @@ public class Client {
         this.email = email;
     }
 
-
+    public void setPassWord(String password){
+        this.password = password;
+    }
 
 }
 

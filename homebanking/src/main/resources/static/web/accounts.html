@@ -24,9 +24,8 @@
 
       <div v-show = "orderedAccounts.length">
         <header>
-          <div v-if="windowWidth > 768" class="header-options d-flex justify-content-around">
-            <a class="a-header-options font1-color" href="">Help</a>
-            <a class="a-header-options font1-color" href="">My Processes</a>
+          <div v-if="client" class="header-options justify-content-around">
+            <a class="a-header-options font1-color" href="">FAQs</a>
             <a class="a-header-options font1-color" href="">Costumer Attention</a>
             <a class="a-header-options font1-color" href="">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -36,14 +35,18 @@
               </svg>
               Notifications
             </a>
-            <a href="" class="a-header-options font1-color">
+            <p href="#" class="a-header-options font1-color">
+              <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+              {{client.firstName}}
+            </p>
+            <p @click="logout()" class="a-header-options font1-color log-out">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                 <path d="M7 12h14l-3 -3m0 6l3 -3" />
               </svg>
               LogOut
-            </a>
+            </p>
           </div>
         
           <section class="nav-and-head d-flex justify-content-evenly align-items-center">
@@ -203,8 +206,7 @@
                         <template v-if="768 >= windowWidth">
                           <a class="nav-link a-menu font1-color dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Personalized Attention</a>
                             <ul class="dropdown-menu">
-                              <li class=""><a class="nav-link a-menu font1-color" href="#">Help</a></li>
-                              <li class=""><a class="nav-link a-menu font1-color" href="#">My Processes</a></li>
+                              <li class=""><a class="nav-link a-menu font1-color" href="#">FAQs</a></li>
                               <li class=""><a class="nav-link a-menu font1-color" href="#">Costumer Attention</a></li>
                               <li class="">
                                 <a class="nav-link a-menu font1-color" href="#">
@@ -220,14 +222,14 @@
                         </template>
 
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
+                          <p class="nav-link a-menu font1-color log-out" @click="logout()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                               <path d="M7 12h14l-3 -3m0 6l3 -3" />
                             </svg>
                             LogOut
-                          </a>
+                          </p>
                         </li>
                       </ul>
                     </div>
@@ -236,9 +238,7 @@
             </nav>
             <!-- FIN MENU LATERAL -->
 
-            <template v-if="windowWidth >= 768">
-              <img class="logo-white-letters" src="./images/darkModeLgInconLetters.png" alt="">
-            </template>
+            <img class="logo-white-letters" src="./images/darkModeLgInconLetters.png" alt="">
 
             <h1 class="h1-accounts font1-color">ACCOUNTS</h1>
             <img class="logo-white-arbol" src="./images/blueFavicon.png" alt="logo-white" title="logo">
@@ -340,7 +340,7 @@
 
             <!-- TABLA LATERAL -->
 
-            <section class="world-wide-promotions d-flex justify-content-between flex-column" v-if="windowWidth >= 768 && client">
+            <section class="world-wide-promotions justify-content-between flex-column" v-if="client">
 
               <table class="table-accounts">
                 <thead>
@@ -404,7 +404,7 @@
                 </tbody>
               </table> 
               
-              <div class="div-panda" v-if="windowWidth >= 768 && windowWidth < 1440">
+              <div class="div-panda panda1">
                 <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
               </div>
   
@@ -419,7 +419,7 @@
                 <div id="totalHavingsChart"> </div>
               </div>
   
-              <div class="div-panda" v-if="windowWidth >= 1440">
+              <div class="div-panda panda2">
                 <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
               </div>    
             </div>

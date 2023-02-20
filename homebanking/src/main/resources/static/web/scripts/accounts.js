@@ -24,7 +24,7 @@ createApp( {
 
     methods: {
         loadData(){
-            axios.get("http://localhost:8080/api/clients/1")
+            axios.get("http://localhost:8080/api/clients/current")
                  .then(response => {
                     this.client = {... response.data};
                     this.accounts = this.client.accounts.map(account => account);
@@ -105,6 +105,14 @@ createApp( {
         orderLoans: function(){
             this.orderedLoans = this.loans.map(loan => ({... loan}));
             this.orderedLoans.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
         },
 
     },

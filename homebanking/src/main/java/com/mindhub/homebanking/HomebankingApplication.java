@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,14 +21,19 @@ import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 @SpringBootApplication
 public class HomebankingApplication {
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
+
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com");
+
+			String passwordCli1 = passwordEncoder.encode("melba555");
+			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordCli1);
 			Account acc1 = new Account("VIN001", LocalDateTime.now(), 50000);
 			Account acc2 = new Account("VIN002", LocalDateTime.now().plusDays(1), 75000);
 			Account acc5 = new Account("VIN005", LocalDateTime.now().plusDays(2), 20000);
@@ -122,8 +129,8 @@ public class HomebankingApplication {
 
 
 
-
-			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com");
+			String passwordCli2 = passwordEncoder.encode("juan555");
+			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com", passwordCli2);
 			Account acc3 = new Account("VIN003", LocalDateTime.now(), 50000);
 			Account acc4 = new Account("VIN004", LocalDateTime.now().plusDays(1), 75000);
 			ClientLoan clLoan3 = new ClientLoan(cli2, ln2, 100000, 24);
