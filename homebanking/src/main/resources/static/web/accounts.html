@@ -12,7 +12,7 @@
     <div id="app">
 
       <!-- LOADER -->
-        <template v-if = "!orderedAccounts.length">
+        <template v-if = "!client">
           <main class="loader-main d-flex flex-column font1-color">
             <span class="d-flex justify-content-center"><img class="icon-loader" src="./images/darkModeSmIcon.png" alt="blue-tree" title="blue-tree"></span>
             <img class="piggy" src="./images/loader.gif" alt="loader" title="loader">
@@ -22,7 +22,7 @@
 
       <!-- FIN LOADER -->
 
-      <div v-show = "orderedAccounts.length">
+      <div v-show = "client">
         <header>
           <div v-if="client" class="header-options justify-content-around">
             <a class="a-header-options font1-color" href="">FAQs</a>
@@ -311,7 +311,7 @@
                 </div>
               
                 <!-- BOTON NEW ACCOUNT -->
-                <div v-if="accounts.length < 3"  class="new-account">
+                <div v-if="accounts.length < 3"  class="new-account" v-on:click="createAccount()">
                   <h4>Add a new account</h4>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

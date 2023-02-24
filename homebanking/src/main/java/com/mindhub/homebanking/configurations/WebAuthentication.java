@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
@@ -22,13 +23,19 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(inputName-> {
-            Client client = clientRepository.findByEmail(inputName);
+        auth.userDetailsService( email-> {
+            Client client = clientRepository.findByEmail(email);
 
-            if (client != null) {
-                return new User(client.getEmail(), client.getPassword(), AuthorityUtils.createAuthorityList("CLIENT"));
-            } else {
-                throw new UsernameNotFoundException("Unknown user: " + inputName);
+            if(client != null){
+                if(email.toUpperCase() == "ADMIN" && client.getEmail().equals("admin@mindhub.com")) {
+                    return new User(client.getEmail(), client.getPassword(), AuthorityUtils.createAuthorityList("ADMIN"));
+                }
+                else{
+                    return new User(client.getEmail(), client.getPassword(), AuthorityUtils.createAuthorityList("CLIENT"));
+                }
+            }
+            else {
+                throw new UsernameNotFoundException("Unknown user: " + email);
             }
         });
 

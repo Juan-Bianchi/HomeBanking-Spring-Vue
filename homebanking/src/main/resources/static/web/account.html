@@ -14,7 +14,7 @@
     <div id="app">
 
       <!-- LOADER -->
-      <template v-if="!orderedTransactions.length">
+      <template v-if="!client">
         <main class="loader-main d-flex flex-column font1-color">
           <span class="d-flex justify-content-center"><img class="icon-loader" src="./images/darkModeSmIcon.png" alt="blue-tree" title="blue-tree"></span>
           <img class="piggy" src="./images/loader.gif" alt="loader" title="loader">
@@ -23,7 +23,7 @@
         
       <!-- FIN LOADER -->
 
-      <div v-show="orderedTransactions.length">
+      <div v-show="client">
 
             <!-- HEADER -->
 

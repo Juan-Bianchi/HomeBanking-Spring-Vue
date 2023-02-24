@@ -16,28 +16,43 @@ createApp({
             missingFields: false,
             foundEmail: false,
             registered: false,
+            dinamicText: "",
+            messages: [" nurture your wealth...", " fulfill your dreams...", " become our client! "],
+            current: 0,
+            adder: 0,
         }
     },
 
     created(){
+    },
 
+    mounted(){
+        window.addEventListener('scroll', this.scrollFunction);
+        this.manageAutoTyping(); 
     },
 
     methods: {
+
+        //LOGIN
 
         login: function(){
             axios.post('/api/login',`email=${this.emailLog}&password=${this.passwordLog}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                  .then(response => {
                     console.log('signed in!!!');
                     this.errorFound = false;
+                    this.emailLog = undefined;
+                    this.passwordLog = undefined;
+                    if(this.registered){
+                        this.createAccount();
+                    }
                     window.location.href = "http://localhost:8080/web/accounts.html"
                 })
                  .catch(err => {
                     console.error(err.message);
                     this.errorFound = true;
                 });
-            this.emailLog = undefined
-            this.passwordLog = undefined
+            this.emailLog = undefined;
+            this.passwordLog = undefined;
         },
 
 
@@ -51,23 +66,26 @@ createApp({
             axios.post('/api/clients',`firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(response => {
                     console.log('registered');
+
+                    this.emailLog = this.email;
+                    this.passwordLog = this.password;
+
                     this.errorFoundSign = false;
                     this.firstName = "";
                     this.lastName = "";
                     this.email = "";
                     this.password = "";
                     this.registered = true;
+
+                    this.login();
                 })
                 .catch(err => {
                     this.errorFoundSign = true;
                     console.error([err]);
                     let spanError = document.querySelector('.signin-error-message');
-                    console.log(err.response.data);
-                    if(err.response.data.includes('Missing')){
-                        spanError.innerHTML = "⋆There are missing fields in the form, fill every field and submit."
-                    }
-                    if(err.response.data.includes('Name')){
-                        spanError.innerHTML = "⋆The email used to sign in is already in use."
+                    spanError.innerHTML = err.response.data;
+                    
+                    if(err.response.data.includes('Email already in use')){
                         this.email = "";
                         this.password = "";
                     }                    
@@ -94,6 +112,82 @@ createApp({
                     window.location.href = "http://localhost:8080/web/index.html";
             })
         },
+
+        createAccount(){
+            axios.post(`/api/clients/current/accounts`)
+                 .then(response => console.log("account created"))
+                 .catch(err => console.error(err.message));
+        },
+
+        // WHEN MOUNTED
+
+        //change bar heigth
+
+        scrollFunction() {
+
+            let header = document.querySelector(".header-wrapper");
+            let icon = document.querySelector(".logo-landing-page");
+
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                header.style.padding = "10px 5px";
+                if(screen.width >= 768){
+                    icon.style.height  = "60px";
+                    icon.style.width = "auto";
+                }
+                
+            } else {
+                header.style.padding = "20px 10px";
+                icon.style.height = "100px";
+                icon.style.width = "auto";
+            }
+        },
+
+        //autotyping
+
+        async manageAutoTyping(){
+
+            let i = 0;
+            let current = 0;
+            while(true) {
+                current = await this.typeSentence(current);
+                await this.waitForMs(1500);
+                current = await this.deleteSentence(current);
+                await this.waitForMs(1500);
+                i++
+                if(i >= this.messages.length) {i = 0;}
+            }
+        },
+
+        async typeSentence(current) { 
+
+            let i = 0;
+            while(i < this.messages[current].length) {
+                await this.waitForMs(100);
+                this.dinamicText += this.messages[current].charAt(i);
+                i++
+            }
+            current ++;
+            return current;                
+        },
+
+        async deleteSentence(current){
+
+            while(this.dinamicText.length > 0) {
+                await this.waitForMs(100);
+                this.dinamicText = this.dinamicText.slice(0,-1);
+            }
+            if(current > 2){
+                current = 0;
+            }
+            
+            return current;
+        },
+
+        waitForMs(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms))
+        },
+
+
     },
 
 }).mount("#app")

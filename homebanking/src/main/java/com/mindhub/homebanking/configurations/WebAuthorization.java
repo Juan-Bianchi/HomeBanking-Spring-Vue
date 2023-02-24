@@ -14,29 +14,29 @@ import javax.servlet.http.HttpSession;
 
 @EnableWebSecurity
 @Configuration
-class WebAuthorization extends WebSecurityConfigurerAdapter {
+public class WebAuthorization extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("/web/index.html").permitAll()
-                .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/logout").hasAnyAuthority("CLIENT", "ADMIN")
-                .antMatchers("/api/clients/{id}").hasAuthority("CLIENT")
-                .antMatchers("/api/clients/current").hasAuthority("CLIENT")
-                .antMatchers("/api/accounts/{id}").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.GET,"/api/**").hasAuthority("ADMIN")
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers("web/**").hasAuthority("CLIENT")
+                                        .antMatchers("/api/login").permitAll()
+                                        .antMatchers("/api/logout").hasAnyAuthority("CLIENT", "ADMIN")
+                                        .antMatchers("/api/clients/current").hasAuthority("CLIENT")
+                                        .antMatchers(HttpMethod.GET,"/api/**").hasAuthority("ADMIN")
+                                        .antMatchers("/rest/**").hasAuthority("ADMIN")
+                                        .antMatchers("/h2-console").hasAuthority("ADMIN")
+                                        .antMatchers("web/**").hasAuthority("CLIENT")
 
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll();
+                                        .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                                        .antMatchers(HttpMethod.POST, "api/clients/current/accounts").hasAuthority("CLIENT")
+                                        .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT");
 
 
         httpSecurity.formLogin().usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
 
-        httpSecurity.logout().logoutUrl("/api/logout");
+        httpSecurity.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
 
         // turn off checking for CSRF tokens

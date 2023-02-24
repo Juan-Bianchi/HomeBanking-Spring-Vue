@@ -60,12 +60,12 @@ public class HomebankingApplication {
 			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
 			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);
 
-			Card crd1 = new Card(CardType.DEBIT, CardColor.GOLD, "1111-2222-3333-4444", 123, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd2 = new Card(CardType.CREDIT, CardColor.TITANIUM, "1110-0022-3343-4454", 333, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd4 = new Card(CardType.DEBIT, CardColor.TITANIUM, "1010-0020-3843-7754", 968, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd5 = new Card(CardType.CREDIT, CardColor.SILVER, "1770-0020-9343-1454", 252, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd6 = new Card(CardType.DEBIT, CardColor.SILVER, "1180-0012-4343-4354", 140, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd7 = new Card(CardType.CREDIT, CardColor.GOLD, "1360-1022-3743-4754", 320, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd1 = new Card(CardType.DEBIT, CardColor.GOLD, "Melba Morel", "1111-2222-3333-4444", 123, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd2 = new Card(CardType.CREDIT, CardColor.TITANIUM, "Melba Morel","1110-0022-3343-4454", 333, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd4 = new Card(CardType.DEBIT, CardColor.TITANIUM, "Melba Morel", "1010-0020-3843-7754", 968, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd5 = new Card(CardType.CREDIT, CardColor.SILVER, "Melba Morel", "1770-0020-9343-1454", 252, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd6 = new Card(CardType.DEBIT, CardColor.SILVER, "Melba Morel", "1180-0012-4343-4354", 140, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd7 = new Card(CardType.CREDIT, CardColor.GOLD, "Melba Morel",  "1360-1022-3743-4754", 320, LocalDate.now(), LocalDate.now().plusYears(5));
 
 
 			cli1.addAccount(acc1);
@@ -125,7 +125,7 @@ public class HomebankingApplication {
 			cardRepository.save(crd4);
 			cardRepository.save(crd5);
 			cardRepository.save(crd6);
-			cardRepository.save(crd7);
+			//cardRepository.save(crd7);
 
 
 
@@ -135,7 +135,7 @@ public class HomebankingApplication {
 			Account acc4 = new Account("VIN004", LocalDateTime.now().plusDays(1), 75000);
 			ClientLoan clLoan3 = new ClientLoan(cli2, ln2, 100000, 24);
 			ClientLoan clLoan4 = new ClientLoan(cli2, ln3, 200000, 36);
-			Card crd3 = new Card(CardType.CREDIT, CardColor.SILVER, "9999-8888-7777-6666", 987, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd3 = new Card(CardType.CREDIT, CardColor.SILVER, "Juan Bianchi", "9999-8888-7777-6666", 987, LocalDate.now(), LocalDate.now().plusYears(5));
 
 			cli2.addAccount(acc3);
 			cli2.addAccount(acc4);

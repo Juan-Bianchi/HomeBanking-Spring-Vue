@@ -115,6 +115,15 @@ createApp( {
             })
         },
 
+        createAccount(){
+            axios.post(`/api/clients/current/accounts`)
+                 .then(response => {
+                    location.reload();
+                    console.log("account created");
+                 })
+                 .catch(err => console.error(err.message));
+        },
+
     },
 
 }).mount("#app");
