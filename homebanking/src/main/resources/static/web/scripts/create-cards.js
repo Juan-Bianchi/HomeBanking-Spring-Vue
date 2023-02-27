@@ -10,7 +10,9 @@ createApp({
             newCard: undefined,
             createdCombinations: [],
             type: "x",
-            color: "x",
+            color: "Select",
+            debitCards:[],
+            creditCards:[],
         }
     },
 
@@ -39,6 +41,7 @@ createApp({
                  .then(response => {
                     this.client = {... response.data};
                     this.cards = [... this.client.cards.map(card => ({... card}))];
+                    this.filterCards();
                     this.manageData();
                     
                  })
@@ -46,8 +49,8 @@ createApp({
 
         loadNewCard: function(){
             this.newCard = {
-                type : undefined,
-                color : undefined,
+                type : this.type,
+                color : this.color,
                 cardHolder : this.client.firstName + " " + this.client.lastName,
                 number : "XXXX-XXXX-XXXX-XXXX",
                 fromDate : (new Date().getMonth() + 1) + "/" + new Date().getFullYear(),
@@ -65,6 +68,26 @@ createApp({
             } );
             console.log(this.createdCombinations);
             
+        },
+
+        createCard: function(){
+            axios.post('/api/clients/current/cards',`cardType=${this.type}&cardColor=${this.color}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                .then(response => {
+                    console.log('created');
+
+                    this.type = "x";
+                    this.color = "x";
+
+                    this.loadData();
+                })
+                .catch(err => console.error(err.message));
+        },
+
+        filterCards: function(){
+            let credit = this.cards.filter(card => card.type.includes('CREDIT'));
+            this.creditCards = credit.sort((c1, c2) => c2.color > c1.color? -1: 1);
+            let debit = this.cards.filter(card => card.type.includes('DEBIT'));
+            this.debitCards = debit.sort((c1, c2) => c2.color > c1.color? -1: 1);
         },
 
 

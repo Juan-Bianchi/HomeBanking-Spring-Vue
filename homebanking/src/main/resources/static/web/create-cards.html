@@ -400,149 +400,196 @@
                     </a>
                   </div>                  
                 
-                <section class="w-100">
+                <section class="w-100 d-flex flex-column">
                     <div class="flex-column justify-content-center align-items-center ms-5 headings-account" v-if="client">
                         <h2 class="font2-color">Card Creation Form:</h2>
                     </div>
                     
-                <!-- RADIO BOXES -->
-                    <div v-if="client">
-                        <section class="type-credit-card-create">
-                            <h3>Select the type of your new card.</h3>
-                            <div v-if="!createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color))" class="form-check">
-                                <input v-model="type" class="form-check-input" type="radio" name="cardType" id="exampleRadios1" value="DEBIT">
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Debit
-                                </label>
-                            </div>
-                            <div v-else class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
-                                <label class="form-check-label" for="flexRadioDisabled">
-                                  Debit
-                                </label>
-                            </div>
-                            <div v-if="!createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color))" class="form-check">
-                                <input v-model="type" class="form-check-input" type="radio" name="cardType" id="exampleRadios1" value="CREDIT">
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Credit
-                                </label>
-                            </div>
-                            <div v-else class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
-                                <label class="form-check-label" for="flexRadioDisabled">
-                                  Credit
-                                </label>
-                            </div>
-                        </section>
+                    
+                    <div v-if="client" class="d-flex new-card-wrapper ms-5 mt-5">
+                        <!-- RADIO BOXES -->
+                        <div class="d-flex flex-column checks-create-cards-wrapper">
+                            <section class="type-credit-card-create font2-color">
+                                <h3>Select the type of your new card.</h3>
+                                <div v-if=" debitCards.length < 3 &&  !createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color))" class="form-check">
+                                    <input v-if="type.includes('DEBIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT" checked>
+                                    <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT">
+                                    <label class="form-check-label" for="debitChecked">
+                                      Debit
+                                    </label>
+                                </div>
+                                <div v-else class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                    <label class="form-check-label" for="flexRadioDisabled">
+                                      Debit
+                                    </label>
+                                </div>
+                                <div v-if="creditCards.length < 3 && !createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color))" class="form-check">
+                                    <input v-if="type.includes('CREDIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT" checked>
+                                    <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT">
+                                    <label class="form-check-label" for="creditChecked">
+                                      Credit
+                                    </label>
+                                </div>
+                                <div v-else class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                    <label class="form-check-label" for="flexRadioDisabled">
+                                      Credit
+                                    </label>
+                                </div>
+                            </section>
+    
+                            <section class="type-debit-card-create font2-color">
+                                <h3>Select the color of your new card.</h3>
+                                <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type))" class="form-check">
+                                    <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="silverChecked" value="SILVER">
+                                    <label class="form-check-label" for="silverChecked">
+                                      Silver
+                                    </label>
+                                </div>
+                                <div v-else class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                    <label class="form-check-label" for="flexRadioDisabled">
+                                      Silver
+                                    </label>
+                                </div>
+                                <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type))" class="form-check">
+                                    <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="goldChecked" value="GOLD">
+                                    <label class="form-check-label" for="goldChecked">
+                                      Gold
+                                    </label>
+                                </div>
+                                <div v-else class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                    <label class="form-check-label" for="flexRadioDisabled">
+                                      Gold
+                                    </label>
+                                </div>
+                                <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type))" class="form-check">
+                                    <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="titaniumChecked" value="TITANIUM">
+                                    <label class="form-check-label" for="titaniumChecked">
+                                      Titanium
+                                    </label>
+                                </div>
+                                <div v-else class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                    <label class="form-check-label" for="flexRadioDisabled">
+                                      Titanium
+                                    </label>
+                                </div>
+                            </section>
+                            <button @click="createCard()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCard">
+                                Create Card
+                            </button>
+                        </div>
 
-                        <section class="type-debit-card-create">
-                            <h3>Select the color of your new card.</h3>
-                            <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type))" class="form-check">
-                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="SILVER">
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Silver
-                                </label>
+                        <div class="modal fade" id="createCard" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Congratulatios! Card created</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>If you want to see your card details click 'See cards' button. If you want to add more cards just click the 'Close' button.</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                  <a class="nav-link" href="./cards.html"><button type="button" class="btn">See cards</button></a>
+                                </div>
+                              </div>
                             </div>
-                            <div v-else class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
-                                <label class="form-check-label" for="flexRadioDisabled">
-                                  Silver
-                                </label>
+                        </div>
+
+                        <!-- CARDS -->
+                        <div>
+                            <div class="d-flex credit-card-wrapper align-items-center" v-if="newCard && type.includes('CREDIT')">
+                                <div class="credit-card-template">
+                                    <div class="card cardCredit flip-card-inner">
+                                        <div class="flip-card-front" :class="'card-'+color.toLowerCase()">
+                                            <figure class="card__figure">
+                                                <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                                <span class="card__figureName">{{color}}</span>
+                                            </figure>
+                                            <div class="card__reader">
+                                                <div class="card__reader--risk card__reader--risk-one"></div>
+                                                <div class="card__reader--risk card__reader--risk-two"></div>
+                                                <div class="card__reader--risk card__reader--risk-three"></div>
+                                                <div class="card__reader--risk card__reader--risk-four"></div>
+                                            </div>
+                                            <p class="card__number cred">{{newCard.number}}</p>
+                                            <div class="card__dates cred">
+                                                <span class="card__dates--first">{{newCard.fromDate}}</span>
+                                                <span class="card__dates--second">{{newCard.thruDate}}</span>
+                                            </div>
+                                            <span class="card__name cred">{{newCard.cardHolder.toUpperCase()}}</span>
+                                            <div class="card__flag">
+                                                <div class="card__flag--globe"></div>
+                                                <div class="card__flag--red"></div>
+                                                <div class="card__flag--yellow"></div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="flip-card-back" :class="'card-'+color.toLowerCase()">
+                                            <div class="magnetic-band"></div>
+                                            <div class="cvv-andSignature d-flex justify-content-evenly">
+                                               
+                                            </div>
+                                            <div class="card-legend">
+                                                <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
+                                                <p>Use of this card is subject to the card agreement.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type))" class="form-check">
-                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="GOLD">
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Gold
-                                </label>
+        
+                            
+                            <div class="d-flex credit-card-wrapper align-items-center" v-if="newCard && type.includes('DEBIT')">
+                                <div class="debit-card-template">
+                                    <div class="card cardCredit flip-card-inner">
+                                        <div class="flip-card-front" :class="'card-'+color.toLowerCase()">
+                                            <figure class="card__figure">
+                                                <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                                <span class="card__figureName">{{color}}</span>
+                                            </figure>
+                                            <div class="card__reader">
+                                                <div class="card__reader--risk card__reader--risk-one"></div>
+                                                <div class="card__reader--risk card__reader--risk-two"></div>
+                                                <div class="card__reader--risk card__reader--risk-three"></div>
+                                                <div class="card__reader--risk card__reader--risk-four"></div>
+                                            </div>
+                                            <p class="card__number">{{newCard.number}}</p>
+                                            <div class="card__dates">
+                                                <span class="card__dates--first">{{newCard.fromDate}}</span>
+                                                <span class="card__dates--second">{{newCard.thruDate}}</span>
+                                            </div>
+                                            <span class="card__name">{{newCard.cardHolder.toUpperCase()}}</span>
+                                            <img class="visa-icon" src="./images/visa.png" alt="visa">
+                                            <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
+                                        </div>
+        
+                                        <div class="flip-card-back" :class="'card-'+color.toLowerCase()">
+                                            <div class="magnetic-band"></div>
+                                            <div class="cvv-andSignature d-flex justify-content-evenly">
+                                               
+                                            </div>
+                                            <div class="card-legend">
+                                                <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
+                                                <p>Use of this card is subject to the card agreement.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div v-else class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
-                                <label class="form-check-label" for="flexRadioDisabled">
-                                  Gold
-                                </label>
-                            </div>
-                            <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type))" class="form-check">
-                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="TITANIUM">
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Titanium
-                                </label>
-                            </div>
-                            <div v-else class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
-                                <label class="form-check-label" for="flexRadioDisabled">
-                                  Titanium
-                                </label>
-                            </div>
-                        </section>
+                        </div>
+                       
                         
                     </div>
 
-                    <!-- CARDS -->
+                    
 
-                    <!-- <div class="uncomplete-card-template">
-
-                    </div>
-
-                    <div class="credit-card-template">
-                        <div class="d-flex credit-card-wrapper align-items-center">
-                            
-                                <div class="card cardCredit">
-                                    <div :class="'card-'+card.color.toLowerCase()">
-                                        <figure class="card__figure">
-                                            <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
-                                            <span class="card__figureName">{{card.color}}</span>
-                                        </figure>
-                                        <div class="card__reader">
-                                            <div class="card__reader--risk card__reader--risk-one"></div>
-                                            <div class="card__reader--risk card__reader--risk-two"></div>
-                                            <div class="card__reader--risk card__reader--risk-three"></div>
-                                            <div class="card__reader--risk card__reader--risk-four"></div>
-                                        </div>
-                                        <p class="card__number cred">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
-                                        <div class="card__dates cred">
-                                            <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
-                                            <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
-                                        </div>
-                                        <span class="card__name cred">{{card.cardHolder.toUpperCase()}}</span>
-                                        <div class="card__flag">
-                                            <div class="card__flag--globe"></div>
-                                            <div class="card__flag--red"></div>
-                                            <div class="card__flag--yellow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="debit-card-template">
-                        <div class="d-flex credit-card-wrapper align-items-center">
-                            
-                                <div class="card cardCredit ">
-                                    <div :class="'card-'+card.color.toLowerCase()">
-                                        <figure class="card__figure">
-                                            <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
-                                            <span class="card__figureName">{{card.color}}</span>
-                                        </figure>
-                                        <div class="card__reader">
-                                            <div class="card__reader--risk card__reader--risk-one"></div>
-                                            <div class="card__reader--risk card__reader--risk-two"></div>
-                                            <div class="card__reader--risk card__reader--risk-three"></div>
-                                            <div class="card__reader--risk card__reader--risk-four"></div>
-                                        </div>
-                                        <p class="card__number">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
-                                        <div class="card__dates">
-                                            <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
-                                            <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
-                                        </div>
-                                        <span class="card__name">{{card.cardHolder.toUpperCase()}}</span>
-                                        <img class="visa-icon" src="./images/visa.png" alt="visa">
-                                        <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
-                                    </div>
-                                </div>
-                                                      
-                        </div>   
-                    </div> -->
+                    
                 </section>
                   
                 

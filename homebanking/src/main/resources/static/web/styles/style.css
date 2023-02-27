@@ -795,6 +795,10 @@ h4 {
     display: none;
 }
 
+.check-trans:checked{
+    position: unset !important;
+}
+
 /*----------------------------FOOTER ACCOUNT-------------------------------------------*/
 .footer-transactions{
     position: relative;
@@ -886,6 +890,10 @@ h4 {
 
 .card-titanium{
     background: linear-gradient(90deg, var(--card-titanium), var(--card-titanium));
+}
+
+.card-select{
+    background: linear-gradient(90deg, green, green);
 }
 
 .card__figure {
@@ -1208,6 +1216,20 @@ h4 {
     right: 2%;
     display: none;
   }
+
+/*----------------------------CREATE-CARDS MAIN--------------------------------------*/
+
+.new-card-wrapper{
+    flex-wrap: wrap;
+    width: 90%;
+    gap: 4vw;
+    justify-content: space-around;
+}
+
+.checks-create-cards-wrapper{
+    gap: 2vw;
+}
+
 
 
 /*----------------------------SIGN IN--------------------------------------------------*/

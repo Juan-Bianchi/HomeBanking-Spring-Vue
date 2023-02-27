@@ -446,10 +446,12 @@
                           <polyline points="9 6 15 12 9 18" />
                         </svg>
                       </div>
+
+                      <!-- CHECKS -->
                       
                       <div class="transactions-display-options d-flex justify-content-around" v-if="typesOfTransaction.length">
                         <div class="form-check form-switch d-flex align-items-center justify-content-center" v-for="type of typesOfTransaction">
-                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
+                          <input class="form-check-input check-trans" type="checkbox" role="switch" id="flexSwitchCheckChecked" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
                           <label class="form-check-label" for="flexSwitchCheckChecked">{{type}}</label>
                         </div>
                         <select class="form-select select-transaction" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions">
