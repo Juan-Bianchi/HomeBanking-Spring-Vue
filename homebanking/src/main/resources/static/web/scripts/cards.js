@@ -83,6 +83,7 @@ createApp({
             axios.post('/api/logout')
                  .then(response => {
                     console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
                     window.location.href = "http://localhost:8080/web/index.html";
             })
         },

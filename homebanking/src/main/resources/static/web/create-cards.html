@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Transactions | MB Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> 
+    <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+    <div id="app">
+
+      <!-- LOADER -->
+      <template v-if="!client">
+        <main class="loader-main d-flex flex-column font1-color">
+          <span class="d-flex justify-content-center"><img class="icon-loader" src="./images/darkModeSmIcon.png" alt="blue-tree" title="blue-tree"></span>
+          <img class="piggy" src="./images/loader.gif" alt="loader" title="loader">
+        </main>
+      </template>
+        
+      <!-- FIN LOADER -->
+
+      <div v-show="client">
+
+            <!-- HEADER -->
+
+            <header class="account-header">
+              <section class="nav-and-head d-flex justify-content-evenly align-items-center" v-if="client">
+    
+                <!-- MENU LATERAL -->
+                <nav class="navbar navbar-dark" v-if="client">
+                    <div class="container-fluid">
+                      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      
+                      <div class="offcanvas offcanvas-start menu-logged-in" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                          <img class="avatar me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                          <h3 class="menu-h3 font1-color">
+                            Welcome {{client.firstName}} {{client.lastName}}
+                          </h3>
+                          
+                          <svg xmlns="http://www.w3.org/2000/svg" data-bs-dismiss="offcanvas" aria-label="Close" class="icon icon-tabler icon-tabler-chevron-left buttom-menu font1-color" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <polyline points="15 6 9 12 15 18" />
+                          </svg>
+                        </div>
+    
+    
+                        <div class="offcanvas-body" v-if="client">
+                          <ul class="justify-content-end flex-grow-1 pe-3">     
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                              </svg> 
+                              <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+                                <path d="M12 6v2m0 8v2" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="./accounts.html">Accounts</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <rect x="3" y="5" width="18" height="14" rx="3" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <line x1="7" y1="15" x2="7.01" y2="15" />
+                                <line x1="11" y1="15" x2="13" y2="15" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="./cards.html">Cards</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="3" y1="21" x2="21" y2="21" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                                <polyline points="5 6 12 3 19 6" />
+                                <line x1="4" y1="10" x2="4" y2="21" />
+                                <line x1="20" y1="10" x2="20" y2="21" />
+                                <line x1="8" y1="14" x2="8" y2="17" />
+                                <line x1="12" y1="14" x2="12" y2="17" />
+                                <line x1="16" y1="14" x2="16" y2="17" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="#">Investments</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <ellipse cx="16" cy="6" rx="5" ry="3" />
+                                <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                                <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                <path d="M5 15v1m0 -8v1" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="./loans.html">Loans</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                                <path d="M12 3v3m0 12v3" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="#">Currency Exchange</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shield-lock" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                                <circle cx="12" cy="11" r="1" />
+                                <line x1="12" y1="12" x2="12" y2="14.5" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="#">Insurance</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="9" y1="15" x2="15" y2="9" />
+                                <circle cx="9.5" cy="9.5" r=".5" fill="currentColor" />
+                                <circle cx="14.5" cy="14.5" r=".5" fill="currentColor" />
+                                <circle cx="12" cy="12" r="9" />
+                              </svg>
+                              <a class="nav-link a-menu font1-color" href="#">Comerce Promotions</a>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                                <span class="font1-color">----------------------------------</span>
+                            </li>
+                            <li class="nav-item d-flex my-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                              </svg>
+                              <p class="nav-link a-menu font1-color log-out" @click="logout()">LogOut</p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                </nav>
+   
+                <h1 class="h1-accounts font1-color">Cards</h1>
+                <img class="logo-white-arbol" src="./images/blueFavicon.png" alt="logo-white" title="logo">
+              </section>
+            </header>
+
+
+            <!-- MAIN -->
+
+            <main class="main-transactions d-flex ">
+
+                <!-- MENU -->
+                <section class="main-menu justify-content-between" v-if="client">
+                  <div id="sidebar" class="sidebar font1-color" data-background-color="black">
+
+                      <div class="d-flex justify-content-around align-items-center">
+                        <h3>Welcome {{client.firstName}}</h3>
+                        <img class="avatar me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                      </div>
+                      <svg @click="toggleMenu()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left button-menu-transaction" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <polyline points="15 6 9 12 15 18" />
+                      </svg>
+                      <ul class="justify-content-end flex-grow-1 pe-3">     
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                          </svg> 
+                          <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+                            <path d="M12 6v2m0 8v2" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="./accounts.html">Accounts</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <rect x="3" y="5" width="18" height="14" rx="3" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <line x1="7" y1="15" x2="7.01" y2="15" />
+                            <line x1="11" y1="15" x2="13" y2="15" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="./cards.html">Cards</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <line x1="3" y1="21" x2="21" y2="21" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <polyline points="5 6 12 3 19 6" />
+                            <line x1="4" y1="10" x2="4" y2="21" />
+                            <line x1="20" y1="10" x2="20" y2="21" />
+                            <line x1="8" y1="14" x2="8" y2="17" />
+                            <line x1="12" y1="14" x2="12" y2="17" />
+                            <line x1="16" y1="14" x2="16" y2="17" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="#">Investments</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <ellipse cx="16" cy="6" rx="5" ry="3" />
+                            <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                            <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                            <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                            <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                            <path d="M5 15v1m0 -8v1" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="./loans.html">Loans</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                            <path d="M12 3v3m0 12v3" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="#">Currency Exchange</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shield-lock" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                            <circle cx="12" cy="11" r="1" />
+                            <line x1="12" y1="12" x2="12" y2="14.5" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="#">Insurance</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <line x1="9" y1="15" x2="15" y2="9" />
+                            <circle cx="9.5" cy="9.5" r=".5" fill="currentColor" />
+                            <circle cx="14.5" cy="14.5" r=".5" fill="currentColor" />
+                            <circle cx="12" cy="12" r="9" />
+                          </svg>
+                          <a class="nav-link a-menu font1-color" href="#">Comerce Promotions</a>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                            <span>----------------------------------</span>
+                        </li>
+                        <li class="nav-item d-flex my-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                            <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                          </svg>
+                          <p class="nav-link a-menu font1-color log-out" @click="logout()">LogOut</p>
+                        </li>
+                      </ul>
+                  </div>
+
+                  <!-- SLIM MENU -->
+
+                  <div class="d-flex flex-column justify-content-around align-items-center small-menu-transaction">
+                    <img class="mini-logo-tree" src="./images/darkModeSmIcon.png" alt="logo-white" title="logo">
+                    <a class="toolTip nav-link a-menu font1-color" aria-current="page" href="#">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                      </svg> 
+                      <span class="tooltiptext">Home</span>
+                    </a>
+                    
+                    <svg @click="toggleMenu()" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right button-small-menu-transaction" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <polyline points="9 6 15 12 9 18" />
+                    </svg>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="./accounts.html">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+                        <path d="M12 6v2m0 8v2" />
+                      </svg>
+                      <span class="tooltiptext">Accounts</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="./cards.html">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <rect x="3" y="5" width="18" height="14" rx="3" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                        <line x1="7" y1="15" x2="7.01" y2="15" />
+                        <line x1="11" y1="15" x2="13" y2="15" />
+                      </svg>
+                      <span class="tooltiptext">Cards</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="#">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="3" y1="21" x2="21" y2="21" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                        <polyline points="5 6 12 3 19 6" />
+                        <line x1="4" y1="10" x2="4" y2="21" />
+                        <line x1="20" y1="10" x2="20" y2="21" />
+                        <line x1="8" y1="14" x2="8" y2="17" />
+                        <line x1="12" y1="14" x2="12" y2="17" />
+                        <line x1="16" y1="14" x2="16" y2="17" />
+                      </svg>
+                      <span class="tooltiptext">Investments</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="./loans.html">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <ellipse cx="16" cy="6" rx="5" ry="3" />
+                        <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                        <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                        <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4" />
+                        <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                        <path d="M5 15v1m0 -8v1" />
+                      </svg>
+                      <span class="tooltiptext">Loans</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="#" >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                        <path d="M12 3v3m0 12v3" />
+                      </svg>
+                      <span class="tooltiptext">Foreign Currency Exchange</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="#">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shield-lock" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                        <circle cx="12" cy="11" r="1" />
+                        <line x1="12" y1="12" x2="12" y2="14.5" />
+                      </svg>
+                      <span class="tooltiptext">Insurance</span>
+                    </a>
+
+                    <a class="toolTip nav-link a-menu font1-color" href="#">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="9" y1="15" x2="15" y2="9" />
+                        <circle cx="9.5" cy="9.5" r=".5" fill="currentColor" />
+                        <circle cx="14.5" cy="14.5" r=".5" fill="currentColor" />
+                        <circle cx="12" cy="12" r="9" />
+                      </svg>
+                      <span class="tooltiptext">Commerce Promotions</span>
+                    </a>
+
+                    <p class="toolTip nav-link a-menu font1-color log-out" @click="logout()">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                      </svg>
+                      <span class="tooltiptext">Log out</span>
+                    </p>
+
+                  </div>
+                                    
+                </section>
+
+                <div class="relleno">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit non voluptatibus ducimus in excepturi? Mollitia, inventore, laboriosam est necessitatibus modi officiis, non dolores labore quasi explicabo recusandae cupiditate? Delectus, nam.</p>
+                </div>
+
+                <!-- ENCABEZADO -->
+
+                <section class="mt-3 transaction-wrapper d-flex flex-column justify-content-start align-items-start">
+                  <div class="logo-and-user-account justify-content-end align-items-center w-100 mt-3" v-if="client">
+                    <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                    <h6 class="font2-color me-5">{{client.firstName}}</h6>
+                    <a class="font2-color h2-logout d-flex" href="#" style="text-decoration: none;">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0D4C92" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                      </svg>
+                      <h6 @click="logout()" class="log-out">LogOut</h6>
+                    </a>
+                  </div>                  
+                
+                <section class="w-100">
+                    <div class="flex-column justify-content-center align-items-center ms-5 headings-account" v-if="client">
+                        <h2 class="font2-color">Card Creation Form:</h2>
+                    </div>
+                    
+                <!-- RADIO BOXES -->
+                    <div v-if="client">
+                        <section class="type-credit-card-create">
+                            <h3>Select the type of your new card.</h3>
+                            <div v-if="!createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color))" class="form-check">
+                                <input v-model="type" class="form-check-input" type="radio" name="cardType" id="exampleRadios1" value="DEBIT">
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Debit
+                                </label>
+                            </div>
+                            <div v-else class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                <label class="form-check-label" for="flexRadioDisabled">
+                                  Debit
+                                </label>
+                            </div>
+                            <div v-if="!createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color))" class="form-check">
+                                <input v-model="type" class="form-check-input" type="radio" name="cardType" id="exampleRadios1" value="CREDIT">
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Credit
+                                </label>
+                            </div>
+                            <div v-else class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                <label class="form-check-label" for="flexRadioDisabled">
+                                  Credit
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="type-debit-card-create">
+                            <h3>Select the color of your new card.</h3>
+                            <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type))" class="form-check">
+                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="SILVER">
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Silver
+                                </label>
+                            </div>
+                            <div v-else class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                <label class="form-check-label" for="flexRadioDisabled">
+                                  Silver
+                                </label>
+                            </div>
+                            <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type))" class="form-check">
+                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="GOLD">
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Gold
+                                </label>
+                            </div>
+                            <div v-else class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                <label class="form-check-label" for="flexRadioDisabled">
+                                  Gold
+                                </label>
+                            </div>
+                            <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type))" class="form-check">
+                                <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="exampleRadios1" value="TITANIUM">
+                                <label class="form-check-label" for="exampleRadios1">
+                                  Titanium
+                                </label>
+                            </div>
+                            <div v-else class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioDisabled" disabled>
+                                <label class="form-check-label" for="flexRadioDisabled">
+                                  Titanium
+                                </label>
+                            </div>
+                        </section>
+                        
+                    </div>
+
+                    <!-- CARDS -->
+
+                    <!-- <div class="uncomplete-card-template">
+
+                    </div>
+
+                    <div class="credit-card-template">
+                        <div class="d-flex credit-card-wrapper align-items-center">
+                            
+                                <div class="card cardCredit">
+                                    <div :class="'card-'+card.color.toLowerCase()">
+                                        <figure class="card__figure">
+                                            <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                            <span class="card__figureName">{{card.color}}</span>
+                                        </figure>
+                                        <div class="card__reader">
+                                            <div class="card__reader--risk card__reader--risk-one"></div>
+                                            <div class="card__reader--risk card__reader--risk-two"></div>
+                                            <div class="card__reader--risk card__reader--risk-three"></div>
+                                            <div class="card__reader--risk card__reader--risk-four"></div>
+                                        </div>
+                                        <p class="card__number cred">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
+                                        <div class="card__dates cred">
+                                            <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                            <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                                        </div>
+                                        <span class="card__name cred">{{card.cardHolder.toUpperCase()}}</span>
+                                        <div class="card__flag">
+                                            <div class="card__flag--globe"></div>
+                                            <div class="card__flag--red"></div>
+                                            <div class="card__flag--yellow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="debit-card-template">
+                        <div class="d-flex credit-card-wrapper align-items-center">
+                            
+                                <div class="card cardCredit ">
+                                    <div :class="'card-'+card.color.toLowerCase()">
+                                        <figure class="card__figure">
+                                            <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                            <span class="card__figureName">{{card.color}}</span>
+                                        </figure>
+                                        <div class="card__reader">
+                                            <div class="card__reader--risk card__reader--risk-one"></div>
+                                            <div class="card__reader--risk card__reader--risk-two"></div>
+                                            <div class="card__reader--risk card__reader--risk-three"></div>
+                                            <div class="card__reader--risk card__reader--risk-four"></div>
+                                        </div>
+                                        <p class="card__number">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
+                                        <div class="card__dates">
+                                            <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                            <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                                        </div>
+                                        <span class="card__name">{{card.cardHolder.toUpperCase()}}</span>
+                                        <img class="visa-icon" src="./images/visa.png" alt="visa">
+                                        <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
+                                    </div>
+                                </div>
+                                                      
+                        </div>   
+                    </div> -->
+                </section>
+                  
+                
+                  
+                  <!-- <div class="panda-transaction">
+                    <img class="panda-standing" src="./images/blue-panda2.png" alt="">
+                  </div> -->
+
+                </section>
+                <img class="footer-up" src="./images/footer.png" alt="">
+            </main>
+            <!-- FOOTER -->
+
+            <footer class="d-flex justify-content-evenly footer-transactions">
+
+                <div class="d-flex align-items-center">
+                    <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
+                </div>
+
+                <div class="d-flex align-items-start flex-column mt-3">
+
+                <h5>Costumer Service</h5>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                    </svg>
+                    <a class="quickLinksA font1-color" href="tel:0800-MINDHUBBROS">0800-MINDHUBBROS</a>
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <polyline points="3 7 12 13 21 7" />
+                    </svg>
+                    <a class="quickLinksA font1-color" href="mailto:info@mindhubbank.com">info@mindhubbank.com</a>
+                </p>
+
+                </div>
+
+                <div class="d-flex align-items-start flex-column mt-3 footer-div">
+                    <ul>
+                        <h5>Quick Links</h5>
+                        <li><a class="quickLinksA font1-color" href="./index.html">- Home</a></li>
+                        <li><a class="quickLinksA font1-color" href="">- Contact Us</a></li>
+                        <li><a class="quickLinksA font1-color" href="">- News</a></li>
+                        <li><a class="quickLinksA font1-color" href="">- About Us</a></li>
+                        <li><a class="quickLinksA font1-color" href="#">- ATMs for sightless people</a></li>
+                    </ul>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mt-3 footer-div">
+                  <h5>Follow Us</h5>
+                  <div class="d-flex justify-content-between w-100">
+                      <a href="https://www.facebook.com">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                          </svg>
+                      </a>
+                      
+                      <a href="https://twitter.com">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+                          </svg>
+                      </a>
+                      
+                      <a href="https://www.instagram.com">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <rect x="4" y="4" width="16" height="16" rx="4" />
+                              <circle cx="12" cy="12" r="3" />
+                              <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                          </svg>
+                      </a>
+                  </div>
+                </div>
+            </footer>
+          <p class="copyright">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+            </svg>
+            Copyright 2023 Juan Alberto Bianchi - All rights reserved
+          </p>
+      </div>
+    </div>
+      
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./scripts/create-cards.js"></script>
+</body>
+</html>

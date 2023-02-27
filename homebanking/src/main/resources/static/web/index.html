@@ -15,10 +15,18 @@
         <header class="header-landing">
             <div class="header-wrapper w-100">
                 <a class="logo-a-landing font1-color bigger" href="./index.html"><img class="logo-landing-page" src="./images/darkModeLgIncon.png" alt="bankIcon"></a>
-                <a class="a-header-options font1-color bigger" href="">Personal</a>
+                <a class="a-header-options font1-color bigger" href="#">Personal</a>
                 <a class="a-header-options font1-color bigger" href="">Business</a>
                 <a class="a-header-options font1-color bigger" href="">Security</a>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSign">
+                <div class="d-flex align-items-center">
+                    <a v-if="client" href="./accounts.html" class="a-header-options font3-color bigger">{{client.firstName}} {{client.lastName}}</a>
+                    <a v-else href="#" data-bs-toggle="modal" data-bs-target="#modalSign" class="a-header-options font1-color bigger">Sign In</a>
+                    <img class="img-user" src="./images/user.png" alt="user">
+                </div>
+                <button v-if="client" type="button" class="btn btn-primary" @click="logout()">
+                    Log Out
+                </button>  
+                <button v-else type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSign">
                     Online Banking
                 </button>
             </div>
@@ -215,12 +223,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title fs-5" id="exampleModalLabel">HOMEBANKING</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <img class="w-25 welcome-title" src="./images/welcome.png" alt="girl">
+                            <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body d-flex align-items-center">
                             <!-- LOGIN FORM -->
-                            <div class="section">
+                            <div class="section mb-3">
                                 <div class="container">
                                     <div class="row full-height justify-content-center">
                                         <div class="col-12 text-center align-self-center">
@@ -286,11 +294,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center girl-container">
+                                <!-- <img class="w-100" src="./images/welcome.png" alt=""> -->
+                                <img class="girl-login" src="./images/girl.png" alt="girl">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <img class="footer-up" src="./images/footer.png" alt="">
             
             
         </main>
@@ -299,11 +311,12 @@
         <!-- FOOTER -->
 
         <footer class="d-flex justify-content-evenly">
-          <div class="sustentable-footer d-flex justify-content-center footer-div">
+          
+          <!-- <div class="sustentable-footer d-flex justify-content-center footer-div">
             <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
             <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
             <a href="https://www.unepfi.org/banking/bankingprinciples/"><img src="./images/footer3.png" alt="unep" title="unep"></a>       
-          </div>
+          </div> -->
 
           <div class="d-flex align-items-center">
             <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">

@@ -100,6 +100,7 @@ public class HomebankingApplication {
 			loanRepository.save(ln2);
 			loanRepository.save(ln3);
 
+
 			clientRepository.save(cli1);
 			accountRepository.save(acc1);
 			accountRepository.save(acc2);
@@ -127,7 +128,10 @@ public class HomebankingApplication {
 			cardRepository.save(crd6);
 			//cardRepository.save(crd7);
 
+			String passwordAdmin = passwordEncoder.encode("admin");
+			Client admin = new Client("admin", "admin", "admin@mindhub.com", passwordAdmin);
 
+			clientRepository.save(admin);
 
 			String passwordCli2 = passwordEncoder.encode("juan555");
 			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com", passwordCli2);

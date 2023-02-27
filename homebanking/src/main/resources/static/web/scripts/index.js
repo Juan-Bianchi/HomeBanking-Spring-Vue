@@ -24,6 +24,7 @@ createApp({
     },
 
     created(){
+        this.loadCurrentClient();
     },
 
     mounted(){
@@ -106,6 +107,7 @@ createApp({
         },
 
         logout(){
+            this.client = undefined;
             axios.post('/api/logout')
                  .then(response => {
                     console.log('signed out!!!');
@@ -119,24 +121,34 @@ createApp({
                  .catch(err => console.error(err.message));
         },
 
+
+        //WHEN CREATED
+
+        loadCurrentClient: function(){
+            axios.get('/api/clients/current')
+                 .then(response => {
+                    this.client = {... response.data};
+                    console.log(this.client);
+                 })
+                 .catch(err => console.error(err.message));
+        },
+
+
         // WHEN MOUNTED
 
         //change bar heigth
 
         scrollFunction() {
 
-            let header = document.querySelector(".header-wrapper");
             let icon = document.querySelector(".logo-landing-page");
 
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                header.style.padding = "10px 5px";
                 if(screen.width >= 768){
                     icon.style.height  = "60px";
                     icon.style.width = "auto";
                 }
                 
             } else {
-                header.style.padding = "20px 10px";
                 icon.style.height = "100px";
                 icon.style.width = "auto";
             }

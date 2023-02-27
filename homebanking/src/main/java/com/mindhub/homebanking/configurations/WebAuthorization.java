@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
@@ -19,13 +20,18 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("/web/index.html").permitAll()
+                                        .antMatchers("/web/images/**").permitAll()
+                                        .antMatchers("/web/scripts/index.js").permitAll()
+                                        .antMatchers("/web/styles/**").permitAll()
+                                        .antMatchers("/web/fonts/**").permitAll()
                                         .antMatchers("/api/login").permitAll()
                                         .antMatchers("/api/logout").hasAnyAuthority("CLIENT", "ADMIN")
                                         .antMatchers("/api/clients/current").hasAuthority("CLIENT")
+                                        .antMatchers("/api/accounts/{id}").hasAnyAuthority("CLIENT", "ADMIN")
                                         .antMatchers(HttpMethod.GET,"/api/**").hasAuthority("ADMIN")
                                         .antMatchers("/rest/**").hasAuthority("ADMIN")
                                         .antMatchers("/h2-console").hasAuthority("ADMIN")
-                                        .antMatchers("web/**").hasAuthority("CLIENT")
+                                        .antMatchers("/web/**").hasAuthority("CLIENT")
 
                                         .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                                         .antMatchers(HttpMethod.POST, "api/clients/current/accounts").hasAuthority("CLIENT")
@@ -33,8 +39,8 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
 
         httpSecurity.formLogin().usernameParameter("email")
-                .passwordParameter("password")
-                .loginPage("/api/login");
+                    .passwordParameter("password")
+                    .loginPage("/api/login");
 
         httpSecurity.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
@@ -57,6 +63,11 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         // if logout is successful, just send a success response
         httpSecurity.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
+        // redirect when a not authorized user try to access a forbidden /web url
+        httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> redirectPageToLandingPage(req, res));
+
+        // redirect when a no authorized user try to access a forbidden /web
+        httpSecurity.exceptionHandling().accessDeniedHandler((req, res, ex) -> redirectPageToLandingPage(req, res));
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
@@ -67,5 +78,14 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
 
+    }
+
+    private void redirectPageToLandingPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        if(request.getRequestURI().contains("/web/")){
+            response.sendRedirect("/web/index.html");
+        }
+        else {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 }

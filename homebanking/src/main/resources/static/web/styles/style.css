@@ -1,25 +1,20 @@
 @font-face {
-    font-family: Montserrat;
-    src: url(../fonts/static/Montserrat-Medium.ttf);
-
-    font-family: Montserrat Regular;
-    src: url(../fonts/static/Montserrat-Regular.ttf);
-
-    font-family: Raleway;
-    src: url(../fonts/Raleway-VariableFont_wght.ttf);
-
     font-family: Autography;
-    src: url(../fonts/Autography.otf)
+    src: url(../fonts/Autography.otf);
 }
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 
 :root {
     --font-color1 : white;
     --font-color2: #0D4C92;
+    --font-color3: #ffeba7;
+    --backgroundBars: #256D85;
     --font: Overpass Mono, monospace;
-    --masterFont: Raleway;
+    --masterFont: font-family: 'Raleway', sans-serif;;
     --card-gold: #ab891b;
     --card-silver: #1a4c5d;
     --card-titanium: black;
@@ -34,6 +29,10 @@
 
 .font2-color{
     color: var(--font-color2);
+}
+
+.font3-color{
+    color: var(--font-color3)
 }
 
 .red-color{
@@ -60,6 +59,7 @@
 
 main{
     min-height: 70vh;
+    position: relative;
 }
 
 body {
@@ -136,6 +136,37 @@ h4 {
     box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
   }
 
+  .toolTip .tooltiptext {
+    visibility: hidden;
+    width: max-content;
+    background-color: white;
+    color: var(--backgroundBars);
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    margin-left: 8px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  .toolTip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .toolTip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 35%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+  }
+
 
 /*-----------------------------LANDING PAGE-----------------------------------------*/
 .body-landing{
@@ -145,6 +176,10 @@ h4 {
 .header-landing{
     top: 0;
     z-index: 1;
+}
+
+.img-user{
+    width: 35px;
 }
 
 .header-wrapper{
@@ -166,7 +201,7 @@ h4 {
 }
 
 .bigger {
-    font-size: large;
+    font-size: 22px;
 }
 
 .banner-landing{
@@ -320,6 +355,17 @@ h4 {
 }
 
 /*DESKTOP BUTTON*/
+
+@keyframes border-transform{
+  0%,100% { border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%; } 
+  14% { border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%; } 
+  28% { border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%; } 
+  42% { border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%; } 
+  56% { border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%; } 
+  70% { border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%; } 
+  84% { border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%; } 
+}
+
 .button-offcanvas{
     position: fixed;
     top: 30%;
@@ -349,7 +395,7 @@ h4 {
 .a-menu{
     font-weight: bolder;
     font-size: larger;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .a-menu:hover{
@@ -383,7 +429,7 @@ h4 {
 }
 
 .menu-h3{
-    font-family: Montserrat-Regular;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .dropdown-menu{
@@ -469,9 +515,6 @@ h4 {
     color: #0D4C92;
 }
 
-.new-account h4{
-    color: #0D4C92;
-}
 
 .solapa{
     flex-direction: column;
@@ -560,6 +603,7 @@ h4 {
 
 .diagram{
     width: 100%;
+    display: flex;
 }
 
 .tree-and-loan{
@@ -590,6 +634,10 @@ h4 {
 .main-transactions{
     position: relative;
     min-height: 80vh;
+}
+
+.main-menu{
+    display: none;
 }
 
 #content{
@@ -657,6 +705,7 @@ h4 {
     background:linear-gradient(#8fe3e2b6, #8fe3e2b6), url(../images/copaMind.jpg);
     background-size: cover;
     background-position: center right;
+    display: none;
     min-height: 15vh;
     border-radius: 8px;
     width: 90%;
@@ -724,10 +773,26 @@ h4 {
     cursor: pointer;
 }
 
+.relleno{
+    display: none;
+}
+
 .relleno p{
     color: transparent;
     display: block;
     width: 320px;
+}
+
+.logo-and-user-account{
+    display: none;
+}
+
+.title-account{
+    display: none;
+}
+
+.panda-transaction{
+    display: none;
 }
 
 /*----------------------------FOOTER ACCOUNT-------------------------------------------*/
@@ -1147,10 +1212,24 @@ h4 {
 
 /*----------------------------SIGN IN--------------------------------------------------*/
 
-.modal-content {
-    background:#8fe3e2;
+.welcome-title{
+    margin: auto;
 }
 
+.close-modal{
+    position: absolute;
+    top: 7%;
+    right: 3%;
+}
+
+.girl-container{
+    width: 35%;
+}
+
+.girl-login{
+    scale: 0.9;
+    display: none;
+}
 .submit {
 	cursor: pointer;
     transition: all 200ms linear;
@@ -1187,7 +1266,7 @@ h4 {
 .section{
   position: relative;
   width: 100%;
-  display: block;
+  /*display: block;*/
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 15px;
@@ -1240,7 +1319,7 @@ h4 {
 
 .card-3d-wrap {
   position: relative;
-  width: 380px;
+  width: 310px;
   max-width: 100%;
   height: 420px;
   -webkit-transform-style: preserve-3d;
@@ -1464,8 +1543,14 @@ footer{
     flex-wrap: wrap;
     background-color: #2B4865;
     gap: 2vw;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
     color: #d39200;
+}
+
+.footer-up{
+    width: 100%;
+    position: absolute;
+    bottom: -1px;
 }
 
 .sustentable-footer{
@@ -1570,6 +1655,10 @@ footer{
 
 @media(min-width: 768px) {
 
+    .panda-transaction{
+        display: inline;
+    }
+
     .banner-landing{
         display: flex;
     }
@@ -1642,6 +1731,38 @@ footer{
 }
 
 @media (min-width: 1024px) {
+
+    .headings-account{
+        display: flex;
+    }
+
+    .title-account{
+        display: flex;
+    }
+
+    .logo-and-user-account{
+        display: flex;
+    }
+
+    .relleno{
+        display: flex;
+    }
+
+    .main-menu{
+        display: flex;
+    }
+
+    .account-header{
+        display: none;
+    }
+
+    .modal-dialog{
+        min-width: 55%;
+    }
+
+    .girl-login{
+        display: inline;
+    }
 
     .man-standing{
         position: absolute;
@@ -1755,6 +1876,12 @@ footer{
 @media (min-width: 1500px) {
     .man-standing{
         scale: 0.95;
+    }
+}
+
+@media(min-width: 1920px){
+    .panda-transaction{
+        display: none;
     }
 }
 
