@@ -795,7 +795,7 @@ h4 {
     display: none;
 }
 
-.check-trans:checked{
+.check-trans:checked, .check-trans:not(:checked){
     position: unset !important;
 }
 
@@ -1244,13 +1244,19 @@ h4 {
     right: 3%;
 }
 
+.modal-body h6{
+    width: 100%;
+    text-align: center;
+    color: #06283D;
+}
+
 .girl-container{
     width: 35%;
+    display: none;   
 }
 
 .girl-login{
     scale: 0.9;
-    display: none;
 }
 .submit {
 	cursor: pointer;
@@ -1779,11 +1785,11 @@ footer{
     }
 
     .modal-dialog{
-        min-width: 55%;
+        min-width: 70%;
     }
 
-    .girl-login{
-        display: inline;
+    .girl-container{
+        display: flex;
     }
 
     .man-standing{
@@ -1850,6 +1856,10 @@ footer{
 }
 
 @media (min-width: 1440px){
+
+    .modal-dialog{
+        min-width: 55%;
+    }
 
     .carousel-details-container{
         width: 30%;
