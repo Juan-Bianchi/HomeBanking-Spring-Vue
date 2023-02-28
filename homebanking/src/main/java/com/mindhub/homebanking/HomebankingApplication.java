@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,14 +21,19 @@ import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 @SpringBootApplication
 public class HomebankingApplication {
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
+
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
-			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com");
+
+			String passwordCli1 = passwordEncoder.encode("melba555");
+			Client cli1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordCli1);
 			Account acc1 = new Account("VIN001", LocalDateTime.now(), 50000);
 			Account acc2 = new Account("VIN002", LocalDateTime.now().plusDays(1), 75000);
 			Account acc5 = new Account("VIN005", LocalDateTime.now().plusDays(2), 20000);
@@ -53,12 +60,12 @@ public class HomebankingApplication {
 			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
 			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);
 
-			Card crd1 = new Card(CardType.DEBIT, CardColor.GOLD, "1111-2222-3333-4444", 123, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd2 = new Card(CardType.CREDIT, CardColor.TITANIUM, "1110-0022-3343-4454", 333, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd4 = new Card(CardType.DEBIT, CardColor.TITANIUM, "1010-0020-3843-7754", 968, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd5 = new Card(CardType.CREDIT, CardColor.SILVER, "1770-0020-9343-1454", 252, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd6 = new Card(CardType.DEBIT, CardColor.SILVER, "1180-0012-4343-4354", 140, LocalDate.now(), LocalDate.now().plusYears(5));
-			Card crd7 = new Card(CardType.CREDIT, CardColor.GOLD, "1360-1022-3743-4754", 320, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd1 = new Card(CardType.DEBIT, CardColor.GOLD, "Melba Morel", "1111-2222-3333-4444", 123, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd2 = new Card(CardType.CREDIT, CardColor.TITANIUM, "Melba Morel","1110-0022-3343-4454", 333, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd4 = new Card(CardType.DEBIT, CardColor.TITANIUM, "Melba Morel", "1010-0020-3843-7754", 968, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd5 = new Card(CardType.CREDIT, CardColor.SILVER, "Melba Morel", "1770-0020-9343-1454", 252, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd6 = new Card(CardType.DEBIT, CardColor.SILVER, "Melba Morel", "1180-0012-4343-4354", 140, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd7 = new Card(CardType.CREDIT, CardColor.GOLD, "Melba Morel",  "1360-1022-3743-4754", 320, LocalDate.now(), LocalDate.now().plusYears(5));
 
 
 			cli1.addAccount(acc1);
@@ -93,6 +100,7 @@ public class HomebankingApplication {
 			loanRepository.save(ln2);
 			loanRepository.save(ln3);
 
+
 			clientRepository.save(cli1);
 			accountRepository.save(acc1);
 			accountRepository.save(acc2);
@@ -118,17 +126,20 @@ public class HomebankingApplication {
 			cardRepository.save(crd4);
 			cardRepository.save(crd5);
 			cardRepository.save(crd6);
-			cardRepository.save(crd7);
+			//cardRepository.save(crd7);
 
+			String passwordAdmin = passwordEncoder.encode("admin");
+			Client admin = new Client("admin", "admin", "admin@mindhub.com", passwordAdmin);
 
+			clientRepository.save(admin);
 
-
-			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com");
+			String passwordCli2 = passwordEncoder.encode("juan555");
+			Client cli2 = new Client("Juan", "Bianchi", "mail@mail.com", passwordCli2);
 			Account acc3 = new Account("VIN003", LocalDateTime.now(), 50000);
 			Account acc4 = new Account("VIN004", LocalDateTime.now().plusDays(1), 75000);
 			ClientLoan clLoan3 = new ClientLoan(cli2, ln2, 100000, 24);
 			ClientLoan clLoan4 = new ClientLoan(cli2, ln3, 200000, 36);
-			Card crd3 = new Card(CardType.CREDIT, CardColor.SILVER, "9999-8888-7777-6666", 987, LocalDate.now(), LocalDate.now().plusYears(5));
+			Card crd3 = new Card(CardType.CREDIT, CardColor.SILVER, "Juan Bianchi", "9999-8888-7777-6666", 987, LocalDate.now(), LocalDate.now().plusYears(5));
 
 			cli2.addAccount(acc3);
 			cli2.addAccount(acc4);

@@ -9,7 +9,7 @@ createApp( {
             orderedAccounts: [],
             loans: [],
             orderedLoans: [],
-
+            totalBalance: 0,
         }
     },
 
@@ -24,14 +24,18 @@ createApp( {
 
     methods: {
         loadData(){
-            axios.get("http://localhost:8080/api/clients/1")
+            axios.get("http://localhost:8080/api/clients/current")
                  .then(response => {
                     this.client = {... response.data};
+                    localStorage.setItem('currentClient', `${this.client.firstName} ${this.client.lastName}`);
                     this.accounts = this.client.accounts.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
+                    this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
                     this.orderAccounts();
                     this.orderLoans();
-                    this.createPieChart();
+                    if(this.totalBalance){
+                        this.createPieChart();
+                    }
                  })
                  .catch(err => console.error(err.message));
         },
@@ -44,10 +48,6 @@ createApp( {
 
             let serie = [... this.orderedAccounts.map(account => account.balance)];
             let label = [... this.orderedAccounts.map(account => account.number)];
-
-            console.log(serie);
-            console.log(label);
-            console.log(this.accounts);
 
             let options = {
                 series: serie,
@@ -105,6 +105,24 @@ createApp( {
         orderLoans: function(){
             this.orderedLoans = this.loans.map(loan => ({... loan}));
             this.orderedLoans.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
+        },
+
+        createAccount(){
+            axios.post(`/api/clients/current/accounts`)
+                 .then(response => {
+                    location.reload();
+                    console.log("account created");
+                 })
+                 .catch(err => console.error(err.message));
         },
 
     },

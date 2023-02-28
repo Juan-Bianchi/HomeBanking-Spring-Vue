@@ -20,14 +20,13 @@ createApp({
 
     methods: {
         loadData: function(){
-            axios.get(`http://localhost:8080/api/clients/1`)
+            axios.get(`http://localhost:8080/api/clients/current`)
                 .then(response => {
                     this.client = {... response.data};
                     this.loans = this.client.loans.map(loan => ({... loan})).sort((l1, l2) => (l1.id > l2.id ? 1: -1));;
                     this.manageData();
-                    console.log(this.loans);
                 })
-                //.catch(err => console.error(err.message));
+                .catch(err => console.error(err.message));
         },
 
         manageData: function(){
@@ -36,6 +35,15 @@ createApp({
 
         onResize(event) {
             this.windowWidth = screen.width
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
         },
 
     }

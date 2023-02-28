@@ -31,9 +31,10 @@ public class Card {
 
     public Card(){}
 
-    public Card(CardType type, CardColor color, String number, int cvv, LocalDate fromDate, LocalDate thruDate) {
+    public Card(CardType type, CardColor color,String cardHolder, String number, int cvv, LocalDate fromDate, LocalDate thruDate) {
         this.type = type;
         this.color = color;
+        this.cardHolder = cardHolder;
         this.number = number;
         this.cvv = cvv;
         this.fromDate = fromDate;
@@ -42,29 +43,6 @@ public class Card {
 
 
     // OTHER METHODS
-/*
-   public String generateNumber(){
-
-        boolean isAlreadyCreated;
-        String numb;
-
-        do{
-            String firstNumber = String.format("%04d", (int)(Math.random() * 9999));
-            String secondNumber = String.format("%04d", (int)(Math.random() * 9999));
-            String thirdNumber = String.format("%04d", (int)(Math.random() * 9999));
-            String fourthNumber = String.format("%04d", (int)(Math.random() * 9999));
-            numb = firstNumber + "-" + secondNumber + "-" + thirdNumber + "-" + fourthNumber;
-
-            isAlreadyCreated = this.verifyNumber(numb);
-        } while(isAlreadyCreated);
-
-        return numb;
-    }
-
-
-    public boolean verifyNumber(String number){
-        return cardRepository.findAll().stream().anyMatch(card -> card.getNumber().equals(number));
-    }*/
 
     public int createCVV(){
         int cvv = (int)(Math.random() * 999);
@@ -102,7 +80,6 @@ public class Card {
 
     public void setClient(Client client){
         this.client = client;
-        this.cardHolder = client.getFirstName() + " " + client.getLastName();
     }
 
 

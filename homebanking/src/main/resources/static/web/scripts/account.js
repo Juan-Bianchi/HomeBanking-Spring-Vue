@@ -35,7 +35,7 @@ createApp({
             const parameters = new URLSearchParams(urlString);
             const id = parameters.get('id');
             promiseAccount = axios.get(`http://localhost:8080/api/accounts/${id}`);
-            promiseClient = axios.get(`http://localhost:8080/api/clients/1`);
+            promiseClient = axios.get(`http://localhost:8080/api/clients/current`);
             Promise.all([promiseAccount, promiseClient]).then(response => {
                     this.account = {... response[0].data};
                     this.client = {... response[1].data};
@@ -45,51 +45,43 @@ createApp({
                 .catch(err => console.error(err.message));
         },
 
+
         manageData: function(){
             this.orderTransactions();
             this.createTypeOfTransactionList();
             this.filterTransactions();
         },
 
+
         orderTransactions: function(){
             this.orderedTransactions = this.transactions.map(transaction => ({... transaction}));
             this.orderedTransactions.sort((t1, t2) => (t1.date > t2.date ? -1: 1));
         },
+
 
         createTypeOfTransactionList: function(){
             this.typesOfTransaction = [... new Set(this.orderedTransactions.map(transaction => transaction.type))];
             console.log(this.typesOfTransaction);
         },
 
+
         filterTransactions: function(){
             let firstFilter = this.orderedTransactions.filter(transaction => this.activeChecks.some(category => category.startsWith(transaction.type)));
             this.filteredTransactions = [];
             this.dateFilter = Number.parseInt(this.dateFilter);
-            switch(this.dateFilter){
-                case 10:       
-                    let i = 0;
-                    while(i < 6 && i < firstFilter.length){
-                        this.filteredTransactions.push(firstFilter[i]);
-                        i++;
-                    }
-                    break;
-                
-                case 30:
-                    this.filteredTransactions = firstFilter.filter(transaction => new Date(transaction.date.slice(0,10)).getTime() > new Date().getTime() - 30 * 1000 * 60 * 60 * 24);
-                    break;
-                
-                case 60:
-                    this.filteredTransactions = firstFilter.filter(transaction => new Date(transaction.date.slice(0,10)).getTime() > new Date().getTime() - 60 * 1000 * 60 * 60 * 24);
-                    break;
-
-                case 90:
-                    this.filteredTransactions = firstFilter.filter(transaction =>  new Date(transaction.date.slice(0,10)).getTime() > new Date().getTime() - 90 * 1000 * 60 * 60 * 24);
-                    break;  
+            if(this.dateFilter === 10){
+                let i = 0;
+                while(i < 6 && i < firstFilter.length){
+                    this.filteredTransactions.push(firstFilter[i]);
+                    i++;
+                }
             }
-
+            else{
+                this.filteredTransactions = firstFilter.filter(transaction => new Date(transaction.date.slice(0,10)).getTime() > new Date().getTime() - this.dateFilter * 1000 * 60 * 60 * 24);
+            }
             this.renderTransactions();
-
         },
+
 
         renderTransactions: function(){
 
@@ -101,15 +93,17 @@ createApp({
                 transactionsArray.push(this.filteredTransactions.slice(counter, counter+=10));
             }
 
-            this.visibleTransactions = transactionsArray[this.pageNumber - 1];
             this.totalPages = transactionsArray.length;
-            
-            
+            if(this.totalPages === 1){
+                this.pageNumber = 1;
+            }
+            this.visibleTransactions = transactionsArray[this.pageNumber - 1];      
         },
+        
 
         changePage: function(movement){
             this.pageNumber += movement;
-            this.filterTransactions();
+            this.renderTransactions();
         },
 
 
@@ -143,6 +137,15 @@ createApp({
         toggleChevron(id){
             let button = document.getElementById(`toggleChevron${id}`);
             (button.style.transform === "") ? button.style.transform = "rotateX(180deg)": button.style.transform = "";
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
         },
 
 

@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Loans | MB Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./styles/style.css"/>
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
     <div id="app">
 
       <!-- LOADER -->
-      <template v-if="!loans.length">
+      <template v-if="!client">
         <main class="loader-main d-flex flex-column font1-color">
           <span class="d-flex justify-content-center"><img class="icon-loader" src="./images/darkModeSmIcon.png" alt="blue-tree" title="blue-tree"></span>
           <img class="piggy" src="./images/loader.gif" alt="loader" title="loader">
@@ -27,32 +27,38 @@
             <!-- HEADER -->
 
             <header>
-                <div v-if="windowWidth > 768" class="header-options d-flex justify-content-around">
-                  <a class="a-header-options font1-color" href="">Help</a>
-                  <a class="a-header-options font1-color" href="">My Processes</a>
-                  <a class="a-header-options font1-color" href="">Costumer Attention</a>
-                  <a class="a-header-options font1-color" href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
-                      <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
-                    </svg>
-                    Notifications
-                  </a>
-                  <a href="" class="a-header-options font1-color">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                      <path d="M7 12h14l-3 -3m0 6l3 -3" />
-                    </svg>
-                    LogOut
-                  </a>
-                </div>
+              <div v-if="client" class="header-options justify-content-around">
+                <a class="a-header-options font1-color" href="">FAQs</a>
+                <a class="a-header-options font1-color" href="">Costumer Attention</a>
+                <a class="a-header-options font1-color" href="">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
+                    <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
+                  </svg>
+                  Notifications
+                </a>
+                <a href="#" class="a-header-options font1-color">
+                  <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                  {{client.firstName}}
+                </a>
+                <p @click="logout()" class="a-header-options font1-color log-out">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                    <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                  </svg>
+                  LogOut
+                </p>
+              </div>
               
                 <section class="nav-and-head d-flex justify-content-evenly align-items-center">
+                  <img class="logo-white-arbol" src="./images/darkModeSmIcon.png" alt="logo-white" title="logo">
+                  <h1 class="h1-accounts font1-color">LOANS</h1>
+                  <img class="logo-white-letters" src="./images/whiteLetters.png" alt="">
       
                   <!-- MENU LATERAL -->
-                  <nav class="navbar navbar-dark navAccount">
+                  <nav class="navbar navAccount">
                       <div class="container-fluid">
                         <template v-if=" windowWidth < 768">
                           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -119,7 +125,7 @@
                                     <line x1="7" y1="15" x2="7.01" y2="15" />
                                     <line x1="11" y1="15" x2="13" y2="15" />
                                   </svg>
-                                  Credit Cards
+                                  Cards
                                 </a>
                               </li>
                               <li class="nav-item">
@@ -159,7 +165,7 @@
                                     <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
                                     <path d="M12 3v3m0 12v3" />
                                   </svg>
-                                  Divisas Exchange
+                                  Foreign Currency Exchange
                                 </a>
                               </li>
                               <li class="nav-item">
@@ -206,8 +212,7 @@
                               <template v-if="768 >= windowWidth">
                                 <a class="nav-link a-menu font1-color dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Personalized Attention</a>
                                   <ul class="dropdown-menu">
-                                    <li class=""><a class="nav-link a-menu font1-color" href="#">Help</a></li>
-                                    <li class=""><a class="nav-link a-menu font1-color" href="#">My Processes</a></li>
+                                    <li class=""><a class="nav-link a-menu font1-color" href="#">FAQs</a></li>
                                     <li class=""><a class="nav-link a-menu font1-color" href="#">Costumer Attention</a></li>
                                     <li class="">
                                       <a class="nav-link a-menu font1-color" href="#">
@@ -223,14 +228,14 @@
                               </template>
       
                               <li class="nav-item">
-                                <a class="nav-link a-menu font1-color" href="#">
+                                <p class="nav-link a-menu font1-color log-out" @click="logout()">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                                     <path d="M7 12h14l-3 -3m0 6l3 -3" />
                                   </svg>
                                   LogOut
-                                </a>
+                                </p>
                               </li>
                             </ul>
                           </div>
@@ -238,15 +243,7 @@
                       </div>
                   </nav>
                   <!-- FIN MENU LATERAL -->
-      
-                  <template v-if="windowWidth >= 768">
-                    <img class="logo-white-letters" src="./images/darkModeLgInconLetters.png" alt="">
-                  </template>
-      
-                  <h1 class="h1-accounts font1-color">LOANS</h1>
-                  <img class="logo-white-arbol" src="./images/blueFavicon.png" alt="logo-white" title="logo">
-      
-                  
+ 
                 </section>     
               </header>
 
@@ -262,7 +259,7 @@
                         <a class="a-car font1-color" href="#">How to protect yourself from pishing?</a>
                       </div>
                       <div class="carousel-item">
-                        <a class="a-car font1-color" href="./loans.html">A preferencial rate loan just for you!</a>
+                        <a class="a-car font1-color" href="#">A preferencial rate loan just for you!</a>
                       </div>
                     </div>
                 </div>
@@ -323,7 +320,7 @@
                     
                     
       
-                    <div class="tree-transactions d-flex align-items-center" v-if="windowWidth >=1024">
+                    <div class="tree-transactions align-items-center">
                       <img class="tree-blue" src="./images/treeBlue.png" alt="">
                     </div>
                 </div>
@@ -332,7 +329,7 @@
                     <div class="banner-loan">
                     </div>
 
-                    <div class="title-loans-details" v-if="windowWidth > 768">
+                    <div class="title-loans-details">
                         <p class="font2-color">Fullfil your dreams!</p>
                         <p class="font2-color">Achieve your goals!</p>
                     </div>
@@ -403,16 +400,17 @@
                         </ul>
                     </div>
                 </div>
+                <img class="footer-up" src="./images/footer.png" alt="">
             </main>
 
             <!-- FOOTER -->
 
         <footer class="d-flex justify-content-evenly">
-            <div class="sustentable-footer d-flex justify-content-center footer-div">
+            <!-- <div class="sustentable-footer d-flex justify-content-center footer-div">
               <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
               <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
               <a href="https://www.unepfi.org/banking/bankingprinciples/"><img src="./images/footer3.png" alt="unep" title="unep"></a>       
-            </div>
+            </div> -->
   
             <div class="d-flex align-items-center">
               <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
