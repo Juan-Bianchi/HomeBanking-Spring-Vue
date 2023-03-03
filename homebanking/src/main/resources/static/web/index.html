@@ -14,7 +14,7 @@
 
         <header class="header-landing">
             <div class="header-wrapper w-100">
-                <a class="logo-a-landing font1-color bigger" href="./index.html"><img class="logo-landing-page" src="./images/darkModeLgIncon.png" alt="bankIcon"></a>
+                <a class="logo-a-landing font1-color" href="./index.html"><img class="logo-landing-page" src="./images/darkModeLgIncon.png" alt="bankIcon"></a>
                 <a class="a-header-options font1-color bigger" href="#">Personal</a>
                 <a class="a-header-options font1-color bigger" href="">Business</a>
                 <a class="a-header-options font1-color bigger" href="">Security</a>
@@ -23,10 +23,10 @@
                     <a v-else href="#" data-bs-toggle="modal" data-bs-target="#modalSign" class="a-header-options font1-color bigger">Log In</a>
                     <img class="img-user" src="./images/user.png" alt="user">
                 </div>
-                <button v-if="client" type="button" class="btn btn-primary" @click="logout()">
+                <button v-if="client" type="button" class="btn btn-primary bigger" @click="logout()">
                     Log Out
                 </button>  
-                <button v-else type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSign">
+                <button v-else type="button" class="btn btn-primary bigger" data-bs-toggle="modal" data-bs-target="#modalSign">
                     Online Banking
                 </button>
             </div>
@@ -278,7 +278,7 @@
                                                                             <i class="input-icon uil uil-lock-alt"></i>
                                                                         </div>
                                                                         <p @click="signIn()" class="submit btn mt-4">submit</p>
-                                                                        <p v-show="errorFoundSign" class="mb-0 mt-4 text-center red-color signin-error-message"></p>
+                                                                        <p v-show="errorFoundSign" class="mb-0 mt-2 text-center red-color signin-error-message"></p>
                                                                     </div>
                                                                 </div>
                                                             </div>

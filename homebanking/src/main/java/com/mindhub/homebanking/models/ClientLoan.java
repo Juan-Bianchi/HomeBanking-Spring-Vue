@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 public class ClientLoan {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -24,6 +25,7 @@ public class ClientLoan {
     public ClientLoan(){};
 
     public ClientLoan(Client client, Loan loan, double amount, int payments){
+
         this.client = client;
         this.loan = loan;
         this.amount = amount;
@@ -34,40 +36,49 @@ public class ClientLoan {
     // SETTER METHODS
 
     public void setAmount(double amount){
+
         this.amount = amount;
     }
 
     public void setPayments(int payments){
+
         this.payments = payments;
     }
 
     public void setClient(Client client){
+
         this.client = client;
     }
 
     public void setLoan(Loan loan){
+
         this.loan = loan;
     }
 
     // GETTER METHODS
 
     public long getId(){
+
         return this.id;
     }
 
     public int getPayments(){
+
         return this.payments;
     }
 
     public Client getClient(){
+
         return this.client;
     }
 
     public double getAmount(){
+
         return this.amount;
     }
 
     public Loan getLoan(){
+
         return this.loan;
     }
 

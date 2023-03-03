@@ -34,30 +34,37 @@ public class ClientDTO {
 
     //GETTER METHODS
     public String getFirstName() {
+
         return this.firstName;
     }
 
     public String getLastName(){
+
         return this.lastName;
     }
 
     public String getEmail(){
+
         return this.email;
     }
 
     public long getId(){
+
         return this.id;
     }
 
     public Set<AccountDTO> getAccounts(){
+
         return this.accounts;
     }
 
     public Set<ClientLoanDTO> getLoans(){
+
         return this.loans;
     }
 
     public Set<CardDTO> getCards(){
+
         return this.cards;
     }
 

@@ -1,10 +1,11 @@
 package com.mindhub.homebanking.configurations;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
@@ -15,9 +16,9 @@ import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
-public class WebAuthorization extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+public class WebAuthorization {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("/web/index.html").permitAll()
                                         .antMatchers("/web/images/**").permitAll()
@@ -26,24 +27,22 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                                         .antMatchers("/web/fonts/**").permitAll()
                                         .antMatchers("/api/login").permitAll()
                                         .antMatchers("/api/logout").hasAnyAuthority("CLIENT", "ADMIN")
-                                        .antMatchers("/api/clients/current").hasAuthority("CLIENT")
-                                        .antMatchers("/api/accounts/{id}").hasAnyAuthority("CLIENT", "ADMIN")
+                                        .antMatchers("/api/clients/current/**").hasAuthority("CLIENT")
+                                        .antMatchers("/api/accounts/{id}").hasAuthority("ADMIN")
                                         .antMatchers(HttpMethod.GET,"/api/**").hasAuthority("ADMIN")
                                         .antMatchers("/rest/**").hasAuthority("ADMIN")
                                         .antMatchers("/h2-console").hasAuthority("ADMIN")
                                         .antMatchers("/web/**").hasAuthority("CLIENT")
-
                                         .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                                         .antMatchers(HttpMethod.POST, "api/clients/current/accounts").hasAuthority("CLIENT")
                                         .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT");
 
-
-        httpSecurity.formLogin().usernameParameter("email")
+        httpSecurity.formLogin()
+                    .usernameParameter("email")
                     .passwordParameter("password")
                     .loginPage("/api/login");
 
         httpSecurity.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
-
 
         // turn off checking for CSRF tokens
         httpSecurity.csrf().disable();
@@ -63,12 +62,27 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         // if logout is successful, just send a success response
         httpSecurity.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
-        // redirect when a not authorized user try to access a forbidden /web url
+        // redirect when a not logged-in user tries to access a forbidden /web url
         httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> redirectPageToLandingPage(req, res));
 
-        // redirect when a no authorized user try to access a forbidden /web
+        // redirect when a not authorized user tries to access a forbidden /web url
         httpSecurity.exceptionHandling().accessDeniedHandler((req, res, ex) -> redirectPageToLandingPage(req, res));
+
+        
+        return httpSecurity.build();
+
     }
+
+    private void redirectPageToLandingPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        if(request.getRequestURI().contains("/web/")){
+            response.sendRedirect("/web/index.html");
+        }
+        else {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
+    }
+
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
 
@@ -80,12 +94,4 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
     }
 
-    private void redirectPageToLandingPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        if(request.getRequestURI().contains("/web/")){
-            response.sendRedirect("/web/index.html");
-        }
-        else {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        }
-    }
 }

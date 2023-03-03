@@ -23,6 +23,7 @@ public class CardDTO {
     public CardDTO(){}
 
     public CardDTO(Card card){
+
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
         this.type = card.getType();
@@ -38,34 +39,42 @@ public class CardDTO {
 
 
     public long getId() {
+
         return id;
     }
 
     public String getCardHolder() {
+
         return cardHolder;
     }
 
     public CardType getType() {
+
         return type;
     }
 
     public CardColor getColor() {
+
         return color;
     }
 
     public String getNumber() {
+
         return number;
     }
 
     public int getCvv() {
+
         return cvv;
     }
 
     public LocalDate getFromDate() {
+
         return fromDate;
     }
 
     public LocalDate getThruDate() {
+
         return thruDate;
     }
 }
