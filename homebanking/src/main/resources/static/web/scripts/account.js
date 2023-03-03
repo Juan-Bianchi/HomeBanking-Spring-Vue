@@ -34,11 +34,9 @@ createApp({
             const urlString = location.search;
             const parameters = new URLSearchParams(urlString);
             const id = parameters.get('id');
-            promiseAccount = axios.get(`http://localhost:8080/api/accounts/${id}`);
-            promiseClient = axios.get(`http://localhost:8080/api/clients/current`);
-            Promise.all([promiseAccount, promiseClient]).then(response => {
-                    this.account = {... response[0].data};
-                    this.client = {... response[1].data};
+            axios.get(`http://localhost:8080/api/clients/current`).then(response => {
+                    this.client = {... response.data};
+                    this.client.accounts.find(account => account.id == id);           
                     this.transactions = [...this.account.transactions].map(transaction => transaction);
                     this.manageData();
                 })

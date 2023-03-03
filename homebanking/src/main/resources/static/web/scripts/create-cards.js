@@ -56,7 +56,6 @@ createApp({
                 fromDate : (new Date().getMonth() + 1) + "/" + new Date().getFullYear(),
                 thruDate : (new Date().getMonth() + 1) + "/" + (new Date().getFullYear() + 5),
             }
-            console.log(this.newCard);
         },
 
         createFilterRadioLists: function(){
@@ -65,16 +64,14 @@ createApp({
                     type: card.type,
                     color: card.color,
                 }
-            } );
-            console.log(this.createdCombinations);
-            
+            } );          
         },
 
         createCard: function(){
             axios.post('/api/clients/current/cards',`cardType=${this.type}&cardColor=${this.color}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                 .then(response => {
                     console.log('created');
-
+                    console.log([response]);
                     this.type = "x";
                     this.color = "x";
 

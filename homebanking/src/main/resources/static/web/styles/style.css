@@ -196,7 +196,7 @@ h4 {
 }
 
 .logo-landing-page{
-    height: 100px;
+    height: 70px;
     transition: .5s all;
 }
 
@@ -1349,7 +1349,7 @@ h4 {
   position: relative;
   width: 310px;
   max-width: 100%;
-  height: 420px;
+  height: 400px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
@@ -1368,7 +1368,7 @@ h4 {
 .card-front, .card-back {
   width: 100%;
   height: 100%;
-  background-image: url(../images/teal.jpg);
+  background-image: url(../images/fotor_2023-2-2_20_44_28.jpg);
   background-position: center right;
   background-size: cover;
   position: absolute;
@@ -1554,9 +1554,6 @@ h4 {
     cursor: pointer;
 }
 
-.signin-error-message{
-    width: 75%;
-}
 
 .registered-view{
     width: 80%;
@@ -1907,8 +1904,10 @@ footer{
 
 @media (min-width: 1500px) {
     .man-standing{
-        scale: 0.95;
+        scale: 0.8;
+        bottom: 0;
     }
+    
 }
 
 @media(min-width: 1920px){

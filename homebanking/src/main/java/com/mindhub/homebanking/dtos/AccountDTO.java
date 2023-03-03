@@ -10,6 +10,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 public class AccountDTO {
+
     private long id;
     private String number;
     private LocalDateTime creationDate;
@@ -20,6 +21,7 @@ public class AccountDTO {
     public AccountDTO(){}
 
     public AccountDTO( Account account){
+
         this.id = account.getId();
         this.number = account.getNumber();
         this.balance = account.getBalance();
@@ -31,22 +33,27 @@ public class AccountDTO {
     //METODOS GETTERS
 
     public long getId(){
+
         return this.id;
     }
 
     public String getNumber(){
+
         return  this.number;
     }
 
     public double getBalance(){
+
         return this.balance;
     }
 
     public LocalDateTime getCreationDate(){
+
         return this.creationDate;
     }
 
     public Set<TransactionDTO> getTransactions(){
+
         return this.transactions;
     }
 

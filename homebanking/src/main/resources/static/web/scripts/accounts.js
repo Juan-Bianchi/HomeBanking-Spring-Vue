@@ -46,8 +46,8 @@ createApp( {
 
         createPieChart() {
 
-            let serie = [... this.orderedAccounts.map(account => account.balance)];
-            let label = [... this.orderedAccounts.map(account => account.number)];
+            let serie = this.orderedAccounts.map(account => account.balance);
+            let label = this.orderedAccounts.map(account => account.number);
 
             let options = {
                 series: serie,

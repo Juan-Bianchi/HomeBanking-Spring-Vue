@@ -11,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -32,15 +29,24 @@ public class AccountController {
 
     @RequestMapping("/accounts")
     public Set<AccountDTO> getAccounts() {
+
         return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(toSet());
     }
 
     @RequestMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id) {
+
         return accountRepository.findById(id).map(account-> new AccountDTO(account)).orElse(null);
     }
 
-    @PostMapping("clients/current/accounts")
+    @RequestMapping("/clients/current/accounts")
+    public Set<AccountDTO> getCurrentAccounts(Authentication authentication){
+
+       return clientRepository.findByEmail(authentication.getName()).getAccounts().stream().map(account -> new AccountDTO(account)).collect(toSet());
+    }
+
+
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> CreateAccount(Authentication authentication){
 
         Client client =  clientRepository.findByEmail(authentication.getName());
@@ -53,8 +59,9 @@ public class AccountController {
         Account account = new Account(accountNumber, LocalDateTime.now(), 0);
         client.addAccount(account);
         accountRepository.save(account);
+        AccountDTO accountDTO = new AccountDTO(account);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(accountDTO, HttpStatus.CREATED);
 
     }
 

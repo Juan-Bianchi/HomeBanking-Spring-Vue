@@ -43,9 +43,6 @@ createApp({
                     this.errorFound = false;
                     this.emailLog = undefined;
                     this.passwordLog = undefined;
-                    if(this.registered){
-                        this.createAccount();
-                    }
                     window.location.href = "http://localhost:8080/web/accounts.html"
                 })
                  .catch(err => {
@@ -115,12 +112,6 @@ createApp({
             })
         },
 
-        createAccount(){
-            axios.post(`/api/clients/current/accounts`)
-                 .then(response => console.log("account created"))
-                 .catch(err => console.error(err.message));
-        },
-
 
         //WHEN CREATED
 
@@ -144,12 +135,12 @@ createApp({
 
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
                 if(screen.width >= 768){
-                    icon.style.height  = "60px";
+                    icon.style.height  = "55px";
                     icon.style.width = "auto";
                 }
                 
             } else {
-                icon.style.height = "100px";
+                icon.style.height = "70px";
                 icon.style.width = "auto";
             }
         },
