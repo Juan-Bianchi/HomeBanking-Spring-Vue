@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static utils.Utilitary.createCardNumber;
+import static com.mindhub.homebanking.utils.Utilitary.createCardNumber;
 
 @RestController
 @RequestMapping("/api")

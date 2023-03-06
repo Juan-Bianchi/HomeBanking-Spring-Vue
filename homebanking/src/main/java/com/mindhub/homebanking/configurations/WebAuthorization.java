@@ -3,6 +3,7 @@ package com.mindhub.homebanking.configurations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,12 +36,14 @@ public class WebAuthorization {
                                         .antMatchers("/web/**").hasAuthority("CLIENT")
                                         .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                                         .antMatchers(HttpMethod.POST, "api/clients/current/accounts").hasAuthority("CLIENT")
-                                        .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT");
+                                        .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
+                                        .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT");
 
         httpSecurity.formLogin()
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .loginPage("/api/login");
+
 
         httpSecurity.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
@@ -50,8 +53,11 @@ public class WebAuthorization {
         //disabling frameOptions so h2-console can be accessed
         httpSecurity.headers().frameOptions().disable();
 
-        // if user is not authenticated, just send an authentication failure response
-        httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        //redirect when a not authenticated user tries to access a forbidden /web url. Otherwise, send a forbidden http response
+        httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> redirectPageToLandingPage(req, res));
+
+        // redirect when a not authorized user tries to access a forbidden /web url. Otherwise, send a forbidden http response
+        httpSecurity.exceptionHandling().accessDeniedHandler((req, res, ex) -> redirectPageToLandingPage(req, res));
 
         // if login is successful, just clear the flags asking for authentication
         httpSecurity.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
@@ -62,13 +68,6 @@ public class WebAuthorization {
         // if logout is successful, just send a success response
         httpSecurity.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
-        // redirect when a not logged-in user tries to access a forbidden /web url
-        httpSecurity.exceptionHandling().authenticationEntryPoint((req, res, exc) -> redirectPageToLandingPage(req, res));
-
-        // redirect when a not authorized user tries to access a forbidden /web url
-        httpSecurity.exceptionHandling().accessDeniedHandler((req, res, ex) -> redirectPageToLandingPage(req, res));
-
-        
         return httpSecurity.build();
 
     }

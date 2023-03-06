@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a new Card | MB Bank</title>
+    <title>New Transfer | MB Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> 
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
@@ -388,206 +388,144 @@
                 <!-- ENCABEZADO -->
 
                 <section class="mt-3 transaction-wrapper d-flex flex-column justify-content-start align-items-start">
-                  <div class="logo-and-user-account justify-content-end align-items-center w-100 mt-3" v-if="client">
-                    <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
-                    <h6 class="font2-color me-5">{{client.firstName}}</h6>
-                    <a class="font2-color h2-logout d-flex" href="#" style="text-decoration: none;">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0D4C92" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
-                      </svg>
-                      <h6 @click="logout()" class="log-out">LogOut</h6>
-                    </a>
-                  </div>                  
+                    <div class="logo-and-user-account justify-content-end align-items-center w-100 mt-3" v-if="client">
+                        <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                        <h6 class="font2-color me-5">{{client.firstName}}</h6>
+                        <a class="font2-color h2-logout d-flex" href="#" style="text-decoration: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0D4C92" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                            <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                        </svg>
+                        <h6 @click="logout()" class="log-out">LogOut</h6>
+                        </a>
+                    </div>                  
                 
-                  <section class="w-100 d-flex flex-column">
-                      <div class="flex-column justify-content-center align-items-center ms-5 headings-account" v-if="client">
-                          <h2 class="font2-color">Card Creation Form:</h2>
-                      </div>
-                      
-                      
-                      <div v-if="client" class="d-flex new-card-wrapper ms-5 mt-5">
-                          <!-- RADIO BOXES -->
-                          <div class="d-flex flex-column checks-create-cards-wrapper">
-                              <section class="type-credit-card-create font2-color">
-                                  <h3>Select the type of your new card.</h3>
-                                  <div v-if=" debitCards.length < 3 &&  !createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color))" class="form-check">
-                                      <input v-if="type.includes('DEBIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT" checked>
-                                      <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT">
-                                      <label class="form-check-label" for="debitChecked">
-                                        Debit
-                                      </label>
-                                  </div>
-                                  <div v-else class="form-check">
-                                      <input class="form-check-input" type="radio" name="flexRadioDisabled" id="debitDisabled" disabled>
-                                      <label class="form-check-label" for="debitDisabled">
-                                        Debit
-                                      </label>
-                                  </div>
-                                  <div v-if="creditCards.length < 3 && !createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color))" class="form-check">
-                                      <input v-if="type.includes('CREDIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT" checked>
-                                      <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT">
-                                      <label class="form-check-label" for="creditChecked">
-                                        Credit
-                                      </label>
-                                  </div>
-                                  <div v-else class="form-check">
-                                      <input class="form-check-input" type="radio" name="flexRadioDisabled" id="creditDisabled" disabled>
-                                      <label class="form-check-label" for="creditDisabled">
-                                        Credit
-                                      </label>
-                                  </div>
-                              </section>
-      
-                              <section class="type-debit-card-create font2-color">
-                                  <h3>Select the color of your new card.</h3>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type))" class="form-check">
-                                      <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="silverChecked" value="SILVER">
-                                      <label class="form-check-label" for="silverChecked">
-                                        Silver
-                                      </label>
-                                  </div>
-                                  <div v-else class="form-check">
-                                      <input class="form-check-input" type="radio" name="flexRadioDisabled" id="silverDisabled" disabled>
-                                      <label class="form-check-label" for="silverDisabled">
-                                        Silver
-                                      </label>
-                                  </div>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type))" class="form-check">
-                                      <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="goldChecked" value="GOLD">
-                                      <label class="form-check-label" for="goldChecked">
-                                        Gold
-                                      </label>
-                                  </div>
-                                  <div v-else class="form-check">
-                                      <input class="form-check-input" type="radio" name="flexRadioDisabled" id="goldDisabled" disabled>
-                                      <label class="form-check-label" for="goldDisabled">
-                                        Gold
-                                      </label>
-                                  </div>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type))" class="form-check">
-                                      <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="titaniumChecked" value="TITANIUM">
-                                      <label class="form-check-label" for="titaniumChecked">
-                                        Titanium
-                                      </label>
-                                  </div>
-                                  <div v-else class="form-check">
-                                      <input class="form-check-input" type="radio" name="flexRadioDisabled" id="titaniumDisabled" disabled>
-                                      <label class="form-check-label" for="titaniumDisabled">
-                                        Titanium
-                                      </label>
-                                  </div>
-                              </section>
-                              <button @click="createCard()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCard">
-                                  Create Card
-                              </button>
-                          </div>
+                    <section class="w-100 d-flex flex-column align-items-center">
+                        <div class="flex-column justify-content-center align-items-center headings-account" v-if="client">
+                          <h2 class="font2-color">New Transaction:</h2>
+                        </div>
 
-                          <div class="modal fade" id="createCard" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Congratulatios! Card created</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <p>If you want to see your card details click 'See cards' button. If you want to add more cards just click the 'Close' button.</p>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                    <a class="nav-link" href="./cards.html"><button type="button" class="btn">See cards</button></a>
+
+                        <div class="d-flex justify-content-center transaction-inputs mb-5 mt-5">
+                            <!-- RADIO BOXES -->
+                            <div class="d-flex flex-column checks-create-cards-wrapper w-100">
+                                <section class="type-credit-card-create font2-color">
+                                    <h4>Select the origin account.</h4>
+                                    <template v-if="orderedAccounts.length" v-for="account of orderedAccounts">
+                                        <div v-if="account.balance > 1" class="form-check">
+                                            <input v-if="number && number.includes(account.number)" v-model="originAccount" class="form-check-input" type="radio" name="originAccount" id="originAccount" :value="account.number" checked>
+                                            <input v-else v-model="originAccount" class="form-check-input" type="radio" name="originAccount" id="originAccount" :value="account.number">
+                                            <label class="form-check-label" for="originAccount">
+                                            {{account.number}}
+                                            </label>
+                                        </div>
+                                        <div v-else class="form-check">
+                                            <input class="form-check-input" type="radio" name="originDisabled" :id="'originDisabled' + account.id" disabled>
+                                            <label class="form-check-label" for="'originDisabled' + account.id">
+                                            {{account.number}}
+                                            </label>
+                                        </div>
+                                    </template>
+                                </section>
+
+                                <section class="type-debit-card-create font2-color">
+                                    <h4>Now select whether you want to transfer between two own accounts or to a third party account.</h4>
+                                    <div v-if="originAccount" class="form-check">
+                                        <input v-model="isMyOwnAccount" class="form-check-input" type="radio" name="destinationAccount" id="destinationAccount1" value= true>
+                                        <label class="form-check-label" for="destinationAccount1">
+                                        To one of my own accounts
+                                        </label>
+                                    </div>
+                                    <div v-else class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="ownDisabled" disabled>
+                                        <label class="form-check-label" for="ownDisabled">
+                                        To one of my own accounts
+                                        </label>
+                                    </div>
+                                    <div v-if="originAccount" class="form-check">
+                                        <input v-model="isMyOwnAccount" class="form-check-input" type="radio" name="destinationAccount" id="destinationAccount2" value= false>
+                                        <label class="form-check-label" for="destinationAccount2">
+                                        To third party account
+                                        </label>
+                                    </div>
+                                    <div v-else class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDisabled" id="otherDisabled" disabled>
+                                        <label class="form-check-label" for="otherDisabled">
+                                        To third party account
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="type-debit-card-create font2-color">
+                                    <h4>Please, inform the destination account number.</h4>
+                                    <template v-if="isMyOwnAccount && isMyOwnAccount.includes('true')">
+                                        <select class="form-select" aria-label="select-trans" v-model="destinationAccount">
+                                            <template v-if="orderedAccounts.length" v-for="account of orderedAccounts">
+                                                <option v-if="!account.number.includes(originAccount)" :value="account.number">{{account.number}}</option>
+                                            </template>  
+                                        </select>
+                                    </template>
+                                    <template v-else-if="isMyOwnAccount && isMyOwnAccount.includes('false')">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="input-account-number">Destination Account</span>
+                                            <input v-model="destinationAccount" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                      <div class="input-group mb-3">
+                                        <span class="input-group-text" id="input-account-number">Destination Account</span>
+                                        <input v-model="destinationAccount" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" disabled placeholder="Please select if you are sending money to your own accounts or to a third party">
+                                      </div>
+                                    </template>
+                                </section>
+
+                                <section class="type-debit-card-create font2-color" v-if="orderedAccounts.length && originAccount">
+                                    <h4>Please, enter the transfer amount.</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="input-amount">Transfer Amount</span>
+                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="amount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be among U$S 1 and U$S ' + orderedAccounts.find(account => account.number.includes(originAccount)).balance" >
+                                    </div>
+                                </section>
+
+                                <section class="type-debit-card-create font2-color">
+                                    <h4>Please, insert the description of the transfer.</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="input-account-number">Description</span>
+                                        <input v-model="description" type="text" class="form-control" aria-label="descriptionInput" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </section>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#completeTransfer">
+                                    Complete Transfer
+                                </button>
+                            </div>
+
+                            <div class="modal fade" id="completeTransfer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h2 class="modal-title fs-5" id="exampleModalLabel">Please confirm the transfer</h2>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>If you accept the tranfer will be completed. If you want to cancel the transfer just click close button.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                      <button @click="completeTransfer()" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                        Accept
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                          </div>
+                            </div>
 
-                          <!-- CARDS -->
-                          <div>
-                              <div class="d-flex credit-card-wrapper align-items-center" v-if="newCard && type.includes('CREDIT')">
-                                  <div class="credit-card-template">
-                                      <div class="card cardCredit flip-card-inner">
-                                          <div class="flip-card-front" :class="'card-'+color.toLowerCase()">
-                                              <figure class="card__figure">
-                                                  <img src="./images/darkModeLgIncon.png" class="card__figure--logo">
-                                                  <span class="card__figureName">{{color}}</span>
-                                              </figure>
-                                              <div class="card__reader">
-                                                  <div class="card__reader--risk card__reader--risk-one"></div>
-                                                  <div class="card__reader--risk card__reader--risk-two"></div>
-                                                  <div class="card__reader--risk card__reader--risk-three"></div>
-                                                  <div class="card__reader--risk card__reader--risk-four"></div>
-                                              </div>
-                                              <p class="card__number cred">{{newCard.number}}</p>
-                                              <div class="card__dates cred">
-                                                  <span class="card__dates--first">{{newCard.fromDate}}</span>
-                                                  <span class="card__dates--second">{{newCard.thruDate}}</span>
-                                              </div>
-                                              <span class="card__name cred">{{newCard.cardHolder.toUpperCase()}}</span>
-                                              <div class="card__flag">
-                                                  <div class="card__flag--globe"></div>
-                                                  <div class="card__flag--red"></div>
-                                                  <div class="card__flag--yellow"></div>
-                                              </div>
-                                          </div>
-          
-                                          <div class="flip-card-back" :class="'card-'+color.toLowerCase()">
-                                              <div class="magnetic-band"></div>
-                                              <div class="cvv-andSignature d-flex justify-content-evenly">
-                                                
-                                              </div>
-                                              <div class="card-legend">
-                                                  <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
-                                                  <p>Use of this card is subject to the card agreement.</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-          
-                              
-                              <div class="d-flex credit-card-wrapper align-items-center" v-if="newCard && type.includes('DEBIT')">
-                                  <div class="debit-card-template">
-                                      <div class="card cardCredit flip-card-inner">
-                                          <div class="flip-card-front" :class="'card-'+color.toLowerCase()">
-                                              <figure class="card__figure">
-                                                  <img src="./images/darkModeLgIncon.png" class="card__figure--logo" alt="tree">
-                                                  <span class="card__figureName">{{color}}</span>
-                                              </figure>
-                                              <div class="card__reader">
-                                                  <div class="card__reader--risk card__reader--risk-one"></div>
-                                                  <div class="card__reader--risk card__reader--risk-two"></div>
-                                                  <div class="card__reader--risk card__reader--risk-three"></div>
-                                                  <div class="card__reader--risk card__reader--risk-four"></div>
-                                              </div>
-                                              <p class="card__number">{{newCard.number}}</p>
-                                              <div class="card__dates">
-                                                  <span class="card__dates--first">{{newCard.fromDate}}</span>
-                                                  <span class="card__dates--second">{{newCard.thruDate}}</span>
-                                              </div>
-                                              <span class="card__name">{{newCard.cardHolder.toUpperCase()}}</span>
-                                              <img class="visa-icon" src="./images/visa.png" alt="visa">
-                                              <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
-                                          </div>
-          
-                                          <div class="flip-card-back" :class="'card-'+color.toLowerCase()">
-                                              <div class="magnetic-band"></div>
-                                              <div class="cvv-andSignature d-flex justify-content-evenly">
-                                                
-                                              </div>
-                                              <div class="card-legend">
-                                                  <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
-                                                  <p>Use of this card is subject to the card agreement.</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-
-                  </section>
-                  
+                        </div>
+                      
+                        
+                      
+                    </section>
                 
                   
                   <!-- <div class="panda-transaction">
@@ -679,6 +617,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./scripts/create-cards.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./scripts/transfers.js"></script>
 </body>
 </html>

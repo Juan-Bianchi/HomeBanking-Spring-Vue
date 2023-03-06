@@ -409,13 +409,13 @@
                     <div class="card card-transfer" v-if="account">
                       <div class="card-body">
                         <div class="d-flex justify-content-between">
-                          <h5 class="card-title">C.A. $ - {{account.number}}</h5>
-                          <h5>${{account.balance.toLocaleString()}}</h5>
+                          <h5 class="card-title">{{account.number}}</h5>
+                          <h5>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</h5>
                         </div>
                         <h6 class="card-subtitle mb-2 text-muted">Current Account</h6>
                         <div class="d-flex justify-content-between account-card-details">
                           <span>Creation date:</span>
-                          <span>{{account.creationDate.slice(0,10)}}</span>              
+                          <span>{{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
                         </div>
                       </div>
                     </div>

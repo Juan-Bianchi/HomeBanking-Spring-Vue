@@ -10,6 +10,7 @@ createApp( {
             loans: [],
             orderedLoans: [],
             totalBalance: 0,
+            currentAccount: undefined,
         }
     },
 
@@ -19,10 +20,12 @@ createApp( {
 
     mounted() {
         window.addEventListener('resize', this.onResize);
-        
     },
 
     methods: {
+
+        //WHEN CREATED
+
         loadData(){
             axios.get("http://localhost:8080/api/clients/current")
                  .then(response => {
@@ -31,17 +34,30 @@ createApp( {
                     this.accounts = this.client.accounts.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
                     this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
-                    this.orderAccounts();
-                    this.orderLoans();
-                    if(this.totalBalance){
-                        this.createPieChart();
-                    }
+                    this.manageData();
                  })
                  .catch(err => console.error(err.message));
         },
 
-        onResize(event) {
-            this.windowWidth = screen.width
+        //manage all methods
+        manageData: function(){
+            this.orderAccounts();
+            this.orderLoans();
+            if(this.totalBalance){
+                this.createPieChart();
+            }
+            
+        },
+
+        orderAccounts: function(){
+            this.orderedAccounts = this.accounts.map(account => ({... account}));
+            this.orderedAccounts.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
+            this.currentAccount = this.orderedAccounts[0];
+        },
+
+        orderLoans: function(){
+            this.orderedLoans = this.loans.map(loan => ({... loan}));
+            this.orderedLoans.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
         },
 
         createPieChart() {
@@ -97,23 +113,11 @@ createApp( {
             chart.render();
         },
 
-        orderAccounts: function(){
-            this.orderedAccounts = this.accounts.map(account => ({... account}));
-            this.orderedAccounts.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
-        },
 
-        orderLoans: function(){
-            this.orderedLoans = this.loans.map(loan => ({... loan}));
-            this.orderedLoans.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
-        },
+        //WHEN MOUNTED
 
-        logout(){
-            axios.post('/api/logout')
-                 .then(response => {
-                    console.log('signed out!!!');
-                    localStorage.removeItem('currentClient');
-                    window.location.href = "http://localhost:8080/web/index.html";
-            })
+        onResize(event) {
+            this.windowWidth = screen.width
         },
 
         createAccount(){
@@ -123,6 +127,28 @@ createApp( {
                     console.log("account created");
                  })
                  .catch(err => console.error(err.message));
+        },
+
+        setCurrentAccount: function(movement){
+            let carouselAccounts = document.getElementById("carousel-inner-accounts");
+            let item = [... carouselAccounts.children].find(element => element.className.includes("carousel-item active"));
+            let previousAccountNumber = item.innerText.split('\n')[0];
+            let index = this.orderedAccounts.findIndex(account => account.number.includes(previousAccountNumber));
+            if(movement.includes('previous')){
+               this.currentAccount = index == 0? this.orderedAccounts[this.orderedAccounts.length - 1] : this.orderedAccounts[index - 1];
+            }
+            else{
+                this.currentAccount = index == this.orderedAccounts.length - 1? this.orderedAccounts[0] : this.orderedAccounts[index + 1];
+            }
+        },
+
+        logout(){
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
         },
 
     },

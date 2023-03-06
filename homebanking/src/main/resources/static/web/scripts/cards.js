@@ -62,16 +62,7 @@ createApp({
             let arrayDate = date.split('-');
             return arrayDate[1] + "/" + arrayDate[0];
         },
-
-        reset_animation() {
-            let elements = document.querySelectorAll('.card-anim');
-            for(el of elements){
-                el.style.animation = 'none';
-                el.offsetHeight; /* trigger reflow */
-                el.style.animation = null; 
-            }
-        },
-
+        
 
         // WHEN MOUNTED
 

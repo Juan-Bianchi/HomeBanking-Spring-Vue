@@ -30,6 +30,7 @@ createApp({
     mounted(){
         window.addEventListener('scroll', this.scrollFunction);
         this.manageAutoTyping(); 
+        this.controlCarousel();
     },
 
     methods: {
@@ -40,6 +41,7 @@ createApp({
             axios.post('/api/login',`email=${this.emailLog}&password=${this.passwordLog}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                  .then(response => {
                     console.log('signed in!!!');
+                    console.log([response])
                     this.errorFound = false;
                     this.emailLog = undefined;
                     this.passwordLog = undefined;
@@ -143,6 +145,21 @@ createApp({
                 icon.style.height = "70px";
                 icon.style.width = "auto";
             }
+        },
+
+        controlCarousel: function(){
+            const myCarousel = document.getElementById('carousel1');
+            const directionButtons = [... document.querySelectorAll('.btn-carousel')];
+
+            myCarousel.addEventListener('slide.bs.carousel', event => {
+                directionButtons[0].style.opacity = '0';
+                directionButtons[1].style.opacity = '0';
+            })
+
+            myCarousel.addEventListener('slid.bs.carousel', event => {
+                directionButtons[0].style.opacity = '1';
+                directionButtons[1].style.opacity = '1';
+            })
         },
 
         //autotyping

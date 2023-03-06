@@ -16,9 +16,9 @@ public class TransactionDTO {
 
     //CONTRUCTORS
 
-    TransactionDTO(){}
+    public TransactionDTO(){}
 
-    TransactionDTO(Transaction transaction){
+    public TransactionDTO(Transaction transaction){
 
         this.id = transaction.getId();
         this.type = transaction.getType();
