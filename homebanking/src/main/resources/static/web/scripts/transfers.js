@@ -1,0 +1,120 @@
+const {createApp} = Vue;
+
+
+createApp({
+    data(){
+        return{
+            client: undefined,
+            orderedAccounts: [],
+            number: "",
+            originAccount: "",
+            isMyOwnAccount: undefined,
+            destinationAccount: "",
+            amount: "",
+            amountNumber: null,
+            description: "",
+        }
+    },
+
+    created(){
+        this.loadData();
+    },
+
+    mounted(){
+        
+    },
+
+    methods:{
+
+        manageData: function(){
+             const urlString = location.search;
+             const parameters = new URLSearchParams(urlString);
+             this.number = parameters.get('number'); 
+             this.originAccount = parameters.get('number');
+             
+
+        },
+
+        loadData: function(){
+            axios.get('/api/clients/current')
+                 .then(response => {
+                    this.client = {... response.data};
+                    this.orderedAccounts = [... this.client.accounts.map(account => ({... account}))];
+                    this.orderedAccounts.sort((ac1, ac2)=>ac1.id - ac2.id);
+                    this.manageData();
+                 })
+        },
+
+        formatAmountInput: function(){
+            if(Number.isNaN(Number(this.amount))){
+                this.amount = "";
+            }
+            else{
+                this.amount =  Number(this.amount).toLocaleString("es-AR", {style:"currency",currency:"USD"});
+            }
+            this.amountNumber =  Number(this.amount).toFixed(2);
+        },
+
+        numberWhenUsing: function(){
+            if(Number.isNaN(parseFloat(this.amount))){
+                this.amount = "";
+            }
+            else{
+                this.amount =  Number(this.amount);
+            }
+            this.amountNumber =  Number(this.amount).toFixed(2);
+        },
+
+
+        //METHODS USED WHEN MOUNTED
+
+        toggleMenu: function(){
+            let sidebar = document.getElementById("sidebar");
+            let smallMenu = document.querySelector(".small-menu-transaction");
+            let contentWrapper = document.querySelector(".transaction-wrapper");
+            
+            if(this.barOpen){
+                sidebar.style.left = "-100vw";
+                smallMenu.style.top = "4vh";
+                contentWrapper.style.width = `${this.windowWidth - 280}px`;
+                this.barOpen = false;
+            }
+            else {
+                sidebar.style.left = "2vw";
+                smallMenu.style.top = "-1000vh";
+                contentWrapper.style.width = `${this.windowWidth - 280}px`;
+                this.barOpen = true;
+            }
+            
+        },
+
+        completeTransfer: function(){
+            if(Number.isNaN(Number(this.amountNumber)) || !this.amountNumber ){
+                this.amountNumber = 0;
+            }
+            axios.post('/api/transactions', `amount=${this.amountNumber}&description=${this.description}&origAccountNumb=${this.originAccount}&destAccountNumb=${this.destinationAccount}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                 .then(response => {
+                    window.location.href = "http://localhost:8080/web/transfers.html";
+                 })
+                 .catch(err =>{
+                    console.log([err])
+                    //console.log(err.reponse.data);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `The transfer was not completed: ${err.message.includes('400')? err.message: err.response.data}`,
+                    })
+                 })
+        },
+
+        logout(){
+            this.client = undefined;
+            axios.post('/api/logout')
+                 .then(response => {
+                    console.log('signed out!!!');
+                    localStorage.removeItem('currentClient');
+                    window.location.href = "http://localhost:8080/web/index.html";
+            })
+        },
+    },
+}).mount("#app");

@@ -36,7 +36,8 @@ createApp({
             const id = parameters.get('id');
             axios.get(`http://localhost:8080/api/clients/current`).then(response => {
                     this.client = {... response.data};
-                    this.client.accounts.find(account => account.id == id);           
+                    this.account = this.client.accounts.find(account => account.id == id);  
+                    console.log(this.account)       
                     this.transactions = [...this.account.transactions].map(transaction => transaction);
                     this.manageData();
                 })

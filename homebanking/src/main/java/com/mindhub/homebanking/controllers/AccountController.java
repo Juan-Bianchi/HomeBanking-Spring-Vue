@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static utils.Utilitary.createAccountNumber;
+import static com.mindhub.homebanking.utils.Utilitary.createAccountNumber;
 
 @RestController
 @RequestMapping("/api")

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
-import static utils.Utilitary.createAccountNumber;
+import static com.mindhub.homebanking.utils.Utilitary.createAccountNumber;
 
 @RestController
 @RequestMapping("/api")
