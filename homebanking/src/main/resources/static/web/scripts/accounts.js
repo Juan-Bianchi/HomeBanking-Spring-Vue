@@ -11,9 +11,9 @@ createApp( {
             orderedLoans: [],
             totalBalance: 0,
             currentAccount: undefined,
+            genericLoans: undefined,
         }
     },
-
     created() {
         this.loadData();
     },
@@ -28,15 +28,15 @@ createApp( {
 
         loadData(){
             axios.get("http://localhost:8080/api/clients/current")
-                 .then(response => {
+                .then(response => {
                     this.client = {... response.data};
-                    localStorage.setItem('currentClient', `${this.client.firstName} ${this.client.lastName}`);
                     this.accounts = this.client.accounts.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
                     this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
                     this.manageData();
-                 })
-                 .catch(err => console.error(err.message));
+                })
+                .catch(err => console.error(err.message));
+                 
         },
 
         //manage all methods
@@ -45,8 +45,7 @@ createApp( {
             this.orderLoans();
             if(this.totalBalance){
                 this.createPieChart();
-            }
-            
+            }        
         },
 
         orderAccounts: function(){

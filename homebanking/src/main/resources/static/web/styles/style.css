@@ -14,8 +14,9 @@
     --font-color3: #ffeba7;
     --font-color4:#06283D;
     --backgroundBars: #256D85;
-    --font: Overpass Mono, monospace;
-    --masterFont: font-family: 'Raleway', sans-serif;;
+    --font: "Overpass Mono", monospace;
+    --font2: "Poppins", sans-serif;
+    --masterFont: font-family: 'Raleway', sans-serif;
     --card-gold: #ab891b;
     --card-silver: #1a4c5d;
     --card-titanium: black;
@@ -128,20 +129,20 @@ h4 {
     background-color: #ffeba7;
     color: #102770;
     box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
-  }
-  .btn:active,
-  .btn:focus{  
+}
+.btn:active,
+.btn:focus{  
     background-color: #102770;
     color: #ffeba7;
     box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
-  }
-  .btn:hover{  
+}
+.btn:hover{  
     background-color: #102770;
     color: #ffeba7;
     box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
-  }
+}
 
-  .toolTip .tooltiptext {
+.toolTip .tooltiptext {
     visibility: hidden;
     width: max-content;
     background-color: white;
@@ -154,14 +155,14 @@ h4 {
     z-index: 1;
     opacity: 0;
     transition: opacity 1s;
-  }
+}
 
-  .toolTip:hover .tooltiptext {
+.toolTip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .toolTip .tooltiptext::after {
+.toolTip .tooltiptext::after {
     content: " ";
     position: absolute;
     top: 35%;
@@ -170,7 +171,19 @@ h4 {
     border-width: 8px;
     border-style: solid;
     border-color: transparent white transparent transparent;
-  }
+}
+
+.flexAfter768{
+    display: none;
+}
+
+.flexAfter1024{
+    display: none;
+}
+
+.noneAfter768{
+    display: flex;
+}
 
 /*////////////////////////////////HEADER//////////////////////////////////////////////*/
 
@@ -180,7 +193,7 @@ h4 {
 }
 
 
-/*-----------------------------LANDING PAGE-----------------------------------------*/
+/*///////////////////////////////////LANDING PAGE////////////////////////////////////////*/
 .body-landing{
     background: none;
 }
@@ -225,7 +238,6 @@ h4 {
     flex-wrap: wrap;
     position: relative;
     z-index: -1;
-    display: none;
 }
 
 .autotyping-wrapper{
@@ -345,11 +357,10 @@ h4 {
 }
 */
 
-/*-------------------------------------ACCOUNTS-----------------------------------------*/
-/*----------------------------HEADER ACCOUNTS-------------------------------------------*/
+/*///////////////////////////////////ACCOUNTS///////////////////////////////////////////////////*/
+/*///////////////////////////////////HEADER ACCOUNTS////////////////////////////////////////////*/
 
 .header-options {
-    display: none;
     align-items: center;
     background-color: #06283D;
     min-height: 5vh;
@@ -396,7 +407,7 @@ h4 {
     border-bottom-right-radius: 8px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-	background: #256D85;
+	background: linear-gradient(to right, #6ab3e4, #256D85);
 	-o-transition: left .2s;
 	transition: left .2s;
     z-index: 1;
@@ -456,7 +467,7 @@ h4 {
     background-color: #256D85;
 }
 
-/*----------------------------MAIN ACCOUNTS--------------------------------------------*/
+/*///////////////////////////////////MAIN ACCOUNTS/////////////////////////////////////////////*/
 
 .accounts-main{
     display: flex;
@@ -488,8 +499,6 @@ h4 {
 .a-car:hover{
     color: white;
 }
-
-
 
 .accounts-container{
     min-height: 90%;
@@ -649,16 +658,13 @@ h4 {
 
 .tree-and-loan{
     gap: 3vw;
-    width: 100%;
+    flex-wrap: wrap;
+    width: 90%;
 }
 
 .loans-wrapper{
     width: 100%;
     gap: 3vh;
-}
-
-.world-wide-promotions{
-    display: none;
 }
 
 .panda1{
@@ -670,7 +676,7 @@ h4 {
 }
 
 
-/*----------------------------MAIN ACCOUNT----------------------------------------------*/
+/*//////////////////////////////MAIN ACCOUNT//////////////////////////////////////////*/
 
 .main-transactions{
     position: relative;
@@ -746,7 +752,6 @@ h4 {
     background:linear-gradient(#8fe3e2b6, #8fe3e2b6), url(../images/copaMind.jpg);
     background-size: cover;
     background-position: center right;
-    display: none;
     min-height: 15vh;
     border-radius: 8px;
     width: 90%;
@@ -840,16 +845,16 @@ h4 {
     position: unset !important;
 }
 
-/*----------------------------FOOTER ACCOUNT-------------------------------------------*/
+/*///////////////////////////////FOOTER ACCOUNT///////////////////////////////////////*/
 .footer-transactions{
     position: relative;
 }
 
 
-/*-------------------------------MAIN LOANS--------------------------------------------*/
+/*///////////////////////////////MAIN LOANS//////////////////////////////////////////*/
 
-.loan-list-main{
-    width: 80%;
+.loans-main{
+    font-family: var(--font2);
 }
 
 .details-loans{
@@ -874,7 +879,7 @@ h4 {
 }
 
 .banner-wrapper{
-    width: 80%;
+    width: 85%;
     position: relative;
     margin-bottom: 8vh;
     display: none;
@@ -892,7 +897,195 @@ h4 {
     display: none;
 }
 
-/*----------------------------MAIN CARDS------------------------------------------------*/
+.table-loan{ 
+    font-family: var(--font2); 
+}
+.panel{
+    background: linear-gradient(to right, #2980b9, #2c3e50);
+    text-align: center;
+    padding: 0;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 0 5px rgba(0,0,0,0.05),0 0 0 10px rgba(0,0,0,0.05);
+}
+
+.panel .panel-heading{
+    padding: 20px 15px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+}
+.panel .panel-heading .title{
+    color: #fff;
+    font-size: 28px;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 40px;
+    margin: 0;
+}
+.panel .panel-heading .btn{
+    color: rgba(255,255,255,0.5);
+    background: transparent;
+    font-size: 16px;
+    text-transform: capitalize;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    transition: all 0.3s ease 0s;
+}
+.panel .panel-heading .btn:hover{
+    color: #fff;
+    text-shadow: 3px 3px rgba(255,255,255,0.2);
+}
+.panel .panel-heading .form-control{
+    color: #fff;
+    background-color: transparent;
+    width: 35%;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+}
+.panel .panel-heading .form-control:focus{
+    background-color: rgba(255,255,255,0.2);
+    box-shadow: none;
+    outline: none;
+}
+.panel .panel-heading .form-control::placeholder{
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+    font-weight: 500;
+}
+.panel .panel-body{ padding: 0; }
+.panel .panel-body .table thead tr th{
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 12px;
+    border: none;
+}
+.panel .panel-body .table tbody tr td{
+    color: #fff;
+    font-size: 15px;
+    padding: 10px 12px;
+    vertical-align: middle;
+    border: none;
+}
+.panel .panel-body .table tbody tr:nth-child(even){ background-color: rgba(255,255,255,0.05); }
+.panel .panel-body .table tbody .action-list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.panel .panel-body .table tbody .action-list li{
+    display: inline-block;
+    margin: 0 5px;
+}
+.panel .panel-body .table tbody .action-list li a{
+    color: #fff;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+.panel .panel-body .table tbody .action-list li a:hover{ text-shadow: 3px 3px 0 rgba(255,255,255,0.3); }
+.panel .panel-body .table tbody .action-list li a:before,
+.panel .panel-body .table tbody .action-list li a:after{
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #111;
+    font-size: 12px;
+    padding: 5px 7px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    display: none;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -32px;
+    transition: all 0.3s ease 0s;
+}
+.panel .panel-body .table tbody .action-list li a:after{
+    content: '';
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -18px;
+    z-index: -1;
+}
+.panel .panel-body .table tbody .action-list li a:hover:before,
+.panel .panel-body .table tbody .action-list li a:hover:after{
+    display: block;
+}
+.panel .panel-footer{
+    color: #fff;
+    background-color: transparent;
+    padding: 15px;
+    border: none;
+}
+.panel .panel-footer .col{ line-height: 35px; }
+.pagination{ margin: 0; }
+.pagination li a{
+    display: inline-block;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid transparent;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 31px;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    margin: 0 3px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+.pagination li a:hover{
+    color: #fff;
+    background-color: transparent;
+    border-color: rgba(255,255,255,0.2);
+}
+.pagination li a:focus,
+.pagination li.active a,
+.pagination li.active a:hover{
+    color: #fff;
+    background-color: transparent;
+    border-color: #fff;
+}
+.pagination li:first-child a,
+.pagination li:last-child a{
+    border-radius: 50%;
+}
+.filter-loans{
+    flex-wrap: wrap;
+}
+.checks-loans{
+    flex-wrap: wrap;
+}
+.emptyLines{
+    height: 32px;
+}
+.offer-loans-wrapper{
+    box-shadow: 0 0 0 5px rgba(0,0,0,0.05),0 0 0 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    gap: 2vh;
+    padding: 15px;
+    background: linear-gradient(to right, #236998, #2c3e50);
+}
+.available-amounts{
+    flex-wrap: nowrap;
+}
+.title-background-loans{
+    background-color: rgba(255,255,255,0.05);
+    height: 40px;
+    margin: auto;
+}
+/*////////////////////////////////////MAIN CARDS//////////////////////////////////////////////*/
 
 .cards-bank {
     width: 87%;
@@ -1278,7 +1471,7 @@ h4 {
     width: 90%;
 }
 
-/*----------------------------SIGN IN--------------------------------------------------*/
+/*//////////////////////////////SIGN IN////////////////////////////////////////////////*/
 
 .welcome-title{
     margin: auto;
@@ -1312,10 +1505,7 @@ h4 {
 	text-decoration: none;
 }
 .link {
-  color: var(--font-color2);
-}
-.link:hover {
-  color: #ffeba7;
+  color: var(--font-color3);
 }
 .forget {
   font-weight: 500;
@@ -1331,6 +1521,7 @@ h4 {
   font-weight: 600;
   text-align: center;
   padding-left: 0;
+  color: var(--white)
 }
 .title-log-in span{
   padding: 0 20px;
@@ -1414,9 +1605,7 @@ h4 {
 .card-front, .card-back {
   width: 100%;
   height: 100%;
-  background-image: url(../images/fotor_2023-2-2_20_44_28.jpg);
-  background-position: center right;
-  background-size: cover;
+  background: linear-gradient(to right, #2980b9, #2c3e50);
   position: absolute;
   border-radius: 6px;
   border: solid 2px var(--card-gold);
@@ -1685,12 +1874,20 @@ footer{
 
 @media(min-width: 768px) {
 
-    .panda-transaction{
-        display: inline;
+    .tree-and-loan{
+        width: 85%;
     }
 
-    .banner-landing{
-        display: flex;
+    .noneAfter768{
+        display: none;
+    }
+
+    .flexAfter768{
+        display:flex;
+    }
+
+    .panda-transaction{
+        display: inline;
     }
 
     .header-landing{
@@ -1705,16 +1902,8 @@ footer{
         display: inline;
     }
 
-    .header-options{
-        display: flex;
-    }
-
     .logo-white-letters{
         display: inline;
-    }
-
-    .world-wide-promotions{
-        display: flex;
     }
 
     .nav-and-head {
@@ -1762,7 +1951,7 @@ footer{
 
 @media (min-width: 1024px) {
 
-    .headings-account{
+    .flexAfter1024{
         display: flex;
     }
 
@@ -1859,6 +2048,10 @@ footer{
 
 @media (min-width: 1440px){
 
+    .tree-and-loan{
+        flex-wrap: nowrap;
+    }
+
     .modal-dialog{
         min-width: 55%;
     }
@@ -1922,3 +2115,10 @@ footer{
 }
 
 
+@media (max-width:767px){
+    .panel .panel-heading .title{
+        text-align: center;
+        margin: 0 0 10px;
+    }
+    .panel .panel-heading .btn_group{ text-align: center; }
+}

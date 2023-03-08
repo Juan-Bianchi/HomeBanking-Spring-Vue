@@ -25,10 +25,10 @@
 
       <div v-show = "client">
         <header>
-          <div v-if="client" class="header-options justify-content-around">
-            <a class="a-header-options font1-color" href="">FAQs</a>
-            <a class="a-header-options font1-color" href="">Costumer Attention</a>
-            <a class="a-header-options font1-color position-relative" href="">
+          <div v-if="client" class="header-options flexAfter768 justify-content-around">
+            <a class="a-header-options flexAfter768 font1-color" href="">FAQs</a>
+            <a class="a-header-options flexAfter768 font1-color" href="">Costumer Attention</a>
+            <a class="a-header-options flexAfter768 font1-color position-relative" href="">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2 me-2" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
@@ -40,11 +40,11 @@
               </span>
               Notifications
             </a>
-            <p href="#" class="a-header-options font1-color">
+            <p href="#" class="a-header-options flexAfter768 font1-color">
               <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
               {{client.firstName}}
             </p>
-            <p @click="logout()" class="a-header-options font1-color log-out">
+            <p @click="logout()" class="a-header-options flexAfter768 font1-color log-out">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
@@ -148,7 +148,7 @@
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="./loans.html">
+                          <a class="nav-link a-menu font1-color" href="./loan-application.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <ellipse cx="16" cy="6" rx="5" ry="3" />
@@ -263,7 +263,7 @@
                 <a class="a-car font1-color" href="#">How to protect yourself from pishing?</a>
               </div>
               <div class="carousel-item">
-                <a class="a-car font1-color" href="./loans.html">A preferencial rate loan just for you!</a>
+                <a class="a-car font1-color" href="./loan-application.html">A preferencial rate loan just for you!</a>
               </div>
             </div>
           </div>
@@ -365,7 +365,7 @@
 
             <!-- TABLA LATERAL -->
 
-            <section class="world-wide-promotions justify-content-between flex-column" v-if="client">
+            <section class="world-wide-promotions flexAfter768 justify-content-between flex-column" v-if="client">
 
               <table class="table-accounts">
                 <thead>
@@ -450,21 +450,20 @@
               </div>    
             </div>
 
+
+            <!-- LOANS -->
             <div class="d-flex justify-content-between align-items-center tree-and-loan">
               <div v-if="orderedLoans.length" class="loans-wrapper d-flex flex-column">
                 <h5 class="font2-color">Active Loans</h5>
-                <div v-if="orderedLoans.length < 3" class="new-account">
-                  <a class="nav-link" href="./loans.html"><h6>Add a new loan</h6></a>
+                <a class="new-account nav-link" href="./loan-application.html">
+                  <h6>Apply to a new loan</h6>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <circle cx="12" cy="12" r="9" />
                     <line x1="9" y1="12" x2="15" y2="12" />
                     <line x1="12" y1="9" x2="12" y2="15" />
                   </svg>
-                </div>
-                <div v-else class="new-account">
-                  <a class="nav-link" href="./loans.html"><h6>See my loans in detail</h6></a>
-                </div>
+                </a>
                 <table class="table" v-if="orderedLoans.length" style="text-align: center;">
                   <thead>
                     <tr>
@@ -490,7 +489,7 @@
                 <h5 class="font2-color">No active Loans</h5>
                 <p>Know more about our loans. Ask for a new lone to fullfil your dreams!</p>
                 <div class="new-account">
-                  <a class="nav-link" href="./loans.html"><h6>Add a new loan</h6></a>
+                  <a class="nav-link" href="./loan-application.html"><h6>Add a new loan</h6></a>
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <circle cx="12" cy="12" r="9" />

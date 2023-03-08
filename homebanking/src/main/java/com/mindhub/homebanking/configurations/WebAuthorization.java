@@ -27,6 +27,7 @@ public class WebAuthorization {
                                         .antMatchers("/web/styles/**").permitAll()
                                         .antMatchers("/web/fonts/**").permitAll()
                                         .antMatchers("/api/login").permitAll()
+                                        .antMatchers("/api/loans").permitAll()
                                         .antMatchers("/api/logout").hasAnyAuthority("CLIENT", "ADMIN")
                                         .antMatchers("/api/clients/current/**").hasAuthority("CLIENT")
                                         .antMatchers("/api/accounts/{id}").hasAuthority("ADMIN")
@@ -35,8 +36,9 @@ public class WebAuthorization {
                                         .antMatchers("/h2-console").hasAuthority("ADMIN")
                                         .antMatchers("/web/**").hasAuthority("CLIENT")
                                         .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                                        .antMatchers(HttpMethod.POST, "api/clients/current/accounts").hasAuthority("CLIENT")
+                                        .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
                                         .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
+                                        .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
                                         .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT");
 
         httpSecurity.formLogin()
