@@ -1,4 +1,5 @@
 @font-face {
+
     font-family: Autography;
     src: url(../fonts/Autography.otf);
 }
@@ -56,6 +57,14 @@
 
 #totalHavingsChart{
     z-index: 100;
+}
+
+.fa-white{
+    color: white;
+}
+
+.fa-grey{
+    color: rgba(128, 128, 128, 0.676)
 }
 
 * {
@@ -407,7 +416,7 @@ h4 {
     border-bottom-right-radius: 8px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-	background: linear-gradient(to right, #6ab3e4, #256D85);
+	background: #256D85;
 	-o-transition: left .2s;
 	transition: left .2s;
     z-index: 1;
@@ -898,7 +907,7 @@ h4 {
 }
 
 .table-loan{ 
-    font-family: var(--font2); 
+    font-family: var(--font2);
 }
 .panel{
     background: linear-gradient(to right, #2980b9, #2c3e50);
@@ -907,6 +916,7 @@ h4 {
     border-radius: 10px;
     border: none;
     box-shadow: 0 0 0 5px rgba(0,0,0,0.05),0 0 0 10px rgba(0,0,0,0.05);
+    min-height: 589px;
 }
 
 .panel .panel-heading{
@@ -922,7 +932,7 @@ h4 {
     line-height: 40px;
     margin: 0;
 }
-.panel .panel-heading .btn{
+.panel .panel-heading .btn, .btn-loans{
     color: rgba(255,255,255,0.5);
     background: transparent;
     font-size: 16px;
@@ -931,9 +941,18 @@ h4 {
     border-radius: 50px;
     transition: all 0.3s ease 0s;
 }
-.panel .panel-heading .btn:hover{
+.panel .panel-heading .btn:hover, .btn-loans:hover{
     color: #fff;
     text-shadow: 3px 3px rgba(255,255,255,0.2);
+}
+.btn-loans{
+    color: #fff;
+    border: 2px solid var(--font-color3);
+    padding: 10px 30px;
+    border-radius: 4px; 
+}
+.btn-loans:hover{
+    text-shadow: none;
 }
 .panel .panel-heading .form-control{
     color: #fff;
@@ -1068,7 +1087,7 @@ h4 {
     flex-wrap: wrap;
 }
 .emptyLines{
-    height: 32px;
+    height: 42px;
 }
 .offer-loans-wrapper{
     box-shadow: 0 0 0 5px rgba(0,0,0,0.05),0 0 0 10px rgba(0,0,0,0.05);
@@ -1076,14 +1095,23 @@ h4 {
     gap: 2vh;
     padding: 15px;
     background: linear-gradient(to right, #236998, #2c3e50);
+    min-height: 589px;
+}
+.offer-loans-wrapper h3{
+    text-align: start;
+    padding-top: 10px;
 }
 .available-amounts{
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .title-background-loans{
-    background-color: rgba(255,255,255,0.05);
+    background-color:rgba(255, 255, 255, 0.2);
     height: 40px;
     margin: auto;
+}
+.loan-png{
+    height: 4rem;
 }
 /*////////////////////////////////////MAIN CARDS//////////////////////////////////////////////*/
 
@@ -1473,13 +1501,32 @@ h4 {
 
 /*//////////////////////////////SIGN IN////////////////////////////////////////////////*/
 
+.modal-dialog{
+    background: white;
+    border-radius: 10px;
+}
+
+.modal-login{
+    background: linear-gradient(rgba(255, 255, 255, 0.87), rgba(255, 255, 255, 0.87)) , url(../images/favicon.svg);
+    background-size: 20%;
+}
 .welcome-title{
     margin: auto;
 }
 
+.header-login{
+    font-family: 'Dancing Script', cursive;
+    justify-content: center;
+    width: 100%;
+}
+
+.title-login-header{
+    font-size: 45px !important;
+    font-weight: 900;
+}
+
 .close-modal{
     position: absolute;
-    top: 7%;
     right: 3%;
 }
 
@@ -1874,6 +1921,10 @@ footer{
 
 @media(min-width: 768px) {
 
+    .available-amounts{
+        justify-content: space-between;
+    }
+
     .tree-and-loan{
         width: 85%;
     }
@@ -1945,7 +1996,7 @@ footer{
     }
 
     .div-details-loans{
-        width: 30%;
+        width: 100%;
     }
 }
 
