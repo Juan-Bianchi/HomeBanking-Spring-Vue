@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
   <body class="body-account">
@@ -273,30 +274,24 @@
   
               <!-- ACCOUNTS -->
               <section class="d-flex justify-content-between flex-column accounts-all">
-                <div class="solapa d-flex align-items-center">
-                  <h4>Accounts</h4>
-                  <div class="d-flex card-wrapper"> 
+                <div class="solapa d-flex align-items-start p-3">
 
-                    <!-- NO ACCOUNTS CARD -->
-                    <div class="card card-innactive" v-if="!orderedAccounts.length">                       
-                      <h5 class="card-title">NO ACCOUNT ADDED YET</h5>
-                    </div>
-
+                  <div class="d-flex carousel-wrapper flex-column"> 
+                    <h2>Accounts</h2>
                     <!-- RENDER ACCOUNTS -->
-                    <div id="carousel-accounts" class="carousel slide" v-else>
+                    <div id="carousel-accounts" class="carousel slide">
                       <div id="carousel-inner-accounts" class="carousel-inner">
                         <div class="carousel-item" v-for="(account, index) of orderedAccounts" :class="index==0? 'active': ''">
-                          <div class="w-100 d-flex justify-content-center">
+                          <div class="d-flex justify-content-center">
                             <div class="card card-account">
-                              <div class="card-body">
+                              <div class="card-body font1-color">
                                 <div class="d-flex justify-content-between">
                                   <h5 class="card-title">{{account.number}}</h5>
                                   <h5>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</h5>
                                 </div>
-                                <h6 class="card-subtitle mb-2 text-muted">Current Account</h6>
+                                <h6 class="card-subtitle mb-2">Current Account</h6>
                                 <div class="d-flex justify-content-between account-card-details">
-                                  <span>Creation date:</span>
-                                  <span>{{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
+                                  <span>Creation date:  {{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
                                 </div>                              
                               </div>
                             </div>
@@ -310,20 +305,77 @@
                         <svg width='64px' height='64px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Arrow' transform='translate(-386.000000, -48.000000)'><g id='right_fill' transform='translate(386.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path d='M16.0607,10.9393 C16.6465,11.5251 16.6465,12.4749 16.0607,13.0607 L10.4038,18.7175 C9.81804,19.3033 8.86829,19.3033 8.2825,18.7175 C7.69672,18.1317 7.69672,17.182 8.2825,16.5962 L12.8787,12 L8.2825,7.40381 C7.69672,6.81802 7.69672,5.86827 8.2825,5.28248 C8.86829,4.6967 9.81804,4.6967 10.4038,5.28249 L16.0607,10.9393 Z' id='路径' fill='#256D85FF'></path></g></g></g></svg>
                       </button>
                     </div>
+
+                    <div class="d-flex flex-column align-items-start text-start">
+                      <span>To navegate among your accounts, click on the left, or on the rigth arrow. </span>
+                      <span>You can also click on any of the 'details' icons of the list to see your account.</span>
+                    </div>
                     
                   </div>
 
-                  <div v-if="currentAccount" class="d-flex justify-content-between account-card-details">
-                    <a :href="'./transfers.html?number=' + currentAccount.number" class="font4-color">Transfer</a>
-                    <a :href="'./account.html?id=' + currentAccount.id" class="font4-color">Transactions</a>
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div class="container table-loan" v-if="visibleLoans.length">
+                      <div class="row d-flex justify-content-center">
+                          <div class="col-12 col-md-12 col-lg-12">
+                              <div class="panel panelAccounts">
+                                  <div class="panel-heading">
+                                      <div class="row">
+                                          <div class="col col-sm-6 col-xs-12">
+                                              <h4 class="title">Accounts</h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="panel-body table-responsive">
+                                      <table class="table">
+                                          <thead>
+                                              <tr>
+                                                <th>Number</th>
+                                                <th>Balance</th>
+                                                <th>Details</th>                                              
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <template v-for="(account, index) of orderedAccounts">
+                                              <tr>                        
+                                                  <td>{{account.number}}</td>
+                                                  <td>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
+                                                  <td>
+                                                    <ul class="action-list">
+                                                        <li @click="slideCarousel(index)"><a href="#" data-tip="details"><i class="fa fa-circle-info"></i></a></li>
+                                                    </ul>
+                                                  </td>                
+                                              </tr>
+                                            </template>                                              
+                                          </tbody>
+                                          <tfoot class="foot-accounts">
+                                            <tr>
+                                              <td>TOTAL</td>
+                                              <td>{{totalBalance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
+                                              <td>
+                                                <ul class="action-list">
+                                                    <li><a href="#totalHavingsChart" data-tip="details"><i class="fa fa-circle-info"></i></a></li>
+                                                </ul>
+                                              </td>  
+                                            </tr>
+                                          </tfoot>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>  
+                  </div>    
+
+                    
+                  <div v-if="currentAccount" class="mt-4 d-flex justify-content-around account-card-details w-100 flex-wrap">  
+                    <button v-if="accounts.length < 3" class="btn btn-loans btn-background" v-on:click="createAccount()">New account <i class="fa-solid fa-plus"></i></button>
+                    <a :href="'./transfers.html?number=' + currentAccount.number" class="font4-color"><button class="btn btn-loans btn-background">Transfer</button></a>
+                    <a :href="'./account.html?id=' + currentAccount.id" class="font4-color"><button class="btn btn-loans btn-background">Transactions</button></a>
                     <a class="nav-link font4-color" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                      <span>More</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="12" cy="19" r="1" />
-                        <circle cx="12" cy="5" r="1" />
-                      </svg>
+                      <button class="btn btn-loans btn-background">
+                        More
+                        <i class="ms-3 fa-solid fa-ellipsis-vertical"></i>
+                      </button> 
                     </a>
                     <ul class="dropdown-menu drop-account">
                       <li><a class="dropdown-item drop-item font4-color" href="#">Fixed-term deposit</a></li>
@@ -331,41 +383,17 @@
                       <li><a class="dropdown-item drop-item font4-color" href="#">Buy Dolars</a></li>
                       <li><a class="dropdown-item drop-item font4-color" href="#">Buy Euros</a></li>
                     </ul>                          
-                  </div>
-                  
+                  </div>     
+
                 </div>
               
-                <!-- BOTON NEW ACCOUNT -->
-                <div v-if="accounts.length < 3"  class="new-account" v-on:click="createAccount()">
-                  <h4>Add a new account</h4>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <circle cx="12" cy="12" r="9" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                  </svg>
-                </div>
-
-                <!-- CHECKS -->
-
-                <div class="solapa d-flex align-items-center">
-                  <h4>Checks</h4>
-                  <div class="d-flex card-wrapper"> 
-                    <div class="card card-innactive">                       
-                      <h5 class="card-title text-muted">Create E-check</h5>
-                    </div>
-                    <div class="card card-innactive">                       
-                      <h5 class="card-title text-muted">Order Physical Checkbook</h5>
-                    </div>
-                  </div>
-                </div>
               </section>   
             
             </div>
 
             <!-- TABLA LATERAL -->
 
-            <section class="world-wide-promotions flexAfter768 justify-content-between flex-column" v-if="client">
+            <!-- <section class="world-wide-promotions flexAfter768 justify-content-between flex-column" v-if="client">
 
               <table class="table-accounts">
                 <thead>
@@ -433,77 +461,112 @@
                 <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
               </div>
   
-            </section>       
+            </section>        -->
           </div>
 
-          <div class="d-flex justify-content-between align-items-start diagram-wrapper">
+          <div class="d-flex justify-content-center align-items-start diagram-wrapper mb-5">
 
-            <div class="justify-content-center align-items-end diagram">
-              <div v-show="totalBalance" class="" style="min-width: 310px;">
-                <h5 class="font2-color">Total balance</h5>
-                <div id="totalHavingsChart">
-                 </div>
+            <!-- CHART -->
+            <div class="justify-content-around align-items-end diagram p-3">
+              <div v-show="totalBalance" class="w-100" style="min-width: 310px;">
+                <h2 class="font2-color">Total Balance</h2>
+                <div class="d-flex justify-content-between back w-100 diagram-apex">
+                  <img class="laugh-man-balance inlineAfter1440" src="./images/havings.png" alt="laughing">
+                  <div id="totalHavingsChart" class="d-flex justify-content-between">    
+                  </div>
+                </div>
+                <div class="d-flex justify-content-around">
+                  <span>Total Balance: {{totalBalance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</span>
+                  <span>All amounts are U$S Dollars</span>
+                </div>
               </div>
-  
-              <div class="div-panda panda2">
-                <img src="./images/sittingPanda.png" alt="sittingPanda" title="sittingPanda">
-              </div>    
             </div>
 
 
             <!-- LOANS -->
-            <div class="d-flex justify-content-between align-items-center tree-and-loan">
-              <div v-if="orderedLoans.length" class="loans-wrapper d-flex flex-column">
-                <h5 class="font2-color">Active Loans</h5>
-                <a class="new-account nav-link" href="./loan-application.html">
-                  <h6>Apply to a new loan</h6>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <circle cx="12" cy="12" r="9" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                  </svg>
-                </a>
-                <table class="table" v-if="orderedLoans.length" style="text-align: center;">
-                  <thead>
-                    <tr>
-                      <th>Type of loan</th>
-                      <th>Amount</th>
-                      <th>Payments</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <template v-for="loan of orderedLoans">
-                      <tr>                        
-                          <td>{{loan.name}}</td>
-                          <td>${{loan.amount}}</td>
-                          <td>{{loan.payments}}</td>                 
-                      </tr>
-                    </template>
-                    
-                  </tbody>
-                </table>
-              </div>
-
-              <div v-else >
-                <h5 class="font2-color">No active Loans</h5>
-                <p>Know more about our loans. Ask for a new lone to fullfil your dreams!</p>
-                <div class="new-account">
-                  <a class="nav-link" href="./loan-application.html"><h6>Add a new loan</h6></a>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <circle cx="12" cy="12" r="9" />
-                    <line x1="9" y1="12" x2="15" y2="12" />
-                    <line x1="12" y1="9" x2="12" y2="15" />
-                  </svg>
+            <div class="d-flex justify-content-between align-items-start tree-and-loan">
+              <div class="container table-loan" v-if="visibleLoans.length">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="panel panelAccounts">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col col-sm-6 col-xs-12">
+                                        <h4 class="title">Active <span>Loans</span></h4>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 text-end">
+                                        <div class="btn_group">        
+                                            <a class="nav-link" href="./loan-application.html"><button class="btn btn-loans"><span class="me-3">New loan</span><i class="fa-solid fa-plus"></i></button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                          <th>Type of loan</th>
+                                          <th>Amount</th>
+                                          <th>Payments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <template v-for="loan of visibleLoans">
+                                        <tr>                        
+                                            <td>{{loan.name}}</td>
+                                            <td>${{loan.amount}}</td>
+                                            <td>{{loan.payments}}</td>            
+                                        </tr>
+                                      </template>  
+                                      <template v-if="visibleLoans.length > -1 && visibleLoans.length < 5" v-for="line of emptyLinesAmount">
+                                        <tr class="emptyLines">
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                                      </template>
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer" id="table-loans-accounts">
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-xs-6 float-start">
+                                      <span class="float-start">showing {{pageNumber}} out of {{totalPages}} entries</span>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-xs-6 float-end">
+                                      <div class="flex-column align-items-end flexAfter768">
+                                        <div class="d-flex justify-content-end align-items-center page-transactions">
+                                          <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                          <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                                          <ul class="pagination">
+                                            <template v-for="number of visibleNavNumbers">
+                                              <li :class="pageNumber == number? 'active': 'disabled'" @click="goToPage(number)"><a href="#table-loans-accounts">{{number}}</a></li>
+                                            </template>
+                                          </ul>                       
+                                          <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                          <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                        </div>
+                                        
+                                      </div>
+                                      <div class="flex-column align-items-end noneAfter768">
+                                        <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                        <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                  
+                                        <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                        <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                      </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              
-
-              <div class="tree-transactions d-flex align-items-center" v-if="windowWidth >=1024">
-                <img class="tree-blue" src="./images/treeBlue.png" alt="">
-              </div>
+              </div>      
+          
             </div>
+
           </div>
           <img class="footer-up" src="./images/footer.png" alt="">
         </main>
@@ -513,11 +576,6 @@
         <!-- FOOTER -->
 
         <footer class="d-flex justify-content-evenly">
-          <!-- <div class="sustentable-footer d-flex justify-content-center footer-div">
-            <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
-            <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
-            <a href="https://www.unepfi.org/banking/bankingprinciples/"><img src="./images/footer3.png" alt="unep" title="unep"></a>       
-          </div> -->
 
           <div class="d-flex align-items-center">
             <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">

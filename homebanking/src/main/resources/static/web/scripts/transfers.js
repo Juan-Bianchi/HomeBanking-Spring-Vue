@@ -5,6 +5,7 @@ createApp({
     data(){
         return{
             client: undefined,
+            barOpen: true,
             orderedAccounts: [],
             number: "",
             originAccount: "",

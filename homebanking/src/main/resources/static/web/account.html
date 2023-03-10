@@ -159,7 +159,7 @@
 
             <!-- MAIN -->
 
-            <main class="main-transactions d-flex ">
+            <main class="main-transactions d-flex">
 
                 <!-- MENU -->
                 <section class="main-menu justify-content-between" v-if="client">
@@ -398,11 +398,12 @@
                       </svg>
                       <h6 @click="logout()" class="log-out">LogOut</h6>
                     </a>
-                  </div>                  
-                  
+                  </div>    
+
+                  <!-- TITLE -->
                   <div class="flex-column justify-content-center align-items-center ms-5 headings-account flexAfter1024" v-if="account">
-                    <h2 class="font2-color">CA account number:</h2>
-                    <h2 class="font2-color">{{account.number}}</h2>
+                    <h2 class="font1-color">CA account number:</h2>
+                    <h2 class="font1-color">{{account.number}}</h2>
                   </div>
                 
                   <div class="d-flex justify-content-center card-wrapper-transaction font2-color"> 
@@ -421,7 +422,7 @@
                     </div>
                   </div>
 
-                  <div class="d-flex flex-column justify-content-start align-items-start w-100">
+                  <div class="d-flex flex-column justify-content-start align-items-center w-100">
                   
                     <div class="d-flex flex-column display-transaction-wrapper">
                       <div v-if="totalPages > 1" class="d-flex justify-content-end align-items-center page-transactions">
@@ -464,7 +465,133 @@
                       
                     </div>
                     
-                    
+                    <!-- TABLE -->
+
+
+                    <!-- <div class="d-flex justify-content-between align-items-start tree-and-loan">
+                      <div class="container table-loan" v-if="filteredTransactions.length">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col col-sm-6 col-xs-12">
+                                                <h4 class="title">Active <span>Loans</span></h4>
+                                            </div>
+                                            <div class="col-sm-9 col-xs-12 text-end">
+                                                <div class="btn_group">
+                                                    <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf fa-lg"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                  <th>Type of transaction</th>
+                                                  <th>Date</th>
+                                                  <th>Amount</th>
+                                                  <th class="flexAfter768 justify-content-center">Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              <template v-for="transaction of visibleTransactions">
+                                                <tr>
+                                                  <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                    <div class="accordion-item accordion-trasaction-table">                            
+                                                        <td><span :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">{{transaction.type.charAt(0) + transaction.type.slice(1).toLowerCase()}}</span></td>
+                                                        <td>{{transaction.date.slice(0,10)}}</td>
+                                                        <td>{{transaction.amount}}</td>
+                                                        <td>
+                                                          <div class="accordion-header" id="flush-headingOne">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id"> 
+                                                              <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-if="transaction.type === 'CREDIT'" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <polyline points="6 9 12 15 18 9" />
+                                                              </svg>
+                                                              <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <polyline points="6 9 12 15 18 9" />
+                                                              </svg>
+                                                            </button>
+                                                          </div>
+                                                        </td>                          
+                                                    </div>
+                                                  </div>  
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="4" class="collapse-td">
+                                                    <div :id="'flush-collapse' + transaction.id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                      <div class="accordion-body d-flex justify-content-between">
+                                                        <div class="d-flex" style="width: 45%; gap: 1vw;">
+                                                          <span>Movement description:</span>
+                                                          <span>{{transaction.description}}</span>
+                                                        </div>
+                                                        <div class="d-flex" style="width: 45%; gap: 1vw;">
+                                                          <span>Date:</span>
+                                                          <span>{{transaction.date.slice(0,10)}}, Time: {{transaction.date.slice(11,19)}}</span>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </template>
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-6 col-sm-6 col-xs-6 float-start">
+                                              <span class="float-start">showing {{pageNumber}} out of {{totalPages}} entries</span>
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-xs-6 float-end">
+                                              <div class="flex-column align-items-end flexAfter768">
+                                                <div class="d-flex justify-content-end align-items-center page-transactions">
+                                                  <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                                  <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                                                  <ul class="pagination">
+                                                    <template v-for="number of visibleNavNumbers">
+                                                      <li :class="pageNumber == number? 'active': 'disabled'" @click="goToPage(number)"><a href="#">{{number}}</a></li>
+                                                    </template>
+                                                  </ul>                       
+                                                  <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                                  <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                                </div>
+                                                
+                                              </div>
+                                              <div class="flex-column align-items-end noneAfter768">
+                                                <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                                <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                          
+                                                <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                                <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                              </div>
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col">
+                                              <div class="d-flex justify-content-around filter-loans" v-if="typesOfLoans.length">
+                                                <span>Switch to filter your loans: </span>
+                                                <div class="d-flex justify-content-between checks-loans">
+                                                  <div class="form-check form-switch d-flex align-items-center" v-for="type of typesOfLoans">
+                                                    <input class="form-check-input check-trans me-2" type="checkbox" role="switch" id="checkLoanType" :value="type" v-model="activeChecks" @change="filterLoans" checked>
+                                                    <label class="form-check-label me-3" for="checkLoanType">{{type}}</label>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+  
+                    </div> -->
+
   
                     <div class="transaction-details w-100 d-flex justify-content-start mb-4">
                       <table class="table table-transactions" v-if="filteredTransactions.length">

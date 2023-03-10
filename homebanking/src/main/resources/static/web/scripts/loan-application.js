@@ -40,6 +40,9 @@ createApp({
     },
 
     methods: {
+
+        // WHEN CREATED (TO RENDER PAGE)
+
         loadData: function(){
             let ownLoans = axios.get('http://localhost:8080/api/clients/current');
             let genericLoans = axios.get('http://localhost:8080/api/loans');
@@ -52,7 +55,7 @@ createApp({
                         this.accounts = [... response[2].data].sort((a1, a2)=> a1.id - a2.id)
                         this.manageData();
                    })
-                   //.catch(err => console.error(err.message));
+                   .catch(err => console.error(err.message));
         },
 
         manageData: function(){
@@ -78,7 +81,7 @@ createApp({
             let availablePers = this.genericLoans.find(loan=> loan.name.includes('Personal')).maxAmount - personal;
             let availableAuto = this.genericLoans.find(loan=> loan.name.includes('Automotive')).maxAmount - automotive;
 
-            if(availableMort > 1){
+            if(availableMort > 10000){
                 this.availableAmounts.push(({
                     id: this.genericLoans.find(loan=> loan.name.includes('Mortgage')).id,
                     name: 'Mortgage',
@@ -86,7 +89,7 @@ createApp({
                 }))
             }
             
-            if(availablePers > 1){
+            if(availablePers > 10000){
                 this.availableAmounts.push(({
                     id: this.genericLoans.find(loan=> loan.name.includes('Personal')).id,
                     name: 'Personal',
@@ -94,7 +97,7 @@ createApp({
                 }))
             }
             
-            if(availableAuto > 1){
+            if(availableAuto > 10000){
                 this.availableAmounts.push(({
                     id: this.genericLoans.find(loan=> loan.name.includes('Automotive')).id,
                     name: 'Automotive',
@@ -105,6 +108,7 @@ createApp({
         },
 
 
+        //current loans table
         renderLoans: function(){
 
             let size = this.filteredLoans.length;
@@ -132,7 +136,7 @@ createApp({
             this.visibleNavNumbers = this.navNumbersArray[this.currentNavModulus];
             this.emptyLinesAmount = 5 - this.visibleLoans.length;
         },
-        
+
         changePage: function(movement){
             this.pageNumber += movement;
             this.currentNavModulus = Math.ceil((this.pageNumber - 1) / 3);
@@ -145,6 +149,10 @@ createApp({
             this.renderLoans();
         },
 
+
+        // WHEN MOUNTED
+
+        //loan application form
         formatAmountInput: function(){
             if(Number.isNaN(Number(this.stringAmount.slice(3)))){                
                 this.stringAmount = "";
@@ -160,10 +168,6 @@ createApp({
 
         numberWhenUsing: function(){
             this.stringAmount = "";         
-        },
-
-        onResize(event) {
-            this.windowWidth = screen.width
         },
 
         applyLoan: function(){
@@ -182,6 +186,13 @@ createApp({
                  })
         },
 
+        //to render
+        onResize(event) {
+            this.windowWidth = screen.width
+        },
+
+
+        //LOGOUT
         logout(){
             axios.post('/api/logout')
                  .then(response => {

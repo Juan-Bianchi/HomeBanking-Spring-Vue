@@ -30,7 +30,6 @@ public class LoanController {
     AccountRepository accountRepository;
     @Autowired
     TransactionRepository transactionRepository;
-
     @Autowired
     ClientLoanRepository clientLoanRepository;
 
@@ -95,6 +94,10 @@ public class LoanController {
         if(loan == null){
 
             return new ResponseEntity<>("There is not any loan with the given id.", HttpStatus.FORBIDDEN);
+        }
+        if(loanApplicationDTO.getAmount() < 10000){
+
+            return new ResponseEntity<>("The loan amount must not be bigger than U$S 10.0000 .", HttpStatus.FORBIDDEN);
         }
         if(loan.getMaxAmount() < loanApplicationDTO.getAmount()){
 

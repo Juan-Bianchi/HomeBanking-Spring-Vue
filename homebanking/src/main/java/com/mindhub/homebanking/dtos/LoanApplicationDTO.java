@@ -11,7 +11,7 @@ public class LoanApplicationDTO {
     //CONSTRUCTOR
     LoanApplicationDTO(){}
 
-    LoanApplicationDTO(long id, double amount, int payments, String associatedAccountNumber){
+    LoanApplicationDTO(Long id, Double amount, Integer payments, String associatedAccountNumber){
         this.idLoan = id;
         this.amount = amount;
         this.payments = payments;

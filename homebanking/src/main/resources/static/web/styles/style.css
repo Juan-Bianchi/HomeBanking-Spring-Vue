@@ -55,8 +55,8 @@
     color: white;
 }
 
-#totalHavingsChart{
-    z-index: 100;
+.back{
+    background: linear-gradient(to right, #2980b9, #2c3e50);
 }
 
 .fa-white{
@@ -91,7 +91,6 @@ ul{
 
 h4 {
     width: 100%;
-    text-align: start;
 }
 
 .nav-item{
@@ -182,6 +181,12 @@ h4 {
     border-color: transparent white transparent transparent;
 }
 
+.diagram-apex{
+    color: white;
+    border-radius: 10px;
+    border: #d39200 solid 1px;
+}
+
 .flexAfter768{
     display: none;
 }
@@ -192,6 +197,10 @@ h4 {
 
 .noneAfter768{
     display: flex;
+}
+
+.inlineAfter1440{
+    display: none;
 }
 
 /*////////////////////////////////HEADER//////////////////////////////////////////////*/
@@ -316,7 +325,7 @@ h4 {
 }
 
 .carousel-item {
-    transition: transform 2.6s ease-in-out;
+    transition: all 2.6s ease-in-out;
 }
 
 .double-carousel {
@@ -420,6 +429,7 @@ h4 {
 	-o-transition: left .2s;
 	transition: left .2s;
     z-index: 1;
+    box-shadow: 1px 10px 20px 0 rgba(0, 0, 0, 0.667);
 
 }
 
@@ -555,10 +565,15 @@ h4 {
 
 
 .solapa{
-    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
     width: 100%;
     padding: 15px 0 15px 0;
-    border-radius: 8px;
+    border-radius: 10px;
+    border: 2px solid var(--font-color4);
+    background-color: white;
+    flex-wrap: wrap;
+    gap: 2vh;
 }
 
 .card-wrapper{
@@ -572,8 +587,9 @@ h4 {
     width: 100%;
 }
 
+
 .card-account{
-    background: url(../images/account1.png), white;
+    background: url(../images/account1.png), linear-gradient(to right, #2980b9, #2c3e50);
     background-size: cover;
     background-position: left;
     display: block;
@@ -636,12 +652,9 @@ h4 {
     background-color: white;
 }
 
-#totalHavingsChart {
-    border-radius: 8px;
-    box-shadow: -6px 6px 8px 2px #8fe3e2;
+#totalHavingsChart{
+    z-index: 100;
     min-height: 40vh;
-    background-color: #8fc6e3;
-    border: #d39200 solid 1px;
 }
 
 .tree-blue{
@@ -656,13 +669,20 @@ h4 {
 
 .diagram-wrapper{
     flex-wrap: wrap;
-    width: 90%;
+    width: 100%;
     gap: 3vh;
 }
 
 .diagram{
-    width: 100%;
+    width: 85%;
     display: flex;
+    border-radius: 10px;
+    border: 2px solid var(--font-color4);
+    background: white;
+}
+
+.laugh-man-balance{
+    width: 40%;
 }
 
 .tree-and-loan{
@@ -758,7 +778,7 @@ h4 {
 }
 
 .headings-account{
-    background:linear-gradient(#8fe3e2b6, #8fe3e2b6), url(../images/copaMind.jpg);
+    background:linear-gradient(to right, #297fb9b8, #2c3e50b9), url(../images/copaMind.jpg);
     background-size: cover;
     background-position: center right;
     min-height: 15vh;
@@ -777,6 +797,10 @@ h4 {
 .transaction-wrapper{
     width: 100%;
     gap:4vh
+}
+
+.accordion-trasaction-table{
+    padding: 0 !important;
 }
 
 .table-transactions{
@@ -918,7 +942,9 @@ h4 {
     box-shadow: 0 0 0 5px rgba(0,0,0,0.05),0 0 0 10px rgba(0,0,0,0.05);
     min-height: 589px;
 }
-
+.panelAccounts{
+    min-height: auto;
+}
 .panel .panel-heading{
     padding: 20px 15px;
     border-radius: 10px 10px 0 0;
@@ -946,13 +972,23 @@ h4 {
     text-shadow: 3px 3px rgba(255,255,255,0.2);
 }
 .btn-loans{
-    color: #fff;
-    border: 2px solid var(--font-color3);
+    color: #fff !important;
+    border: 2px solid var(--font-color3) !important;
     padding: 10px 30px;
     border-radius: 4px; 
 }
 .btn-loans:hover{
-    text-shadow: none;
+    text-shadow: none !important;
+    scale: 1.05 !important;
+}
+.btn-background{
+    background: linear-gradient(to right, #2980b9, #2c3e50);
+    color: white;
+    border: 2px solid var(--font-color2);
+    border-radius: 50px;
+    transition: all 0.3s ease 0s;
+    width: 160px;
+    margin-top: 1vh;
 }
 .panel .panel-heading .form-control{
     color: #fff;
@@ -991,6 +1027,28 @@ h4 {
     vertical-align: middle;
     border: none;
 }
+.foot-accounts{
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 12px;
+    border-top: 1px solid white;
+}
+.foot-accounts .action-list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.foot-accounts .action-list li a{
+    color: #fff;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+
 .panel .panel-body .table tbody tr:nth-child(even){ background-color: rgba(255,255,255,0.05); }
 .panel .panel-body .table tbody .action-list{
     padding: 0;
@@ -1921,6 +1979,10 @@ footer{
 
 @media(min-width: 768px) {
 
+    .carousel-wrapper{
+        width: 100%;
+    }
+
     .available-amounts{
         justify-content: space-between;
     }
@@ -1965,10 +2027,6 @@ footer{
         justify-content: space-between;
     }
 
-    .accounts{
-        width: 55%;
-    }
-
     .new-account{
         width: 90%;
     }
@@ -2001,6 +2059,12 @@ footer{
 }
 
 @media (min-width: 1024px) {
+
+    .carousel-wrapper{
+        justify-content: center;
+        gap: 3vh;
+        width: 70%;
+    }
 
     .flexAfter1024{
         display: flex;
@@ -2090,7 +2154,7 @@ footer{
     }
 
     .diagram-wrapper{
-        width: 82%;
+        width: 85%;
         gap: 4vw;
         flex-wrap: nowrap;
     }
@@ -2098,6 +2162,16 @@ footer{
 }
 
 @media (min-width: 1440px){
+
+    .inlineAfter1440{
+        display: inline;
+    }
+
+    .carousel-wrapper{
+        justify-content: center;
+        gap: 3vh;
+        width: 50%;
+    }
 
     .tree-and-loan{
         flex-wrap: nowrap;

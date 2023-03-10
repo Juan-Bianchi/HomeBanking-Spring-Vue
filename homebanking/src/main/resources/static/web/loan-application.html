@@ -442,7 +442,7 @@
                                     <h5>Please, inform the amount you want to apply for.</h5>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="input-amount-loan">Loan Amount</span>
-                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="stringAmount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be between U$S 1 and U$S ' + availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available" >
+                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="stringAmount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be between U$S 10.000 and U$S ' + availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available" >
                                     </div> 
                                   </section>
 
