@@ -107,7 +107,7 @@ public class Client {
     }
 
     @JsonIgnore
-    public Set<Loan> getLoan() {
+    public Set<Loan> getGenericLoan() {
 
         return clientLoans.stream().map(clientLoan -> clientLoan.getLoan()).collect(toSet());
     }

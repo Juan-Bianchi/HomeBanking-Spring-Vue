@@ -5,6 +5,7 @@ createApp({
     data(){
         return{
             client: undefined,
+            barOpen: true,
             orderedAccounts: [],
             number: "",
             originAccount: "",
@@ -46,23 +47,19 @@ createApp({
         },
 
         formatAmountInput: function(){
-            if(Number.isNaN(Number(this.amount))){
+            if(Number.isNaN(Number(this.amount.slice(3)))){
                 this.amount = "";
+                this.amountNumber =  0;
             }
             else{
+                this.amountNumber =  Number(this.amount.slice);
                 this.amount =  Number(this.amount).toLocaleString("es-AR", {style:"currency",currency:"USD"});
             }
-            this.amountNumber =  Number(this.amount).toFixed(2);
+            
         },
 
-        numberWhenUsing: function(){
-            if(Number.isNaN(parseFloat(this.amount))){
-                this.amount = "";
-            }
-            else{
-                this.amount =  Number(this.amount);
-            }
-            this.amountNumber =  Number(this.amount).toFixed(2);
+        numberWhenUsing: function(){    
+            this.amount = "";
         },
 
 

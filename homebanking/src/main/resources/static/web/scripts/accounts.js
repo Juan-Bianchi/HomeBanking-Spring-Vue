@@ -11,9 +11,17 @@ createApp( {
             orderedLoans: [],
             totalBalance: 0,
             currentAccount: undefined,
+            genericLoans: undefined,
+            totalPages: 1,
+            pageNumber: 1,
+            visibleLoans: [],
+            navNumbersArray: [],
+            visibleNavNumbers: [],
+            emptyLinesAmount: undefined,
+            currentNavModulus: 0,
+
         }
     },
-
     created() {
         this.loadData();
     },
@@ -28,15 +36,15 @@ createApp( {
 
         loadData(){
             axios.get("http://localhost:8080/api/clients/current")
-                 .then(response => {
+                .then(response => {
                     this.client = {... response.data};
-                    localStorage.setItem('currentClient', `${this.client.firstName} ${this.client.lastName}`);
                     this.accounts = this.client.accounts.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
                     this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
                     this.manageData();
-                 })
-                 .catch(err => console.error(err.message));
+                })
+                .catch(err => console.error(err.message));
+                 
         },
 
         //manage all methods
@@ -45,8 +53,8 @@ createApp( {
             this.orderLoans();
             if(this.totalBalance){
                 this.createPieChart();
-            }
-            
+            }      
+            this.renderLoans();
         },
 
         orderAccounts: function(){
@@ -69,15 +77,29 @@ createApp( {
                 series: serie,
 
                 chart: {
-                    width: 380,
-                    type: 'pie',
+                    width: 310,
+                    type: 'donut',
+                },
+
+                plotOptions: {
+                    pie: {
+                      donut: {
+                        labels: {
+                          show: true, 
+                        }
+                      }
+                    }
                 },
 
                 labels: label,
+
+                dataLabels: {
+                    enabled: true,
+                },
               
                 colors: (function(length){
                         let arrayColor =[];
-                        let colors = ['#d39200', '#06283D', '#cd6aaa'];
+                        let colors = ['#d39200', '#06283D', '#256D85'];
                         for(let i=0; i < length; i++){
                             arrayColor.push(colors[i]);
                         }
@@ -87,12 +109,20 @@ createApp( {
                 fill: {
                     colors: (function(length){
                         let arrayColor =[];
-                        let colors = ['#d39200', '#06283D', '#cd6aaa'];
+                        let colors = ['#d39200', '#06283D', '#256D85'];
                         for(let i=0; i < length; i++){
                             arrayColor.push(colors[i]);
                         }
                         return arrayColor;
                     }(this.accounts.length)),
+                },
+
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        colors: ['#ffffff', '#ffffff', '#ffffff'],
+                        useSeriesColors: false
+                    },
                 },
 
                 responsive: [{
@@ -113,6 +143,46 @@ createApp( {
             chart.render();
         },
 
+        renderLoans: function(){
+
+            let size = this.orderedLoans.length;
+            let counter = 0;
+            let transactionsArray = [];
+
+            while(counter < size){
+                transactionsArray.push(this.orderedLoans.slice(counter, counter+=5));
+            }
+
+            this.totalPages = transactionsArray.length;
+            if(this.totalPages === 1){
+                this.pageNumber = 1;
+            }
+            this.visibleLoans = transactionsArray[this.pageNumber - 1];
+            
+            let numbers = [];
+            for(let i = 1; i <= this.totalPages; i++){
+                numbers.push(i);
+            }
+            counter = 0;
+            while(counter < this.totalPages){
+                this.navNumbersArray.push( numbers.slice(counter, counter+=3) );
+            }
+            this.visibleNavNumbers = this.navNumbersArray[this.currentNavModulus];
+            this.emptyLinesAmount = 5 - this.visibleLoans.length;
+        },
+        
+        changePage: function(movement){
+            this.pageNumber += movement;
+            this.currentNavModulus = Math.ceil((this.pageNumber - 1) / 3);
+            console.log(this.currentNavModulus);
+            this.renderLoans();
+        },
+
+        goToPage: function(page){
+            this.pageNumber = page;
+            this.renderLoans();
+        },
+
 
         //WHEN MOUNTED
 
@@ -131,6 +201,7 @@ createApp( {
 
         setCurrentAccount: function(movement){
             let carouselAccounts = document.getElementById("carousel-inner-accounts");
+            console.log([carouselAccounts]);
             let item = [... carouselAccounts.children].find(element => element.className.includes("carousel-item active"));
             let previousAccountNumber = item.innerText.split('\n')[0];
             let index = this.orderedAccounts.findIndex(account => account.number.includes(previousAccountNumber));
@@ -140,6 +211,12 @@ createApp( {
             else{
                 this.currentAccount = index == this.orderedAccounts.length - 1? this.orderedAccounts[0] : this.orderedAccounts[index + 1];
             }
+        },
+
+        slideCarousel: function(position){
+            let carouselAccounts = document.getElementById("carousel-inner-accounts");
+            const carousel = new bootstrap.Carousel(carouselAccounts);
+            carousel.to(position);
         },
 
         logout(){

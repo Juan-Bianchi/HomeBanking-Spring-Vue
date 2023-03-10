@@ -8,6 +8,9 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
 </head>
   <body class="body-landing">
@@ -35,7 +38,7 @@
 
         <main>
 
-            <div class="banner-landing w-100">
+            <div class="banner-landing w-100 flexAfter768">
                 <div class="d-flex autotyping-wrapper">
                     <img class="tree-banner" src="./images/darkModeSmIcon.png" alt="">
                     <div class="typing-container">
@@ -222,9 +225,10 @@
             <!-- Modal -->
             <div class="modal fade" id="modalSign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <img class="w-25 welcome-title" src="./images/welcome.png" alt="girl">
+                    <div class="modal-content modal-login">
+                        <div class="modal-header header-login font2-color">
+                            <!-- <img class="w-25 welcome-title" src="./images/welcome.png" alt="girl"> -->
+                            <h2 class="title-login-header">Welcome to your Homebanking</h2>
                             <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body d-flex align-items-center justify-content-center flex-column">
@@ -315,12 +319,6 @@
         <!-- FOOTER -->
 
         <footer class="d-flex justify-content-evenly">
-          
-          <!-- <div class="sustentable-footer d-flex justify-content-center footer-div">
-            <a href="https://www.ftserussell.com/products/indices/ftse4good"><img src="./images/footer1.png" alt="ftse" title="ftse"></a>
-            <a href="https://www.unglobalcompact.org"><img src="./images/footer2.png" alt="unitedNat" title="unitedNat"></a>
-            <a href="https://www.unepfi.org/banking/bankingprinciples/"><img src="./images/footer3.png" alt="unep" title="unep"></a>       
-          </div> -->
 
           <div class="d-flex align-items-center">
             <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">

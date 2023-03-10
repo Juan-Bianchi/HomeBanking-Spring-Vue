@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
@@ -27,10 +31,10 @@
             <!-- HEADER -->
 
             <header>
-              <div v-if="client" class="header-options justify-content-around">
-                <a class="a-header-options font1-color" href="">FAQs</a>
-                <a class="a-header-options font1-color" href="">Costumer Attention</a>
-                <a class="a-header-options font1-color" href="">
+              <div v-if="client" class="header-options flexAfter768 justify-content-around">
+                <a class="a-header-options flexAfter768 font1-color" href="">FAQs</a>
+                <a class="a-header-options flexAfter768 font1-color" href="">Costumer Attention</a>
+                <a class="a-header-options flexAfter768 font1-color" href="">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
@@ -38,11 +42,11 @@
                   </svg>
                   Notifications
                 </a>
-                <a href="#" class="a-header-options font1-color">
+                <a href="#" class="a-header-options flexAfter768 font1-color">
                   <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
                   {{client.firstName}}
                 </a>
-                <p @click="logout()" class="a-header-options font1-color log-out">
+                <p @click="logout()" class="a-header-options flexAfter768 font1-color log-out">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
@@ -72,6 +76,9 @@
                               <span>e</span>
                               <span>n</span>
                               <span>u</span>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+
                             </div>
                             
                           </button>
@@ -247,7 +254,7 @@
                 </section>     
               </header>
 
-            <main class="accounts-main">
+            <main class="accounts-main loans-main">
 
                 <!-- CARRUSEL -->
                 <div id="carousel-top-main" class="carousel slide" data-bs-ride="carousel">
@@ -266,63 +273,228 @@
 
                 <!-- LOANS LIST -->
 
-                <div class="d-flex justify-content-between align-items-center tree-and-loan loan-list-main">
-                    <div v-if="loans.length" class="loans-wrapper d-flex flex-column">
-                      <h5 class="font2-color">Currently Active Loans</h5>
-                      <div v-if="loans.length < 4" class="new-account">
-                        <h6>Add a new loan</h6>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <circle cx="12" cy="12" r="9" />
-                          <line x1="9" y1="12" x2="15" y2="12" />
-                          <line x1="12" y1="9" x2="12" y2="15" />
-                        </svg>
-                      </div>
-                      <table class="table" v-if="loans.length < 4" style="text-align: center;">
-                        <thead>
-                          <tr>
-                            <th>Type of loan</th>
-                            <th>Amount</th>
-                            <th>Payments</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <template v-for="loan of loans">
-                            <tr>                        
-                                <td>{{loan.name}}</td>
-                                <td>${{loan.amount}}</td>
-                                <td>{{loan.payments}}</td>                 
-                            </tr>
-                          </template>
-                          
-                        </tbody>
-                      </table>
-                    </div>
-      
-                    <div v-else-if="!loans.length" >
-                      <h5 class="font2-color">No active Loans</h5>
-                      <p>Know more about our loans. Ask for a new lone to fullfil your dreams!</p>
-                      <div class="new-account">
-                        <h6>Add a new loan</h6>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <circle cx="12" cy="12" r="9" />
-                          <line x1="9" y1="12" x2="15" y2="12" />
-                          <line x1="12" y1="9" x2="12" y2="15" />
-                        </svg>
+                <div class="d-flex justify-content-between align-items-start tree-and-loan">
+                    <div class="container table-loan" v-if="filteredLoans.length">
+                      <div class="row d-flex justify-content-center">
+                          <div class="col-12 col-md-12 col-lg-12">
+                              <div class="panel">
+                                  <div class="panel-heading">
+                                      <div class="row">
+                                          <div class="col col-sm-6 col-xs-12">
+                                              <h4 class="title">Active <span>Loans</span></h4>
+                                          </div>
+                                          <!-- <div class="col-sm-9 col-xs-12 text-end">
+                                              <div class="btn_group">
+                                                  <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf fa-lg"></i></button>
+                                              </div>
+                                          </div> -->
+                                      </div>
+                                  </div>
+                                  <div class="panel-body table-responsive">
+                                      <table class="table">
+                                          <thead>
+                                              <tr>
+                                                <th>Type of loan</th>
+                                                <th>Amount</th>
+                                                <th>Payments</th>
+                                                <th class="flexAfter768 justify-content-center">More Info</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <template v-for="loan of visibleLoans">
+                                              <tr>                        
+                                                  <td>{{loan.name}}</td>
+                                                  <td>${{loan.amount}}</td>
+                                                  <td>{{loan.payments}}</td>  
+                                                  <td class="flexAfter768 justify-content-center">
+                                                    <ul class="action-list">
+                                                        <li><a href="#" data-tip="details"><i class="fa fa-circle-info"></i></a></li>
+                                                    </ul>
+                                                  </td>               
+                                              </tr>
+                                            </template>  
+                                            <template v-if="visibleLoans.length > -1 && visibleLoans.length < 5" v-for="line of emptyLinesAmount">
+                                              <tr class="emptyLines">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="flexAfter768 justify-content-center"></td>
+                                              </tr>
+                                            </template>
+                                            
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                  <div class="panel-footer">
+                                      <div class="row">
+                                          <div class="col-6 col-sm-6 col-xs-6 float-start">
+                                            <span class="float-start">showing {{pageNumber}} out of {{totalPages}} entries</span>
+                                          </div>
+                                          <div class="col-6 col-sm-6 col-xs-6 float-end">
+                                            <div class="flex-column align-items-end flexAfter768">
+                                              <div class="d-flex justify-content-end align-items-center page-transactions">
+                                                <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                                <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                                                <ul class="pagination">
+                                                  <template v-for="number of visibleNavNumbers">
+                                                    <li :class="pageNumber == number? 'active': 'disabled'" @click="goToPage(number)"><a href="#">{{number}}</a></li>
+                                                  </template>
+                                                </ul>                       
+                                                <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                                <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                              </div>
+                                              
+                                            </div>
+                                            <div class="flex-column align-items-end noneAfter768">
+                                              <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
+                                              <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
+                        
+                                              <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
+                                              <i v-else class="fa-solid fa-chevron-right fa-grey ms-2"></i>
+                                            </div>
+                                            
+                                          </div>
+                                      </div>
+                                      <div class="row mt-5">
+                                          <div class="col">
+                                            <div class="d-flex justify-content-around filter-loans" v-if="typesOfLoans.length">
+                                              <span>Switch to filter your loans: </span>
+                                              <div class="d-flex justify-content-between checks-loans">
+                                                <div class="form-check form-switch d-flex align-items-center" v-for="type of typesOfLoans">
+                                                  <input class="form-check-input check-trans me-2" type="checkbox" role="switch" id="checkLoanType" :value="type" v-model="activeChecks" @change="filterLoans" checked>
+                                                  <label class="form-check-label me-3" for="checkLoanType">{{type}}</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
                     </div>
 
-                    <div v-else class="card card-innactive">                       
-                        <h5 class="card-title text-muted">Already have all our loans</h5>
-                        <h5 class="card-title text-muted">Ready to fulfill your dreams!</h5>
-                    </div>
-                    
+                    <!-- OFFER NEW LOANS -->
+                    <section class="offer-loans-wrapper d-flex flex-column w-100 font1-color panel">
+                      <h3>Pre-approved loans available</h3>
+
+                      <div class="d-flex flex-column gap-4">
+                        <h4 class="title-background-loans">Currently available amounts</h4>
+                        <div class="d-flex available-amounts gap-2" v-if="availableAmounts.length" v-for="loan of availableAmounts">
+                          <div class="d-flex flex-column justify-content-center align-items-start">
+                            <span>Type of Loan: {{loan.name}} </span>
+                            <span>Available amount: {{loan.available.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-start flex-wrap">  
+                            <a :href="'#'+ loan.name.toLowerCase() + 'Loans'"><button class="btn-loans">See Details</button></a>
+                          </div>
+                          
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-around align-items-center w-100 my-4">
+                        <img class="loan-png" src="./images/newhouse.png" alt="newHouse">
+                        <img class="loan-png" src="./images/newcar.png" alt="newCar">
+                        <img class="loan-png" src="./images/newtv.png" alt="newTv">
+                      </div>
+
+                      <div class="d-flex flex-wrap justify-content-center btn-group">
+                        <a href="#collapseLoanApplication"><button class="btn-loans" data-bs-toggle="collapse" href="#collapseLoanApplication" role="button" aria-expanded="false" aria-controls="collapseExample">Apply a new loan</button></a>
+                      </div>
+                    </section>         
                     
       
-                    <div class="tree-transactions align-items-center">
+                    <!-- <div class="tree-transactions align-items-center">
                       <img class="tree-blue" src="./images/treeBlue.png" alt="">
-                    </div>
+                    </div> -->
+                </div>
+
+
+                <div class="collapse" id="collapseLoanApplication">
+                      <div class="card card-body">
+                        <section class="w-100 d-flex flex-column align-items-center my-4">
+                          <div class="mb-3 d-flex flex-column justify-content-center align-items-center headings-account" v-if="client">
+                              <h2 class="font2-color">Loan Application Form:</h2>
+                          </div>
+                                                 
+                          <div v-if="availableAmounts.length" class="d-flex new-card-wrapper">
+                              <!-- RADIO BOXES -->
+                              <div class="d-flex flex-column checks-create-cards-wrapper">
+                                  <section class="type-credit-card-create font2-color">
+                                      <h5>Select the type of your new loan.</h5>
+                                      <template v-if="genericLoans.length" v-for="loan of genericLoans">
+                                        <div v-if="availableAmounts.some(ln => ln.name.includes(loan.name))">
+                                          <input v-model="loanApplicationDTO.idLoan" class="form-check-input me-2" type="radio" name="LoanName" id="nameChecked" :value="loan.id">
+                                          <label class="form-check-label" for="nameChecked">
+                                            {{loan.name}}
+                                          </label>
+                                        </div>
+                                        <div v-else class="form-check">
+                                            <input class="form-check-input me-2" type="radio" name="nameDisabled" id="nameDisabled" disabled>
+                                            <label class="form-check-label" for="nameDisabled">
+                                              {{loan.name}}
+                                            </label>
+                                        </div>
+                                      </template>
+                                  </section>
+                                  
+                                  <section v-if= "loanApplicationDTO.idLoan" class="type-debit-card-create font2-color">
+                                    <h5>Please, inform the amount you want to apply for.</h5>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="input-amount-loan">Loan Amount</span>
+                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="stringAmount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be between U$S 10.000 and U$S ' + availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available" >
+                                    </div> 
+                                  </section>
+
+                                  <section class="type-debit-card-create font2-color">
+                                    <template v-if="loanApplicationDTO.idLoan">
+                                        <h5>Please, select the amount of payments you are going to repay the loan.</h5> 
+                                        <select class="form-select" aria-label="select-trans" v-model="loanApplicationDTO.payments">
+                                            <template v-for="payment of genericLoans.find(loan => loan.id == loanApplicationDTO.idLoan).payments">
+                                                <option :value="payment">{{payment}}</option>
+                                            </template>  
+                                        </select>
+                                    </template>
+                                  </section>
+
+                                  <section class="type-debit-card-create font2-color">
+                                    <h5>Please, select the account where you want to receive the money.</h5> 
+                                    <template v-if="accounts.length">
+                                        <select class="form-select" aria-label="select-trans" v-model="loanApplicationDTO.associatedAccountNumber">
+                                            <template v-for="account of accounts">
+                                                <option :value="account.number">{{account.number}}</option>
+                                            </template>  
+                                        </select>
+                                    </template>
+                                  </section>
+                                  
+                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applyLoan">
+                                      Apply
+                                  </button>
+                              </div>
+    
+                              <div class="modal fade" id="applyLoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h2 class="modal-title fs-5" id="exampleModalLabel">Please confirm the loan application</h2>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>If you accept the loan will be applied. If you want to cancel the request just click close button.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                      <button @click="applyLoan()" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                        Accept
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>  
+                          </div>
+                        </section>
+                      </div>
                 </div>
 
                 <div class="banner-wrapper">
@@ -340,63 +512,79 @@
 
                 
 
-                <div class="details-loans d-flex justify-content-between">
+                <div class="details-loans d-flex flex-column">
 
                     <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Features</h3>
-                        <h5 class="font2-color">Personal loans</h5>
+                        <h3 id="personalLoans" class="font2-color mt-5 mb-3">Personal loans</h3>
+                        <h5 class="font2-color">Features</h5>
                         <ul class="loans-ul">
-                            <li>Loan amounts from $10,000 to $100,000</li>
-                            <li>Fixed rates of 10% - 24% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a response in less than 60 seconds</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
+                            <li>Loan amounts up to $100,000</li>
+                            <li>Fixed rate of 24% <abbr title="Annual Percentage Rate">APR</abbr></li>
+                            <li>Submit your application online and get a response in less than 60 seconds.</li>
+                            <li>Once approved, get funds instanly to your account.</li>
                             <li>You can repay your loan over 6, 12 or 24 months.</li>
                         </ul>
-                        <h5 class="font2-color">Automotive loans</h5>
+                        <h5 class="font2-color">Benefits</h5>
                         <ul class="loans-ul">
-                            <li>Loan amounts from $30,000 to $300,000</li>
-                            <li>Fixed rates of 7% - 20% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a response in less than 60 seconds</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
+                          <li>Predictable monthly payments</li>
+                          <li>Quick access to your funds</li>
+                          <li>Simple application process</li>
+                          <li>Setting up monthly payments with Auto Deduct at time of origination helps you to qualify for a lower rate and simplifies the repayment process.</li>
+                        </ul>
+                        <h5 class="font2-color">Requirements</h5>
+                        <ul class="loans-ul">
+                          <li>Yearly income of at least $10,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
+                          <li>Eligible Mindhub Bros deposit account open.</li>
+                          <li>If you already have another Mindhub Brothers Bank Personal Loan opened at the time of application, money requested, plus the past due amount, must not exceed the max Personal Loan amount.</li>
+                        </ul>
+
+
+                        <h3 id="automotiveLoans" class="font2-color mt-5 mb-3">Automotive loans</h3>
+                        <h5 class="font2-color">Features</h5>
+                        <ul class="loans-ul">
+                            <li>Loan amounts up to $300,000</li>
+                            <li>Fixed rates of 20% <abbr title="Annual Percentage Rate">APR</abbr></li>
+                            <li>Submit your application online and get a response in less than 60 seconds.</li>
+                            <li>Once approved, get funds instanly to your account.</li>
                             <li>You can repay your loan over 6, 12, 24, or 36 months.</li>
                         </ul>
+                        <h5 class="font2-color">Benefits</h5>
                         <ul class="loans-ul">
-                            <h5 class="font2-color">Mortgages</h5>
-                            <li>Loan amounts from $100,000 to $500,000</li>
-                            <li>Fixed rates of 5% - 12% <abbr title="Annual Percentage Rate">APR</abbr></li>
-                            <li>Submit your application online and get a personal meeting with a bank executive in less than a week</li>
-                            <li>Once approved, get funds same day to your account, and up to 2 business days for non-Mindhub Bros accounts, upon approval and when using direct deposit.</li>
+                          <li>Predictable monthly payments</li>
+                          <li>Quick access to your funds</li>
+                          <li>Simple application process</li>
+                          <li>Setting up monthly payments with Auto Deduct at time of origination helps you to qualify for a lower rate and simplifies the repayment process.</li>
+                        </ul>
+                        <h5 class="font2-color">Requirements</h5>
+                        <ul class="loans-ul">
+                          <li>Yearly income of at least $15,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
+                          <li>Eligible Mindhub Bros deposit account open.</li>
+                          <li>If you already have another Mindhub Brothers Bank Automotive Loan opened at the time of application, money requested, plus the past due amount, must not exceed the max Automotive Loan amount.</li>
+                        </ul>
+
+
+
+                        <h3 id="mortgageLoans" class="font2-color mt-5 mb-3">Mortgage</h3>
+                        <h5 class="font2-color">Features</h5>
+                        <ul class="loans-ul">
+                            <li>Loan amounts up to $500,000</li>
+                            <li>Fixed rates of 8% <abbr title="Annual Percentage Rate">APR</abbr></li>
+                            <li>Submit your application online and get a response in less than 60 seconds.</li>
+                            <li>Once approved, get funds instanly to your account.</li>
                             <li>You can repay your loan over 6, 12, 24, 36, 48 or 60 months.</li>
                         </ul>
-                    </div>
-                    <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Benefits</h3>
+                        <h5 class="font2-color">Benefits</h5>
                         <ul class="loans-ul">
-                            <li>Predictable monthly payments</li>
-                            <li>Quick access to your funds</li>
-                            <li>Simple application process</li>
-                            <li>Setting up monthly payments with Auto Deduct at time of origination helps you to qualify for a lower rate and simplifies the repayment process.</li>
+                          <li>Predictable monthly payments</li>
+                          <li>Quick access to your funds</li>
+                          <li>Simple application process</li>
+                          <li>Setting up monthly payments with Auto Deduct at time of origination helps you to qualify for a lower rate and simplifies the repayment process.</li>
                         </ul>
-                    </div>
-                    <div class="div-details-loans">
-                        <h3 class="font2-color mb-3">Requirements</h3>
-                        <h5 class="font2-color">Personal loans</h5>
+                        <h5 class="font2-color">Requirements</h5>
                         <ul class="loans-ul">
-                            <li>Yearly income of at least $10,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mindhub Brothers Banck Personal Loan open at time of application.</li>
-                        </ul>
-                        <h5 class="font2-color">Automotive loans</h5>
-                        <ul class="loans-ul">
-                            <li>Yearly income of at least $15,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mindhub Brothers Banck Automotive Loan open at time of application.</li>
-                        </ul>
-                        <h5 class="font2-color">Mortgages</h5>
-                        <ul class="loans-ul">
-                            <li>Yearly income of at least $85,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
-                            <li>Eligible Mindhub Bros deposit account open for at least twelve months</li>
-                            <li>No one other Mortgage open at time of application.</li>
+                          <li>Yearly income of at least $85,500. Also you are required to satisfy Mindhub Bros’ creditworthiness criteria.</li>
+                          <li>Eligible Mindhub Bros deposit account open.</li>
+                          <li>If you already have another Mindhub Brothers Bank Mortgage opened at the time of application, money requested, plus the past due amount, must not exceed the max Mortgage amount.</li>
                         </ul>
                     </div>
                 </div>
@@ -497,6 +685,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./scripts/loans.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./scripts/loan-application.js"></script>
 </body>
 </html>
