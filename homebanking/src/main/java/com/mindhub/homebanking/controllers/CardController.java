@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class CardController {
     @Autowired
     ClientRepository clientRepository;
 
-    @RequestMapping("/clients/current/cards")
+    @GetMapping("/clients/current/cards")
     public Set<CardDTO> getCurrentCards(Authentication authentication){
 
         return clientRepository.findByEmail(authentication.getName()).getCards().stream().map(card-> new CardDTO(card)).collect(toSet());

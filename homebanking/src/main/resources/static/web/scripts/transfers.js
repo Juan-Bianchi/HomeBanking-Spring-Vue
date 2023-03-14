@@ -52,7 +52,7 @@ createApp({
                 this.amountNumber =  0;
             }
             else{
-                this.amountNumber =  Number(this.amount.slice);
+                this.amountNumber =  Number(this.amount);
                 this.amount =  Number(this.amount).toLocaleString("es-AR", {style:"currency",currency:"USD"});
             }
             
@@ -89,19 +89,40 @@ createApp({
             if(Number.isNaN(Number(this.amountNumber)) || !this.amountNumber ){
                 this.amountNumber = 0;
             }
-            axios.post('/api/transactions', `amount=${this.amountNumber}&description=${this.description}&origAccountNumb=${this.originAccount}&destAccountNumb=${this.destinationAccount}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
-                 .then(response => {
-                    window.location.href = "http://localhost:8080/web/transfers.html";
-                 })
-                 .catch(err =>{
-                    console.log([err])
-                    //console.log(err.reponse.data);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `The transfer was not completed: ${err.message.includes('400')? err.message: err.response.data}`,
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the transaction',
+                text: "If you accept the transaction will be completed. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                showCancelButton: true,          
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('/api/transactions', `amount=${this.amountNumber}&description=${this.description}&origAccountNumb=${this.originAccount}&destAccountNumb=${this.destinationAccount}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response => {
+                        Swal.fire({
+                            customClass: 'modal-sweet-alert',
+                            text: "Transaction completed!",
+                            icon: 'success',
+                            confirmButtonText: 'Accept'
+                        }).then((result) => {
+                            location.reload();
+                        })
                     })
-                 })
+                    .catch(err =>{
+                       console.log([err])
+           
+                       Swal.fire({
+                           customClass: 'modal-sweet-alert',
+                           icon: 'error',
+                           title: 'Oops...',
+                           text: `The transfer was not completed: ${err.message.includes('400')? err.message: err.response.data}`,
+                       })
+                    })
+                }
+              })
         },
 
         logout(){

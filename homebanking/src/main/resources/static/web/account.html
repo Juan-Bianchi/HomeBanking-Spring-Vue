@@ -8,6 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="shortcut icon" href="./images/blueFavicon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8464a58f40.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
@@ -23,7 +28,7 @@
         
       <!-- FIN LOADER -->
 
-      <div v-show="client">
+      <div v-show="client" v-cloak>
 
             <!-- HEADER -->
 
@@ -60,7 +65,7 @@
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                               </svg> 
-                              <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                              <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">Home</a>
                             </li>
                             <li class="nav-item d-flex my-2">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -181,7 +186,7 @@
                             <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                             <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                           </svg> 
-                          <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                          <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">Home</a>
                         </li>
                         <li class="nav-item d-flex my-2">
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -273,7 +278,7 @@
 
                   <div class="d-flex flex-column justify-content-around align-items-center small-menu-transaction">
                     <img class="mini-logo-tree" src="./images/darkModeSmIcon.png" alt="logo-white" title="logo">
-                    <a class="toolTip nav-link a-menu font1-color" aria-current="page" href="#">
+                    <a class="toolTip nav-link a-menu font1-color" aria-current="page" href="./index.html">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -386,7 +391,7 @@
 
                 <!-- ENCABEZADO -->
 
-                <section class="mt-3 transaction-wrapper d-flex flex-column justify-content-start align-items-start">
+                <section class="mt-3 transaction-wrapper d-flex flex-column justify-content-start align-items-center">
                   <div class="logo-and-user-account justify-content-end align-items-center w-100 mt-3" v-if="client">
                     <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
                     <h6 class="font2-color me-5">{{client.firstName}}</h6>
@@ -401,98 +406,97 @@
                   </div>    
 
                   <!-- TITLE -->
-                  <div class="flex-column justify-content-center align-items-center ms-5 headings-account flexAfter1024" v-if="account">
+                  <div class="flex-column justify-content-center align-items-center headings-account flexAfter1024" v-if="account">
                     <h2 class="font1-color">CA account number:</h2>
                     <h2 class="font1-color">{{account.number}}</h2>
                   </div>
                 
-                  <div class="d-flex justify-content-center card-wrapper-transaction font2-color"> 
-                    <div class="card card-transfer" v-if="account">
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                          <h5 class="card-title">{{account.number}}</h5>
-                          <h5>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</h5>
-                        </div>
-                        <h6 class="card-subtitle mb-2 text-muted">Current Account</h6>
-                        <div class="d-flex justify-content-between account-card-details">
-                          <span>Creation date:</span>
-                          <span>{{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
-                        </div>
+                  <div class="card card-account" v-if="account">
+                    <div class="card-body font1-color">
+                      <div class="d-flex justify-content-between">
+                        <h5 class="card-title">{{account.number}}</h5>
+                        <h5>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</h5>
                       </div>
+                      <h6 class="card-subtitle mb-2">Current Account</h6>
+                      <div class="d-flex justify-content-between account-card-details">
+                        <span>Creation date:  {{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
+                      </div>                              
                     </div>
                   </div>
-
-                  <div class="d-flex flex-column justify-content-start align-items-center w-100">
-                  
-                    <div class="d-flex flex-column display-transaction-wrapper">
-                      <div v-if="totalPages > 1" class="d-flex justify-content-end align-items-center page-transactions">
-                        <span>Page {{pageNumber}} of {{totalPages}}</span>
-                        <svg v-if="pageNumber > 1" @click="changePage(-1)" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left chevron-page-transaction" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <polyline points="15 6 9 12 15 18" />
-                        </svg>
-  
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <polyline points="15 6 9 12 15 18" />
-                        </svg>
-  
-                        <svg v-if="totalPages > pageNumber" @click="changePage(1)" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right chevron-page-transaction" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <polyline points="9 6 15 12 9 18" />
-                        </svg>
-  
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <polyline points="9 6 15 12 9 18" />
-                        </svg>
-                      </div>
-
-                      <!-- CHECKS -->
-                      
-                      <div class="transactions-display-options d-flex justify-content-around" v-if="typesOfTransaction.length">
-                        <div class="form-check form-switch d-flex align-items-center justify-content-center" v-for="type of typesOfTransaction">
-                          <input class="form-check-input check-trans" type="checkbox" role="switch" id="flexSwitchCheckChecked" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
-                          <label class="form-check-label" for="flexSwitchCheckChecked">{{type}}</label>
-                        </div>
-                        <select class="form-select select-transaction" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions">
-                          <option selected value="10">Last movements</option>
-                          <option value="30">Last 30 days</option>
-                          <option value="60">Last 60 days</option>
-                          <option value="90">Last 90 days</option>
-                        </select>
-                      </div>
-                      
-                    </div>
                     
                     <!-- TABLE -->
 
 
-                    <!-- <div class="d-flex justify-content-between align-items-start tree-and-loan">
-                      <div class="container table-loan" v-if="filteredTransactions.length">
+                    <div id="trans-table" class="d-flex justify-content-between align-items-start tree-and-loan mb-5">
+                      <div class="container table-loan">
                         <div class="row d-flex justify-content-center">
-                            <div class="col-12 col-md-12 col-lg-12">
+                            <div class="col-12">
                                 <div class="panel">
                                     <div class="panel-heading">
                                         <div class="row">
-                                            <div class="col col-sm-6 col-xs-12">
-                                                <h4 class="title">Active <span>Loans</span></h4>
-                                            </div>
-                                            <div class="col-sm-9 col-xs-12 text-end">
-                                                <div class="btn_group">
-                                                    <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf fa-lg"></i></button>
+                                            <div class="col-12">
+                                                <h4 class="title">Your <span>Transactions</span></h4>
+                                            </div>                 
+                                      
+                                            <div class="row font1-color d-flex justify-content-between">
+                                              <div class="filter-loans col-sm-8 col-xs-12 d-flex align-items-end" v-if="typesOfTransaction.length">
+                                                <div class="d-flex justify-content-between checks-loans">
+                                                  <span class="me-2">Switch to filter your Transactions: </span>
+                                                  <div class="form-check form-switch d-flex align-items-center" v-for="type of typesOfTransaction">
+                                                    <input class="form-check-input check-trans me-2" type="checkbox" role="switch" id="checkLoanType" :value="type" v-model="activeChecks" @change="filterTransactions" checked>
+                                                    <label class="form-check-label me-3" for="checkLoanType">{{type.charAt(0) + type.slice(1).toLowerCase()}}</label>
+                                                  </div>
                                                 </div>
+                                              </div>
+                                              
+                                              <div class="d-flex justify-content-between align-items-end checks-loans">
+                                                <div class="d-flex justify-content-between checks-loans gap-2">
+                                                  <span class="me-2">Chose filter method: </span>
+                                                  <div>
+                                                    <input @change="filterTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectDate" value="true" checked>
+                                                    <label class="form-check-label" for="selectDate">
+                                                    By date range
+                                                    </label>
+                                                  </div>
+                                                  <input @change="filterTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectAmount" value="false">
+                                                  <label class="form-check-label" for="selectAmount">
+                                                    By quantity of transactions
+                                                  </label>
+                                                </div>
+                                                
+                                                <div> 
+                                                  <template v-if="filterByDate.includes('false')">
+                                                    <select class="select-transaction  col-xs-12 col-sm-4" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions()">
+                                                      <option class="font2-color" selected value="5">Last 5 movements</option>
+                                                      <option class="font2-color" value="10">Last 10 movements</option>
+                                                      <option class="font2-color" value="15">Last 15 movements</option>
+                                                      <option class="font2-color" value="20">Last 20 movements</option>
+                                                    </select>
+                                                  </template>
+
+                                                  <!-- CALENDAR -->                    
+
+                                                  <template v-else>
+                                                    <div class="col-12 d-flex date-wrapper">
+                                                      <DatePicker v-model="date" :format="format" range></DatePicker>
+                                                      <button @click="filterTransactions()" class="btn-loans">Filter</button>
+                                                    </div>
+                                                  </template>
+                                                  
+                                                </div>
+                                                
+                                              </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-body table-responsive">
+                                    <div v-if="visibleTransactions.length" class="panel-body table-responsive">
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                  <th>Type of transaction</th>
+                                                  <th>Type</th>
                                                   <th>Date</th>
                                                   <th>Amount</th>
-                                                  <th class="flexAfter768 justify-content-center">Details</th>
+                                                  <th class="justify-content-center">Details</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -501,19 +505,12 @@
                                                   <div class="accordion accordion-flush" id="accordionFlushExample">
                                                     <div class="accordion-item accordion-trasaction-table">                            
                                                         <td><span :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">{{transaction.type.charAt(0) + transaction.type.slice(1).toLowerCase()}}</span></td>
-                                                        <td>{{transaction.date.slice(0,10)}}</td>
+                                                        <td>{{transaction.date.slice(0,10).split('-').reverse().join('/')}}</td>
                                                         <td>{{transaction.amount}}</td>
                                                         <td>
-                                                          <div class="accordion-header" id="flush-headingOne">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id"> 
-                                                              <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-if="transaction.type === 'CREDIT'" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                                <polyline points="6 9 12 15 18 9" />
-                                                              </svg>
-                                                              <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                                <polyline points="6 9 12 15 18 9" />
-                                                              </svg>
+                                                          <div class="accordion-header" id="flush-headingOne"> 
+                                                            <button class="accordion-button accordion-but collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id"> 
+                                                              <i :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" class="fa-solid fa-chevron-down"></i>
                                                             </button>
                                                           </div>
                                                         </td>                          
@@ -523,25 +520,34 @@
                                                 <tr>
                                                   <td colspan="4" class="collapse-td">
                                                     <div :id="'flush-collapse' + transaction.id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                      <div class="accordion-body d-flex justify-content-between">
-                                                        <div class="d-flex" style="width: 45%; gap: 1vw;">
+                                                      <div class="accordion-body d-flex justify-content-around">
+                                                        <div class="d-flex justify-content-center" style="width: 45%; gap: 1vw;">
                                                           <span>Movement description:</span>
                                                           <span>{{transaction.description}}</span>
                                                         </div>
-                                                        <div class="d-flex" style="width: 45%; gap: 1vw;">
+                                                        <div class="d-flex justify-content-center" style="width: 45%; gap: 1vw;">
                                                           <span>Date:</span>
-                                                          <span>{{transaction.date.slice(0,10)}}, Time: {{transaction.date.slice(11,19)}}</span>
+                                                          <span>{{transaction.date.slice(0,10).split('-').reverse().join('/')}}, Time: {{transaction.date.slice(11,19)}}</span>
                                                         </div>
                                                       </div>
                                                     </div>
                                                   </td>
                                                 </tr>
                                               </template>
+
+                                              <template v-if="visibleTransactions.length > -1 && visibleTransactions.length < 10" v-for="line of emptyLinesAmount">
+                                                <tr class="emptyLines">
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                </tr>
+                                              </template>
                                               
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="panel-footer">
+                                    <div v-if="visibleTransactions.length" class="panel-footer">
                                         <div class="row">
                                             <div class="col-6 col-sm-6 col-xs-6 float-start">
                                               <span class="float-start">showing {{pageNumber}} out of {{totalPages}} entries</span>
@@ -552,8 +558,8 @@
                                                   <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
                                                   <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
                                                   <ul class="pagination">
-                                                    <template v-for="number of visibleNavNumbers">
-                                                      <li :class="pageNumber == number? 'active': 'disabled'" @click="goToPage(number)"><a href="#">{{number}}</a></li>
+                                                    <template v-if="visibleNavNumbers.length" v-for="number of visibleNavNumbers">
+                                                      <li :class="pageNumber == number? 'active': 'disabled'" @click="goToPage(number)"><a href="#trans-table">{{number}}</a></li>
                                                     </template>
                                                   </ul>                       
                                                   <i v-if="totalPages > pageNumber" @click="changePage(1)" class="fa-solid fa-chevron-right fa-white ms-2 chevron-page-transaction"></i>                          
@@ -571,89 +577,16 @@
                                               
                                             </div>
                                         </div>
-                                        <div class="row mt-5">
-                                            <div class="col">
-                                              <div class="d-flex justify-content-around filter-loans" v-if="typesOfLoans.length">
-                                                <span>Switch to filter your loans: </span>
-                                                <div class="d-flex justify-content-between checks-loans">
-                                                  <div class="form-check form-switch d-flex align-items-center" v-for="type of typesOfLoans">
-                                                    <input class="form-check-input check-trans me-2" type="checkbox" role="switch" id="checkLoanType" :value="type" v-model="activeChecks" @change="filterLoans" checked>
-                                                    <label class="form-check-label me-3" for="checkLoanType">{{type}}</label>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div v-else class="header-login font1-color title-no-transaction d-flex align-items-center">
+                                      <h2 class="title-login-header">Currently, there is not any transaction which matches your filters</h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
                       </div>
   
-                    </div> -->
-
-  
-                    <div class="transaction-details w-100 d-flex justify-content-start mb-4">
-                      <table class="table table-transactions" v-if="filteredTransactions.length">
-                        <thead>
-                          <tr>
-                            <th>Type of transaction</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Details</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <template v-for="transaction of visibleTransactions">
-                            <tr :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">
-                              <div class="accordion accordion-flush" id="accordionFlushExample">
-                                <div class="accordion-item">                            
-                                    <td><span>{{transaction.type.charAt(0) + transaction.type.slice(1).toLowerCase()}}</span></td>
-                                    <td>{{transaction.date.slice(0,10)}}</td>
-                                    <td>{{transaction.amount}}</td>
-                                    <td>
-                                      <div class="accordion-header" id="flush-headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id"> 
-                                          <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-if="transaction.type === 'CREDIT'" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <polyline points="6 9 12 15 18 9" />
-                                          </svg>
-                                          <svg :id="'toggleChevron'+transaction.id" v-on:click="toggleChevron(transaction.id)" v-else xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down arrow-down" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <polyline points="6 9 12 15 18 9" />
-                                          </svg>
-                                        </button>
-                                      </div>
-                                    </td>                          
-                                </div>
-                              </div>  
-                            </tr>
-                            <tr>
-                              <td colspan="4" class="collapse-td">
-                                <div :id="'flush-collapse' + transaction.id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                  <div class="accordion-body d-flex justify-content-between">
-                                    <div class="d-flex" style="width: 45%; gap: 1vw;">
-                                      <span>Movement description:</span>
-                                      <span>{{transaction.description}}</span>
-                                    </div>
-                                    <div class="d-flex" style="width: 45%; gap: 1vw;">
-                                      <span>Date:</span>
-                                      <span>{{transaction.date.slice(0,10)}}, Time: {{transaction.date.slice(11,19)}}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </template>
-                          
-                        </tbody>
-                      </table>
-                      <div class="panda-transaction">
-                        <img class="panda-standing" src="./images/blue-panda2.png" alt="">
-                      </div>
                     </div>
-                  </div>
-
                   
 
                 </section>
@@ -740,7 +673,10 @@
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/@vuepic/vue-datepicker@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+
     <script src="./scripts/account.js"></script>
 </body>
 </html>

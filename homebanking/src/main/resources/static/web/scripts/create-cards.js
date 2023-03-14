@@ -1,6 +1,11 @@
 const {createApp} = Vue;
 
 
+// CODIGO PARA HACER XML REQUEST
+// axios.get('http://localhost:8080/api/clients/current',{headers:{'accept':'application/xml'}})
+//      .then(response => console.log(response.data))
+
+
 createApp({
     data(){
         return{
@@ -68,16 +73,40 @@ createApp({
         },
 
         createCard: function(){
-            axios.post('/api/clients/current/cards',`cardType=${this.type}&cardColor=${this.color}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
-                .then(response => {
-                    console.log('created');
-                    console.log([response]);
-                    this.type = "x";
-                    this.color = "x";
-
-                    this.loadData();
-                })
-                .catch(err => console.error(err.message));
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the card creation',
+                text: "If you accept the card will be created. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                showCancelButton: true,          
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('/api/clients/current/cards',`cardType=${this.type}&cardColor=${this.color}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response => {
+                        Swal.fire({
+                            customClass: 'modal-sweet-alert',
+                            text: "Card created!",
+                            icon: 'success',
+                            confirmButtonText: 'Accept'
+                        }).then((result) => {
+                            window.location.href = "http://localhost:8080/web/cards.html"; 
+                        })
+                    })
+                    .catch(err =>{
+                       console.log([err])
+           
+                       Swal.fire({
+                           customClass: 'modal-sweet-alert',
+                           icon: 'error',
+                           title: 'Oops...',
+                           text: err.message,
+                       })
+                    })
+                }
+              })
         },
 
         filterCards: function(){

@@ -69,7 +69,6 @@ public class HomebankingApplication {
 
 			cli1.addAccount(acc1);
 			cli1.addAccount(acc2);
-			/*cli1.addAccount(acc5);*/
 			cli1.addClientLoan(clLoan1);
 			cli1.addClientLoan(clLoan2);
 			cli1.addCard(crd1);

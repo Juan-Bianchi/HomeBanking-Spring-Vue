@@ -27,7 +27,7 @@
         
       <!-- FIN LOADER -->
 
-        <div v-show = "client">
+        <div v-show = "client" v-cloak>
             <!-- HEADER -->
 
             <header>
@@ -100,7 +100,7 @@
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                               
                               <li class="nav-item">
-                                <a class="nav-link a-menu font1-color" aria-current="page" href="#">
+                                <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -293,48 +293,67 @@
 
                 <section class="cards-bank">
 
-                    <section class="d-flex flex-column">
+                    <section class="d-flex flex-column credit-section mb-5">
                         <h2 class="font2-color">Credit Cards</h2>
                         <div class="d-flex credit-card-wrapper align-items-center">
-                            <div class="flip-card" v-if="creditCards.length" v-for="card of creditCards">
-                                <div class="card cardCredit flip-card-inner">
-                                    <div class="flip-card-front" :class="'card-'+card.color.toLowerCase()">
-                                        <figure class="card__figure">
-                                          <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
-                                          <span class="card__figureName">{{card.color}}</span>
-                                        </figure>
-                                      <div class="card__reader">
-                                        <div class="card__reader--risk card__reader--risk-one"></div>
-                                        <div class="card__reader--risk card__reader--risk-two"></div>
-                                        <div class="card__reader--risk card__reader--risk-three"></div>
-                                        <div class="card__reader--risk card__reader--risk-four"></div>
-                                      </div>
-                                      <p class="card__number cred">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
-                                      <div class="card__dates cred">
-                                        <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
-                                        <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
-                                      </div>
-                                      <span class="card__name cred">{{card.cardHolder.toUpperCase()}}</span>
-                                      <div class="card__flag">
-                                        <div class="card__flag--globe"></div>
-                                        <div class="card__flag--red"></div>
-                                        <div class="card__flag--yellow"></div>
-                                      </div>
+                          <template v-if="creditCards.length" v-for="card of creditCards" class="d-flex flex-column">
+                            <div class="flip-card">
+                              <div class="card cardCredit flip-card-inner">
+                                  <div class="flip-card-front" :class="'card-'+card.color.toLowerCase()">
+                                      <figure class="card__figure">
+                                        <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                        <span class="card__figureName">{{card.color}}</span>
+                                      </figure>
+                                    <div class="card__reader">
+                                      <div class="card__reader--risk card__reader--risk-one"></div>
+                                      <div class="card__reader--risk card__reader--risk-two"></div>
+                                      <div class="card__reader--risk card__reader--risk-three"></div>
+                                      <div class="card__reader--risk card__reader--risk-four"></div>
                                     </div>
+                                    <p class="card__number cred">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
+                                    <div class="card__dates cred">
+                                      <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                      <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                                    </div>
+                                    <span class="card__name cred">{{card.cardHolder.toUpperCase()}}</span>
+                                    <div class="card__flag">
+                                      <div class="card__flag--globe"></div>
+                                      <div class="card__flag--red"></div>
+                                      <div class="card__flag--yellow"></div>
+                                    </div>
+                                  </div>
 
-                                    <div class="flip-card-back" :class="'card-'+card.color.toLowerCase()">
-                                        <div class="magnetic-band"></div>
-                                        <div class="cvv-andSignature d-flex justify-content-evenly">
-                                            <span>cvv: {{showInfoCards? card.cvv :'•••'}}</span>
-                                            <span class="signature">{{card.cardHolder}}</span>
-                                        </div>
-                                        <div class="card-legend">
-                                            <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
-                                            <p>Use of this card is subject to the card agreement.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                  <div class="flip-card-back" :class="'card-'+card.color.toLowerCase()">
+                                      <div class="magnetic-band"></div>
+                                      <div class="cvv-andSignature d-flex justify-content-evenly">
+                                          <span>cvv: {{showInfoCards? card.cvv :'•••'}}</span>
+                                          <span class="signature">{{card.cardHolder}}</span>
+                                      </div>
+                                      <div class="card-legend">
+                                          <p>This card is property of Mindhub Brothers Bank. If found, please return to any bank branch.</p>
+                                          <p>Use of this card is subject to the card agreement.</p>
+                                      </div>
+                                  </div>
+                              </div>
                             </div>
+                            <!-- <button class="btn btn-loans btn-background accordion-button accordion-but collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id">
+                              See details
+                              <i class="ms-3 fa-solid fa-ellipsis-vertical"></i>
+                            </button> 
+                            <div :id="'flush-collapse' + transaction.id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                              <div class="accordion-body d-flex justify-content-around">
+                                <div class="d-flex justify-content-center" style="width: 45%; gap: 1vw;">
+                                  <span>Movement description:</span>
+                                  <span>{{transaction.description}}</span>
+                                </div>
+                                <div class="d-flex justify-content-center" style="width: 45%; gap: 1vw;">
+                                  <span>Date:</span>
+                                  <span>{{transaction.date.slice(0,10).split('-').reverse().join('/')}}, Time: {{transaction.date.slice(11,19)}}</span>
+                                </div>
+                              </div>
+                            </div> -->
+                          </template>
+                            
                         
                             <div v-if="creditCards.length < 3">
                                 <h5 class="font2-color">Available Credit Card</h5>
@@ -353,7 +372,7 @@
                         </div>
                     </section>
                     
-                    <section class="d-flex flex-column">
+                    <section class="d-flex flex-column debit-section mb-5">
                         <h2 class="font2-color">Debit Cards</h2>
                         <div class="d-flex credit-card-wrapper align-items-center">
                             <div class="flip-card" v-if="debitCards.length" v-for="card of debitCards">

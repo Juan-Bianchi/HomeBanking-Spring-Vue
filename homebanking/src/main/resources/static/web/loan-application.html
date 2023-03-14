@@ -27,7 +27,7 @@
         
       <!-- FIN LOADER -->
 
-        <div v-show = "client">
+        <div v-show = "client" v-cloak>
             <!-- HEADER -->
 
             <header>
@@ -102,7 +102,7 @@
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                               
                               <li class="nav-item">
-                                <a class="nav-link a-menu font1-color" aria-current="page" href="#">
+                                <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -304,7 +304,7 @@
                                             <template v-for="loan of visibleLoans">
                                               <tr>                        
                                                   <td>{{loan.name}}</td>
-                                                  <td>${{loan.amount}}</td>
+                                                  <td>{{loan.amount.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
                                                   <td>{{loan.payments}}</td>  
                                                   <td class="flexAfter768 justify-content-center">
                                                     <ul class="action-list">
@@ -414,7 +414,7 @@
                       <div class="card card-body">
                         <section class="w-100 d-flex flex-column align-items-center my-4">
                           <div class="mb-3 d-flex flex-column justify-content-center align-items-center headings-account" v-if="client">
-                              <h2 class="font2-color">Loan Application Form:</h2>
+                              <h2 class="font1-color">Loan Application Form:</h2>
                           </div>
                                                  
                           <div v-if="availableAmounts.length" class="d-flex new-card-wrapper">
@@ -468,30 +468,10 @@
                                     </template>
                                   </section>
                                   
-                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applyLoan">
+                                  <button type="button" class="btn btn-primary" @click="triggerConfirmApplicationModal()">
                                       Apply
                                   </button>
                               </div>
-    
-                              <div class="modal fade" id="applyLoan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h2 class="modal-title fs-5" id="exampleModalLabel">Please confirm the loan application</h2>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>If you accept the loan will be applied. If you want to cancel the request just click close button.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                      <button @click="applyLoan()" type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                                        Accept
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>  
                           </div>
                         </section>
                       </div>

@@ -130,6 +130,7 @@ createApp({
                 numbers.push(i);
             }
             counter = 0;
+            this.navNumbersArray = [];
             while(counter < this.totalPages){
                 this.navNumbersArray.push( numbers.slice(counter, counter+=3) );
             }
@@ -139,7 +140,7 @@ createApp({
 
         changePage: function(movement){
             this.pageNumber += movement;
-            this.currentNavModulus = Math.ceil((this.pageNumber - 1) / 3);
+            this.currentNavModulus = Math.floor((this.pageNumber - 1) / 3);
             console.log(this.currentNavModulus);
             this.renderLoans();
         },
@@ -170,20 +171,45 @@ createApp({
             this.stringAmount = "";         
         },
 
-        applyLoan: function(){
-            axios.post('/api/loans', { idLoan: this.loanApplicationDTO.idLoan, amount: this.loanApplicationDTO.amount, payments: this.loanApplicationDTO.payments, associatedAccountNumber: this.loanApplicationDTO.associatedAccountNumber,})
-                 .then(response => {
-                    window.location.href = "http://localhost:8080/web/loan-application.html?";
-                 })
-                 .catch(err =>{
-                    console.log([err])
-        
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `The loan application was not completed: ${err.message.includes('403')? err.response.data: "There was an error in the loan request."}`,
+        triggerConfirmApplicationModal: function(){
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the loan application',
+                text: "If you accept the loan will be applied. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                showCancelButton: true,          
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Accept',
+                cancelButtonText: 'Close',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('/api/loans', { idLoan: this.loanApplicationDTO.idLoan, amount: this.loanApplicationDTO.amount, payments: this.loanApplicationDTO.payments, associatedAccountNumber: this.loanApplicationDTO.associatedAccountNumber,})
+                    .then(response => {
+                        Swal.fire({
+                            customClass: 'modal-sweet-alert',
+                            text: "Loan applied!",
+                            icon: 'success',
+                            confirmButtonText: 'Accept'
+                        }).then((result) => {
+                            window.location.href = "http://localhost:8080/web/loan-application.html?"; 
+                        })
                     })
-                 })
+                    .catch(err =>{
+                       console.log([err])
+           
+                       Swal.fire({
+                           customClass: 'modal-sweet-alert',
+                           icon: 'error',
+                           title: 'Oops...',
+                           text: `The loan application was not completed: ${err.message.includes('403')? err.response.data: "There was an error in the loan request."}`,
+                       })
+                    })
+                }
+              })
+        },
+
+        applyLoan: function(){
+            
         },
 
         //to render

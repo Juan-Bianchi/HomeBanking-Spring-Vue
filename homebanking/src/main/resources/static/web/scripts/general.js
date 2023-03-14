@@ -13,11 +13,7 @@ createApp({
             passwordLog: undefined,
             errorFound: false,
             errorFoundSign : false,
-            missingFields: false,
-            foundEmail: false,
             registered: false,
-            dinamicText: "",
-            messages: [" nurture your wealth...", " fulfill your dreams...", " become our client! "],
             current: 0,
             adder: 0,
         }
@@ -29,8 +25,6 @@ createApp({
 
     mounted(){
         window.addEventListener('scroll', this.scrollFunction);
-        this.manageAutoTyping(); 
-        this.controlCarousel();
     },
 
     methods: {
@@ -147,67 +141,7 @@ createApp({
             }
         },
 
-        controlCarousel: function(){
-            const myCarousel = document.getElementById('carousel1');
-            const directionButtons = [... document.querySelectorAll('.btn-carousel')];
-
-            myCarousel.addEventListener('slide.bs.carousel', event => {
-                directionButtons[0].style.opacity = '0';
-                directionButtons[1].style.opacity = '0';
-            })
-
-            myCarousel.addEventListener('slid.bs.carousel', event => {
-                directionButtons[0].style.opacity = '1';
-                directionButtons[1].style.opacity = '1';
-            })
-        },
-
-        //autotyping
-
-        async manageAutoTyping(){
-
-            let i = 0;
-            let current = 0;
-            while(true) {
-                current = await this.typeSentence(current);
-                await this.waitForMs(1500);
-                current = await this.deleteSentence(current);
-                await this.waitForMs(1500);
-                i++
-                if(i >= this.messages.length) {i = 0;}
-            }
-        },
-
-        async typeSentence(current) { 
-
-            let i = 0;
-            while(i < this.messages[current].length) {
-                await this.waitForMs(100);
-                this.dinamicText += this.messages[current].charAt(i);
-                i++
-            }
-            current ++;
-            return current;                
-        },
-
-        async deleteSentence(current){
-
-            while(this.dinamicText.length > 0) {
-                await this.waitForMs(100);
-                this.dinamicText = this.dinamicText.slice(0,-1);
-            }
-            if(current > 2){
-                current = 0;
-            }
-            
-            return current;
-        },
-
-        waitForMs(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms))
-        },
-
 
     },
 
-}).mount("#app")
+}).mount("#appVue")

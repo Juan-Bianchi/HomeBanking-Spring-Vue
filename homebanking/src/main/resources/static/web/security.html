@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -12,16 +12,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
+    <script defer src="./scripts/general.js"></script>
 </head>
   <body class="body-landing">
-    <div id="app" v-cloak>
+    <div id="appVue">
 
         <header class="header-landing">
             <div class="header-wrapper w-100">
                 <a class="logo-a-landing font1-color" href="./index.html"><img class="logo-landing-page" src="./images/darkModeLgIncon.png" alt="bankIcon"></a>
                 <a class="a-header-options font1-color bigger" href="#">Personal</a>
                 <a class="a-header-options font1-color bigger" href="">Business</a>
-                <a class="a-header-options font1-color bigger" href="./security.html">Security</a>
+                <a class="a-header-options font1-color bigger" href="">Security</a>
                 <div class="d-flex align-items-center">
                     <a v-if="client" href="./accounts.html" class="a-header-options font3-color bigger">{{client.firstName}} {{client.lastName}}</a>
                     <a v-else href="#" data-bs-toggle="modal" data-bs-target="#modalSign" class="a-header-options font1-color bigger">Log In</a>
@@ -36,77 +37,19 @@
             </div>
         </header>
 
-        <main>
+        <main class="d-flex flex-column align-items-center">
 
-            <div class="banner-landing w-100 flexAfter768">
-                <div class="d-flex autotyping-wrapper">
-                    <img class="tree-banner" src="./images/darkModeSmIcon.png" alt="">
-                    <div class="typing-container">
-                        <span id="sentence" class="sentence">Strengthen the roots... </span>
-                        <div>
-                            <span id="feature-text">{{dinamicText}}</span>
-                            <span class="input-cursor"></span>
-                        </div>
+            <div class="banner-landing w-100 flexAfter768 justify-content-center align-items-center">
+                <div class="row w-75">
+                    <div class="col d-flex align-items-center">
+                        <img class="icon-security" src="./images/padlock.png" alt="padlock">
+                    </div>
+                    <div class="col d-flex flex-column justify-content-center font1-color">
+                        <h1 class="mb-5">Online security</h1>
+                        <h3 class="mb-5">Keep you safe!!</h3>
+                        <h3>Protect your assets!!</h3>
                     </div>
                 </div>
-
-                <img class="man-standing" src="./images/man.png" alt="">
-
-                <!-- <div id="carousel-photos" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div id="car1" class="carousel-item active">
-                            <div class="carousel2-container d-flex">
-                                <div class="d-flex justify-content-center carousel-img-container2">
-                                    <img src="./images/super.jpg" class="img-carousel" alt="super">
-                                </div>
-                                <div class="d-flex align-items-center flex-column carousel-details-container2">
-                                    <h2 class="section-title mb-3">Discounts with your credit card</h2>
-                                    <p>Extra discounts buying at supermarkets on Tuesdays and Thurdays</p>
-                                </div> 
-                            </div>
-                            
-                        </div>
-
-                        <div id="car2" class="carousel-item">
-                            <div class="carousel2-container d-flex">
-                                <div class="d-flex justify-content-center carousel-img-container2">
-                                    <img src="./images/safeBox.jpg" class="img-carousel" alt="super">
-                                </div>
-                                <div class="d-flex align-items-center flex-column carousel-details-container2">
-                                    <h2 class="section-title mb-3">Safe boxes</h2>
-                                    <p>Safe deposit boxes for you available at your branch.</p>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                        <div id="car3" class="carousel-item">
-                            <div class="carousel2-container d-flex">
-                                <div class="d-flex justify-content-center carousel-img-container2">
-                                    <img src="./images/newCar.jpg" class="img-carousel" alt="super">
-                                </div>
-                                <div class="d-flex align-items-center flex-column carousel-details-container2">
-                                    <h2 class="section-title mb-3">Incredible loan rates</h2>
-                                    <p>Automotive loans to buy the car of your dreams.</p>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                        <div id="car4" class="carousel-item">
-                            <div class="carousel2-container d-flex">
-                                <div class="d-flex justify-content-center carousel-img-container2">
-                                    <img src="./images/vacation.jpg" class="img-carousel" alt="super">
-                                </div>
-                                <div class="d-flex align-items-center flex-column carousel-details-container2">
-                                    <h2 class="section-title mb-3">Discounts with your credit card</h2>
-                                    <p>Exclusive discounts with selected hotels.</p>
-                                </div>    
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div> -->
                 
                 
                 <svg class="ending-landing" focusable="false" class="curve-bottom show-for-large-up" viewBox="0 0 1400 38" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -116,112 +59,47 @@
                 
             </div>
 
-            <svg class="" focusable="false" class="curve-bottom show-for-large-up" viewBox="0 0 1400 38" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 48.179 34.027 C 77.767 32.124 107.361 30.31 136.961 28.583 C 246.195 22.388 355.479 17.949 464.832 14.561 C 574.238 11.173 683.657 8.376 793.092 6.173 C 902.831 3.852 1012.542 2.507 1122.299 1.45 C 1214.873 1.45 1307.424 0 1400 0 L 1400 37.953 C 1400 37.953 48.802 38.011 0 38" shape-rendering="geometricPrecision" style="fill:#ffffff">
-                </path>
-            </svg>
-            <svg class="" focusable="false" class="curve-bottom show-for-large-up" viewBox="0 0 1400 38" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 48.179 34.027 C 77.767 32.124 107.361 30.31 136.961 28.583 C 246.195 22.388 355.479 17.949 464.832 14.561 C 574.238 11.173 683.657 8.376 793.092 6.173 C 902.831 3.852 1012.542 2.507 1122.299 1.45 C 1214.873 1.45 1307.424 0 1400 0 L 1400 37.953 C 1400 37.953 48.802 38.011 0 38" shape-rendering="geometricPrecision" style="fill:#f2f2f2">
-                </path>
-            </svg>
-            
+            <h5>At Mindhub Brothers Bank, we take the security of our customers' accounts very seriously. With the rise of online banking and digital transactions, it's more important than ever to be vigilant against potential scams and phishing attempts. We want to ensure that our customers have the information and tools they need to protect their accounts and personal information. That's why we've put together these phishing prevention tips to help you stay safe online. By following these tips, you can help safeguard your accounts and prevent unauthorized access. We encourage all of our customers to take these tips to heart and contact us if you have any questions or concerns about the security of your account.</h5>
 
-            <!-- CAROUSEL PRODUCTS-->
-            <div class="w-100 d-flex justify-content-center flex-column align-items-center" style="background-color:#f2f2f2">
-                <div id="carousel1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                            <div class="double-carousel">
-                                <div class="d-flex justify-content-center carousel-img-container">
-                                    <img src="./images/branchBank.png" class="img-carousel" alt="branches">
-                                </div>
-                                <div class="d-flex align-items-center flex-column carousel-details-container">
-                                    <h2 class="section-title mb-3">Branches everywhere</h2>
-                                    <p>Wherever you need us... We have several branches in every major city of the nation, as well as at least one branch in most of the minor towns accross the country.</p>
-                                </div>
-                            </div>  
-                      </div>
-                      <div class="carousel-item">
-                        <div class="double-carousel">
-                            <div class="d-flex justify-content-center carousel-img-container">
-                                <img src="./images/loan.jpg" class="img-carousel" alt="loans">
-                            </div>
-                            <div class="d-flex align-items-center flex-column carousel-details-container">
-                                <h2 class="section-title mb-3">Exclusive rate loans</h2>
-                                <p>Our main goal is to help you achieve your dreams. That's why we are currently offering incredible rates for our clients. Just ask for one!</p>
-                                <p><a href="#" class="btn btn-primary mr-2 mb-2">Learn More</a></p>
-                            </div>
-                        </div>    
-                      </div>
-                      <div class="carousel-item">
-                        <div class="double-carousel">
-                            <div class="d-flex justify-content-center carousel-img-container">
-                                <img src="./images/homebanking.jpg" class="img-carousel" alt="homebanking">
-                            </div>
-                            <div class="d-flex align-items-center flex-column carousel-details-container">
-                                <h2 class="section-title mb-3">Everything accounts for everyone</h2>
-                                <p>We like to make money management work hard and look easy. Our personal banking options have been carefully created with you in mind. From checking to savings and every dollar in between, we have an account that makes sense for you.</p>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSign">
-                                    Online Banking
-                                </button>
-                            </div>
-                        </div>   
-                      </div>
-                      
-                      <div class="carousel-item">
-                        <div class="double-carousel">
-                            <div class="d-flex justify-content-center carousel-img-container">
-                                <img src="./images/savings.jpg" class="img-carousel" alt="savings">
-                            </div>
-                            <div class="d-flex align-items-center flex-column carousel-details-container">
-                                <h2 class="section-title mb-3">Savings and investments</h2>
-                                <p>Come to see our exclusive rates for fixed term deposits! Get to know more about investment options to nurture your wealth!!</p>
-                                <p><a href="#" class="btn btn-primary mr-2 mb-2">Learn More</a></p>
-                            </div>
-                        </div>   
-                      </div>
-                      <div class="carousel-item">
-                        <div class="double-carousel">
-                            <div class="d-flex justify-content-center carousel-img-container">
-                                <img src="./images/apphome.jpg" class="img-carousel" alt="app">
-                            </div>
-                            <div class="d-flex align-items-center flex-column carousel-details-container">
-                                <h2 class="section-title mb-3">Homebanking App</h2>
-                                <p>Discover this secure and easier way of using our products and managing your actives!</p>
-                                <p><a href="#" class="btn btn-primary mr-2 mb-2">Learn More</a></p>
-                            </div>
-                        </div> 
-                      </div>
-                    </div>
-                    <!-- BUTTON -->
-                    <div class="button-carousel-container d-flex justify-content-center">
-                        <button class="btn btn-primary btn-carousel" data-bs-target="#carousel1" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </button>
-                        <button class="btn btn-primary btn-carousel" data-bs-target="#carousel1" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    
-                </div>
-                <svg focusable="false" class="curve-bottom show-for-medium-up" viewBox="0 0 1400 38" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 48.179 34.027 C 77.767 32.124 107.361 30.31 136.961 28.583 C 246.195 22.388 355.479 17.949 464.832 14.561 C 574.238 11.173 683.657 8.376 793.092 6.173 C 902.831 3.852 1012.542 2.507 1122.299 1.45 C 1214.873 1.45 1307.424 0 1400 0 L 1400 37.953 C 1400 37.953 48.802 38.011 0 38" shape-rendering="geometricPrecision" style="fill:#fff">
-                    </path>
-                </svg>
-            </div>
-            
-            <div class="summer-promotions">
-                
-            </div>
-
-            
-          
-            
-
-            <!-- Button trigger modal -->
-            
-            
-            <!-- Modal -->
+            <ul>
+                <li>
+                    <strong>Keep your computer and mobile devices secure:</strong> To protect your account, it is important to have
+                    up-to-date anti-virus and anti-malware software installed on your computer and mobile devices. Keep your
+                    operating system and software updated and use strong, unique passwords for all of your accounts.
+                </li>
+                <li>
+                    <strong>Don't click on suspicious links:</strong> Be wary of unsolicited emails or messages that ask you to
+                    click on a link or download an attachment. If you receive a message that seems suspicious, do not click on any
+                    links or download any attachments. Instead, contact us directly to verify its authenticity.
+                </li>
+                <li>
+                    <strong>Verify the sender's identity:</strong> Phishing emails often appear to come from legitimate sources, but
+                    they may actually be sent by scammers. Check the sender's email address to make sure it's legitimate before
+                    clicking on any links or downloading any attachments. If you are unsure, do not hesitate to reach out to our
+                    customer service team.
+                </li>
+                <li>
+                    <strong>Be wary of urgent requests:</strong> Scammers often use urgent language to try to get you to act quickly
+                    without thinking. If an email or message seems urgent or threatens dire consequences if you don't act
+                    immediately, it may be a phishing attempt. Always take the time to carefully review and assess any urgent
+                    requests.
+                </li>
+                <li>
+                    <strong>Always type the URL into the address bar:</strong> When accessing your online banking account, always
+                    type the URL directly into the address bar of your web browser to ensure you are visiting the legitimate site.
+                    Do not click on any links to access your account.
+                </li>
+                <li>
+                    <strong>Use two-factor authentication:</strong> We highly recommend using two-factor authentication to add an
+                    extra layer of security to your account. Two-factor authentication requires you to enter a code in addition to
+                    your password to access your account. This makes it harder for scammers to access your account.
+                </li>
+                <li>
+                    <strong>Check your account regularly:</strong> We recommend checking your account activity regularly to ensure
+                    there are no unauthorized transactions. If you notice any suspicious activity, contact us immediately. We are
+                    here to help protect your account and prevent any fraudulent activity.
+                </li>
+            </ul>
             <div class="modal fade" id="modalSign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content modal-login">
@@ -310,8 +188,6 @@
                 </div>
             </div>
             <img class="footer-up" src="./images/footer.png" alt="">
-            
-            
         </main>
       
 
@@ -396,15 +272,13 @@
           </svg>
           Copyright 2023 Juan Alberto Bianchi - All rights reserved
         </p>
-      </div>
     
     </div>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="./scripts/index.js"></script>
+    
   </body>
 </html>
