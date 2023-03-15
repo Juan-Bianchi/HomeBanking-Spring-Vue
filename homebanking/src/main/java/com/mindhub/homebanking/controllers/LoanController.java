@@ -49,7 +49,7 @@ public class LoanController {
 
         if (loanApplicationDTO.getIdLoan() == null  || loanApplicationDTO.getAmount() == null || loanApplicationDTO.getPayments() == null || loanApplicationDTO.getAssociatedAccountNumber().isEmpty()) {
             String errorMessage = "⋆ The following fields are empty: ";
-            Boolean moreThanOne = false;
+            boolean moreThanOne = false;
 
             if (loanApplicationDTO.getIdLoan() == null){
                 errorMessage += "loan id";

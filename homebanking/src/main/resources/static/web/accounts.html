@@ -24,7 +24,7 @@
 
       <!-- FIN LOADER -->
 
-      <div v-show = "client">
+      <div v-show = "client" v-cloak>
         <header>
           <div v-if="client" class="header-options flexAfter768 justify-content-around">
             <a class="a-header-options flexAfter768 font1-color" href="">FAQs</a>
@@ -99,7 +99,7 @@
                       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" aria-current="page" href="#">
+                          <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -313,6 +313,8 @@
                     
                   </div>
 
+                  <!-- TABLE -->
+
                   <div class="d-flex justify-content-between align-items-start">
                     <div class="container table-loan" v-if="visibleLoans.length">
                       <div class="row d-flex justify-content-center">
@@ -363,7 +365,10 @@
                               </div>
                           </div>
                       </div>
-                    </div>  
+                    </div> 
+                    
+                    <img class="woman-sitting flexAfter768" src="./images/man-smilling.png" alt="wealth">
+                    <!-- <img class="woman-sitting flexAfter768" src="./images/woman-sitting.png" alt="woman"> -->
                   </div>    
 
                     
@@ -467,11 +472,11 @@
           <div class="d-flex justify-content-center align-items-start diagram-wrapper mb-5">
 
             <!-- CHART -->
-            <div class="justify-content-around align-items-end diagram p-3">
-              <div v-show="totalBalance" class="w-100" style="min-width: 310px;">
+            <div class="justify-content-around align-items-between diagram p-3">
+              <div v-show="totalBalance" class="w-100 d-flex justify-content-between flex-column" style="min-width: 310px;">
                 <h2 class="font2-color">Total Balance</h2>
                 <div class="d-flex justify-content-between back w-100 diagram-apex">
-                  <img class="laugh-man-balance inlineAfter1440" src="./images/havings.png" alt="laughing">
+                  <img class="laugh-man-balance noneFrom1024to1200" src="./images/havings.png" alt="laughing">
                   <div id="totalHavingsChart" class="d-flex justify-content-between">    
                   </div>
                 </div>
@@ -514,7 +519,7 @@
                                       <template v-for="loan of visibleLoans">
                                         <tr>                        
                                             <td>{{loan.name}}</td>
-                                            <td>${{loan.amount}}</td>
+                                            <td>{{loan.amount.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
                                             <td>{{loan.payments}}</td>            
                                         </tr>
                                       </template>  
@@ -663,6 +668,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/accounts.js"></script>
   </body>
 </html>

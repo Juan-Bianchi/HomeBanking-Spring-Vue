@@ -24,7 +24,7 @@
         
       <!-- FIN LOADER -->
 
-      <div v-show="client">
+      <div v-show="client" v-cloak>
 
             <!-- HEADER -->
 
@@ -61,7 +61,7 @@
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                               </svg> 
-                              <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                              <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">Home</a>
                             </li>
                             <li class="nav-item d-flex my-2">
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -182,7 +182,7 @@
                             <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                             <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                           </svg> 
-                          <a class="nav-link a-menu font1-color" aria-current="page" href="#">Home</a>
+                          <a class="nav-link a-menu font1-color" aria-current="page" href="./index.html">Home</a>
                         </li>
                         <li class="nav-item d-flex my-2">
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -274,7 +274,7 @@
 
                   <div class="d-flex flex-column justify-content-around align-items-center small-menu-transaction">
                     <img class="mini-logo-tree" src="./images/darkModeSmIcon.png" alt="logo-white" title="logo">
-                    <a class="toolTip nav-link a-menu font1-color" aria-current="page" href="#">
+                    <a class="toolTip nav-link a-menu font1-color" aria-current="page" href="./index.html">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -401,7 +401,7 @@
                         </a>
                     </div>                  
                 
-                    <section class="w-100 d-flex flex-column align-items-center">
+                    <section class="w-100 d-flex flex-column align-items-center mb-5">
                         <div class="flex-column justify-content-center align-items-center headings-account flexAfter1024" v-if="client">
                           <h2 class="font1-color">New Transaction:</h2>
                         </div>
@@ -498,7 +498,7 @@
                                     </div>
                                 </section>
 
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#completeTransfer">
+                                <button @click="completeTransfer()" type="button" class="btn btn-primary" >
                                     Complete Transfer
                                 </button>
                             </div>

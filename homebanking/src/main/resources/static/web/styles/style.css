@@ -24,7 +24,10 @@
     --white: #f6d3fd;
     --height: 210px;
     --width: 320px;
-    color: rgba(128, 128, 128, 0.703);
+}
+
+[v-cloak] {
+    display: none;
 }
 
 .font1-color{
@@ -44,11 +47,11 @@
 }
 
 .red-color{
-    color: red;
+    color: rgb(170, 1, 1);
 }
 
 .green-color{
-    color: green;
+    color: rgb(41, 254, 41);
 }
 
 .white-color{
@@ -109,6 +112,19 @@ h4 {
     margin-right: 8%;
 }
 
+.modal-sweet-alert{
+    background: linear-gradient(to right, #2980b9, #2c3e50) !important;
+    color: white !important;
+    border: 2px solid var(--card-gold) !important;
+}
+
+.swal2-styled, .swal2-confirm{
+    background: transparent !important;
+    font-size: 16px !important;
+    border-radius: 50px !important;
+    border: 2px solid var(--font-color3) !important;
+    padding: 10px 30px !important;
+}
 
 .btn{  
     border-radius: 4px;
@@ -201,6 +217,10 @@ h4 {
 
 .inlineAfter1440{
     display: none;
+}
+
+.noneFrom1024to1200{
+    display: inline;
 }
 
 /*////////////////////////////////HEADER//////////////////////////////////////////////*/
@@ -679,6 +699,7 @@ h4 {
     border-radius: 10px;
     border: 2px solid var(--font-color4);
     background: white;
+    min-height: 424px;
 }
 
 .laugh-man-balance{
@@ -702,6 +723,10 @@ h4 {
 
 .panda2{
     display: none;
+}
+
+.woman-sitting{
+    width: 11rem;
 }
 
 
@@ -799,6 +824,11 @@ h4 {
     gap:4vh
 }
 
+.accordion-but{
+    display: inline;
+    width: fit-content;
+}
+
 .accordion-trasaction-table{
     padding: 0 !important;
 }
@@ -811,8 +841,11 @@ h4 {
 
 .select-transaction{
     width: auto;
-    border: none;
+    border-radius: 10px;
     background-color: transparent;
+    border: 1px solid var(--font-color3);
+    color: var(--font-color1);
+    padding: 5px;
 }
 
 .collapse-td{
@@ -878,6 +911,18 @@ h4 {
     position: unset !important;
 }
 
+.title-no-transaction{
+    height: 300px;
+}
+
+.dp__theme_light {
+    --dp-background-color: linear-gradient(to right, #2980b9, #2c3e50);
+    --dp-text-color: white;
+    --dp-hover-color: #0D4C92;
+    --dp-border-color: var(--font-color3);
+    --dp-border-color-hover: var(--font-color3);
+ }
+
 /*///////////////////////////////FOOTER ACCOUNT///////////////////////////////////////*/
 .footer-transactions{
     position: relative;
@@ -901,7 +946,7 @@ h4 {
     font-size:xx-large;
     font-weight: 500;
     text-align: center;
-    background: #d0e2f1;
+    background: #d0e2f1ac;
     top: 75%;
     left: 25%;
     width: 50%;
@@ -974,8 +1019,9 @@ h4 {
 .btn-loans{
     color: #fff !important;
     border: 2px solid var(--font-color3) !important;
-    padding: 10px 30px;
+    padding: 5px 30px;
     border-radius: 4px; 
+    transition: all 0.3s ease 0s;
 }
 .btn-loans:hover{
     text-shadow: none !important;
@@ -986,10 +1032,12 @@ h4 {
     color: white;
     border: 2px solid var(--font-color2);
     border-radius: 50px;
-    transition: all 0.3s ease 0s;
     width: 160px;
     margin-top: 1vh;
+    height: 50px;
 }
+
+
 .panel .panel-heading .form-control{
     color: #fff;
     background-color: transparent;
@@ -1537,6 +1585,14 @@ h4 {
     display: none;
   }
 
+  .credit-section, .debit-section{
+    width: 100%;
+    padding: 15px 0 15px 0;
+    border-radius: 10px;
+    border: 2px solid var(--font-color4);
+    background-color: white;
+}
+
 /*----------------------------CREATE-CARDS MAIN--------------------------------------*/
 
 .new-card-wrapper{
@@ -1555,6 +1611,12 @@ h4 {
 
 .transaction-inputs{
     width: 90%;
+}
+
+/*//////////////////////////////SECURITY/////////////////////////////////////////////*/
+
+.icon-security{
+    width: 60%;
 }
 
 /*//////////////////////////////SIGN IN////////////////////////////////////////////////*/
@@ -1960,6 +2022,12 @@ footer{
     }
 }
 
+@media(min-width: 425px) {
+    .cards-bank {
+        width: 85%;
+    }
+}
+
 @media screen and (max-width: 580px) {
     .header-wrapper {
         padding: 20px 10px !important; /* Use !important to make sure that JavaScript doesn't override the padding on small screens */
@@ -2059,6 +2127,10 @@ footer{
 }
 
 @media (min-width: 1024px) {
+
+    .noneFrom1024to1200{
+        display: none;
+    }
 
     .carousel-wrapper{
         justify-content: center;
@@ -2161,6 +2233,12 @@ footer{
 
 }
 
+@media(min-width: 1200px){
+    .noneFrom1024to1200{
+        display: inline;
+    }
+}
+
 @media (min-width: 1440px){
 
     .inlineAfter1440{
@@ -2247,3 +2325,5 @@ footer{
     }
     .panel .panel-heading .btn_group{ text-align: center; }
 }
+
+

@@ -36,25 +36,25 @@ public class ClientController {
     private PasswordEncoder passwordEncoder;
 
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getClients(){
 
         return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
     }
 
-    @RequestMapping("clients/{id}")
+    @GetMapping("clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
         return clientRepository.findById(id).map(client-> new ClientDTO(client)).orElse(null);
     }
 
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication) {
 
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,
                                            @RequestParam String email, @RequestParam String password) {
 

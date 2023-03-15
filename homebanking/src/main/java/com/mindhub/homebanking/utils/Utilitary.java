@@ -1,8 +1,11 @@
 package com.mindhub.homebanking.utils;
 
 
+import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CardRepository;
+
+import java.time.LocalDateTime;
 
 public class Utilitary {
     static public String createAccountNumber(AccountRepository accountRepository){
@@ -13,7 +16,6 @@ public class Utilitary {
 
         return numberAccount;
     }
-
 
     static public String createCardNumber(CardRepository cardRepository){
         String cardNumber = "";
@@ -27,5 +29,4 @@ public class Utilitary {
 
         return cardNumber;
     }
-
 }

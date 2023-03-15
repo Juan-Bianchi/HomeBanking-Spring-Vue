@@ -69,7 +69,6 @@ createApp( {
         },
 
         createPieChart() {
-
             let serie = this.orderedAccounts.map(account => account.balance);
             let label = this.orderedAccounts.map(account => account.number);
 
@@ -79,6 +78,7 @@ createApp( {
                 chart: {
                     width: 310,
                     type: 'donut',
+                    foreColor: '#e6e5de',
                 },
 
                 plotOptions: {
@@ -164,6 +164,7 @@ createApp( {
                 numbers.push(i);
             }
             counter = 0;
+            this.navNumbersArray = [];
             while(counter < this.totalPages){
                 this.navNumbersArray.push( numbers.slice(counter, counter+=3) );
             }
@@ -173,7 +174,7 @@ createApp( {
         
         changePage: function(movement){
             this.pageNumber += movement;
-            this.currentNavModulus = Math.ceil((this.pageNumber - 1) / 3);
+            this.currentNavModulus = Math.floor((this.pageNumber - 1) / 3);
             console.log(this.currentNavModulus);
             this.renderLoans();
         },
@@ -191,12 +192,40 @@ createApp( {
         },
 
         createAccount(){
-            axios.post(`/api/clients/current/accounts`)
-                 .then(response => {
-                    location.reload();
-                    console.log("account created");
-                 })
-                 .catch(err => console.error(err.message));
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the account creation',
+                text: "If you accept the account will be created. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                showCancelButton: true,          
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post(`/api/clients/current/accounts`)
+                    .then(response => {
+                        Swal.fire({
+                            customClass: 'modal-sweet-alert',
+                            text: "Account created!",
+                            icon: 'success',
+                            confirmButtonText: 'Accept'
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    })
+                    .catch(err =>{
+                       console.log([err])
+           
+                       Swal.fire({
+                           customClass: 'modal-sweet-alert',
+                           icon: 'error',
+                           title: 'Oops...',
+                           text: err.message,
+                       })
+                    })
+                }
+              })
         },
 
         setCurrentAccount: function(movement){

@@ -24,12 +24,15 @@ createApp({
     methods:{
 
         loadData: function(){
-            axios.get(`http://localhost:8080/api/clients/current`)
-                 .then(response => {
-                    this.client = {... response.data};
-                    this.cards = this.client.cards.map(card => ({...card}));
-                    this.manageData();
-                 })
+            let client = axios.get(`http://localhost:8080/api/clients/current`)
+            let cards = axios.get('http://localhost:8080/api/clients/current/activeCards')
+            Promise.all([client, cards])
+                    .then(response => {
+                            this.client = {... response[0].data};
+                            this.cards = response[1].data.map(card => ({... card,
+                                                                        isExpired: Date}));
+                            this.manageData();
+                    })
         },
 
         manageData(){
@@ -61,6 +64,44 @@ createApp({
         getCardDate: function(date){
             let arrayDate = date.split('-');
             return arrayDate[1] + "/" + arrayDate[0];
+        },
+
+        cancelCard: function(card){
+            card.isActive = false;
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the card cancellation',
+                text: "If you accept the card will be cancelled. You will not be able to make future purchases with the card, and it will not be available in your homebanking anymore. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                showCancelButton: true,          
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.patch('/api/clients/current/cards',`cardNumber=${card.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response => {
+                        Swal.fire({
+                            customClass: 'modal-sweet-alert',
+                            text: "Card cancelled",
+                            icon: 'success',
+                            confirmButtonText: 'Accept'
+                        }).then((result) => {
+                            location.reload(); 
+                        })
+                    })
+                    .catch(err =>{
+                       console.log([err])
+           
+                       Swal.fire({
+                           customClass: 'modal-sweet-alert',
+                           icon: 'error',
+                           title: 'Oops...',
+                           text: err.message,
+                       })
+                    })
+                }
+              })
         },
         
 
