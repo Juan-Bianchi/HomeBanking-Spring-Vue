@@ -946,7 +946,7 @@ h4 {
     font-size:xx-large;
     font-weight: 500;
     text-align: center;
-    background: #d0e2f1;
+    background: #d0e2f1ac;
     top: 75%;
     left: 25%;
     width: 50%;
@@ -1021,6 +1021,7 @@ h4 {
     border: 2px solid var(--font-color3) !important;
     padding: 5px 30px;
     border-radius: 4px; 
+    transition: all 0.3s ease 0s;
 }
 .btn-loans:hover{
     text-shadow: none !important;
@@ -1031,10 +1032,11 @@ h4 {
     color: white;
     border: 2px solid var(--font-color2);
     border-radius: 50px;
-    transition: all 0.3s ease 0s;
     width: 160px;
     margin-top: 1vh;
+    height: 50px;
 }
+
 
 .panel .panel-heading .form-control{
     color: #fff;
