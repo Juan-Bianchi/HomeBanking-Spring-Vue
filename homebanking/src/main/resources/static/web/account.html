@@ -417,7 +417,7 @@
                         <h5 class="card-title">{{account.number}}</h5>
                         <h5>{{account.balance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</h5>
                       </div>
-                      <h6 class="card-subtitle mb-2">Current Account</h6>
+                      <h6 class="card-subtitle mb-2 text-start w-100">{{account.type.slice(0,1) + account.type.slice(1).toLowerCase()}} Account</h6>
                       <div class="d-flex justify-content-between account-card-details">
                         <span>Creation date:  {{account.creationDate.slice(0,10).split('-').reverse().join('/')}}</span>              
                       </div>                              
@@ -435,8 +435,7 @@
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="title">Your <span>Transactions</span></h4>
-                                            </div>                 
+                                                <h4 class="title">Your <span class="col-11">Transactions</span><button class="btn btn-loans btn-default col-1 float-end me-4" title="Pdf"><i class="fa fa-file-pdf fa-xl"></i></button></h4>                                            </div>                 
                                       
                                             <div class="row font1-color d-flex justify-content-between">
                                               <div class="filter-loans col-sm-8 col-xs-12 d-flex align-items-end" v-if="typesOfTransaction.length">
@@ -453,12 +452,12 @@
                                                 <div class="d-flex justify-content-between checks-loans gap-2">
                                                   <span class="me-2">Chose filter method: </span>
                                                   <div>
-                                                    <input @change="filterTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectDate" value="true" checked>
+                                                    <input @change="loadTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectDate" value="true" checked>
                                                     <label class="form-check-label" for="selectDate">
                                                     By date range
                                                     </label>
                                                   </div>
-                                                  <input @change="filterTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectAmount" value="false">
+                                                  <input @change="loadTransactions()" v-model="filterByDate" class="form-check-input me-2" type="radio" name="selectTrans" id="selectAmount" value="false">
                                                   <label class="form-check-label" for="selectAmount">
                                                     By quantity of transactions
                                                   </label>
@@ -466,7 +465,7 @@
                                                 
                                                 <div> 
                                                   <template v-if="filterByDate.includes('false')">
-                                                    <select class="select-transaction  col-xs-12 col-sm-4" aria-label="Default select example" v-model="dateFilter" @change="filterTransactions()">
+                                                    <select class="select-transaction  col-xs-12 col-sm-4" aria-label="Default select example" v-model="dateFilter" @change="loadTransactions()">
                                                       <option class="font2-color" selected value="5">Last 5 movements</option>
                                                       <option class="font2-color" value="10">Last 10 movements</option>
                                                       <option class="font2-color" value="15">Last 15 movements</option>
@@ -479,7 +478,7 @@
                                                   <template v-else>
                                                     <div class="col-12 d-flex date-wrapper">
                                                       <DatePicker v-model="date" :format="format" range></DatePicker>
-                                                      <button @click="filterTransactions()" class="btn-loans">Filter</button>
+                                                      <button @click="loadTransactions()" class="btn-loans">Filter</button>
                                                     </div>
                                                   </template>
                                                   
@@ -496,6 +495,7 @@
                                                   <th>Type</th>
                                                   <th>Date</th>
                                                   <th>Amount</th>
+                                                  <th>Balance</th>
                                                   <th class="justify-content-center">Details</th>
                                                 </tr>
                                             </thead>
@@ -504,9 +504,10 @@
                                                 <tr>
                                                   <div class="accordion accordion-flush" id="accordionFlushExample">
                                                     <div class="accordion-item accordion-trasaction-table">                            
-                                                        <td><span :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">{{transaction.type.charAt(0) + transaction.type.slice(1).toLowerCase()}}</span></td>
+                                                        <td><span :class="(transaction.type === 'DEBIT'? 'red-color': 'green-color')">{{transaction.type}}</span><i v-if="transaction.type === 'CREDIT'" class="fa-solid fa-arrow-up green-color ms-2"></i><i v-else class="fa-solid fa-arrow-down red-color ms-2"></i></td>
                                                         <td>{{transaction.date.slice(0,10).split('-').reverse().join('/')}}</td>
-                                                        <td>{{transaction.amount}}</td>
+                                                        <td>{{transaction.amount.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
+                                                        <td>{{transaction.accountBalance.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</td>
                                                         <td>
                                                           <div class="accordion-header" id="flush-headingOne"> 
                                                             <button class="accordion-button accordion-but collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id"> 
@@ -518,7 +519,7 @@
                                                   </div>  
                                                 </tr>
                                                 <tr>
-                                                  <td colspan="4" class="collapse-td">
+                                                  <td colspan="5" class="collapse-td">
                                                     <div :id="'flush-collapse' + transaction.id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                                       <div class="accordion-body d-flex justify-content-around">
                                                         <div class="d-flex justify-content-center" style="width: 45%; gap: 1vw;">
@@ -537,6 +538,7 @@
 
                                               <template v-if="visibleTransactions.length > -1 && visibleTransactions.length < 10" v-for="line of emptyLinesAmount">
                                                 <tr class="emptyLines">
+                                                  <td></td>
                                                   <td></td>
                                                   <td></td>
                                                   <td></td>
@@ -672,7 +674,7 @@
     </div>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
     <script src="https://unpkg.com/@vuepic/vue-datepicker@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     

@@ -1,9 +1,10 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
+import com.mindhub.homebanking.dtos.LoanCreationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,29 +24,30 @@ import static java.util.stream.Collectors.toSet;
 public class LoanController {
 
     @Autowired
-    LoanRepository loanRepository;
+    ClientService clientService;
     @Autowired
-    ClientRepository clientRepository;
+    AccountService accountService;
     @Autowired
-    AccountRepository accountRepository;
+    LoanService loanService;
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
     @Autowired
-    ClientLoanRepository clientLoanRepository;
+    ClientLoanService clientLoanService;
+
 
 
     @GetMapping("/loans")
     public Set<LoanDTO> getLoansList(){
 
-        return loanRepository.findAll().stream().map(loan -> new LoanDTO(loan)).collect(toSet());
+        return loanService.findAll().stream().map(LoanDTO::new).collect(toSet());
     }
 
     @PostMapping("/loans")
     @Transactional
     public ResponseEntity<Object> createClientLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication){
 
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Loan loan = loanRepository.findById(loanApplicationDTO.getIdLoan()).orElse(null);
+        Client client = clientService.findByEmail(authentication.getName());
+        Loan loan = loanService.findById(loanApplicationDTO.getIdLoan());
 
         if (loanApplicationDTO.getIdLoan() == null  || loanApplicationDTO.getAmount() == null || loanApplicationDTO.getPayments() == null || loanApplicationDTO.getAssociatedAccountNumber().isEmpty()) {
             String errorMessage = "⋆ The following fields are empty: ";
@@ -103,13 +105,14 @@ public class LoanController {
 
             return  new ResponseEntity<>("The requested amount cannot exceed the current max amount for the selected loan.", HttpStatus.FORBIDDEN);
         }
+
         int min = loan.getPayments().stream().min(Integer::compareTo).orElse(null);
         int max = loan.getPayments().stream().max(Integer::compareTo).orElse(null);
         if(loanApplicationDTO.getPayments() < min || loanApplicationDTO.getPayments() > max){
 
             return new ResponseEntity<>("The payments number must among "+ min + " and " + max, HttpStatus.FORBIDDEN);
         }
-        Account account = accountRepository.findAccountByNumber(loanApplicationDTO.getAssociatedAccountNumber());
+        Account account = accountService.findAccountByNumber(loanApplicationDTO.getAssociatedAccountNumber());
         if(account == null){
 
             return new ResponseEntity<>("The given account does not exist.", HttpStatus.FORBIDDEN);
@@ -136,26 +139,85 @@ public class LoanController {
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loanName + " loan approved.", LocalDateTime.now());
         account.addTransaction(transaction);
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
-        double interestRate;
-        if(loan.getId() == 2){
-            interestRate = 1.24;
-        }
-        else if(loan.getId() == 3){
-            interestRate = 1.2;
-        }
-        else{
-            interestRate = 1.08;
-        }
-        ClientLoan clientLoan = new ClientLoan(client, loan, loanApplicationDTO.getAmount() * interestRate, loanApplicationDTO.getPayments());
+        double finalLoanAmount = loanApplicationDTO.getAmount() + loanApplicationDTO.getAmount() * loan.getInterestRate() / 100;
+        ClientLoan clientLoan = new ClientLoan(client, loan, finalLoanAmount, loanApplicationDTO.getPayments());
         client.addClientLoan(clientLoan);
         loan.addClientLoan(clientLoan);
 
-        transactionRepository.save(transaction);
-        clientLoanRepository.save(clientLoan);
-        accountRepository.save(account);
+        transactionService.save(transaction);
+        clientLoanService.save(clientLoan);
+        accountService.save(account);
 
         return new ResponseEntity<>("Loan has been created and approved.", HttpStatus.CREATED);
     }
+
+    @PostMapping("/genericLoans")
+    public ResponseEntity<Object> setGenericLoan(@RequestBody LoanCreationDTO genericLoan, Authentication authentication){
+
+        Client admin = clientService.findByEmail(authentication.getName());
+        if(!admin.getEmail().equals("admin@mindhub.com") || !admin.getFirstName().equalsIgnoreCase("admin")){
+
+            return new ResponseEntity<>("Only ADMIN can set a new loan.", HttpStatus.FORBIDDEN);
+        }
+        if (genericLoan.getName().isEmpty()  || genericLoan.getMaxAmount() == null || genericLoan.getPayments() == null || genericLoan.getInterestRate() == null) {
+            String errorMessage = "⋆ The following fields are empty: ";
+            boolean moreThanOne = false;
+
+            if (genericLoan.getName().isEmpty()){
+                errorMessage += "name";
+                moreThanOne = true;
+            }
+            if (genericLoan.getMaxAmount() == null){
+                if(moreThanOne){
+                    errorMessage += ", ";
+                }
+                else {
+                    moreThanOne = true;
+                }
+                errorMessage += "max amount";
+            }
+            if (genericLoan.getPayments() == null){
+                if(moreThanOne){
+                    errorMessage += ", ";
+                }
+                else {
+                    moreThanOne = true;
+                }
+                errorMessage += "payments";
+            }
+            if (genericLoan.getInterestRate() == null){
+                if(moreThanOne) {
+                    errorMessage += ", ";
+                }
+                errorMessage += "interest rate";
+            }
+            errorMessage += ".";
+
+            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+        }
+        if(genericLoan.getMaxAmount() < 10000){
+
+            return new ResponseEntity<>("Loan must be at least of 10000 dolars", HttpStatus.FORBIDDEN);
+        }
+        if(genericLoan.getInterestRate() < 0 || genericLoan.getInterestRate() > 100){
+
+            return new ResponseEntity<>("The interest rate must be between 0% and 100%", HttpStatus.FORBIDDEN);
+        }
+        if(genericLoan.getPayments().stream().anyMatch(payment -> payment < 0 || payment > 60)){
+
+            return new ResponseEntity<>("Payment options must be higher than 0 and lower than 60.", HttpStatus.FORBIDDEN);
+        }
+        if(loanService.existsLoanByName(genericLoan.getName())){
+
+            return new ResponseEntity<>("There cannot be two loans with the same name", HttpStatus.FORBIDDEN);
+        }
+
+        Loan loan = new Loan(genericLoan.getName(), genericLoan.getMaxAmount(), genericLoan.getPayments(), genericLoan.getInterestRate());
+        loanService.save(loan);
+
+        return new ResponseEntity<>("Loan created.", HttpStatus.OK);
+    }
+
 
 
 }

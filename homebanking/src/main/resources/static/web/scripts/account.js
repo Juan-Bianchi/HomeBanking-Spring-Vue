@@ -23,7 +23,7 @@ createApp({
             visibleNavNumbers: [],
             emptyLinesAmount: undefined,
             currentNavModulus: 0,
-            date: [],
+            date: undefined,
             filterByDate : "true",
             format: undefined,
         }
@@ -43,28 +43,55 @@ createApp({
             const urlString = location.search;
             const parameters = new URLSearchParams(urlString);
             const id = parameters.get('id');
-            axios.get(`http://localhost:8080/api/clients/current`).then(response => {
-                    this.client = {... response.data};
-                    this.account = this.client.accounts.find(account => account.id == id);  
-                    this.transactions = [...this.account.transactions].map(transaction => transaction);
-                    this.date.push(new Date(new Date().setDate(new Date().getDate()-7)));
-                    this.date.push(new Date(new Date().setDate(this.date[0].getDate() + 7)));
-                    this.manageData();
+            let client = axios.get(`http://localhost:8080/api/clients/current`)
+            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            Promise.all([client, accounts]).then(response => {
+                    this.client = {... response[0].data};
+                    this.account = response[1].data.find(account => account.id == id);  
                     const date = Vue.ref();
-                    date.value = [this.date[0], this.date[1]];
-                    this.format = (date) => {
-                        const day1 = this.date[0].getDate();
-                        const month1 = this.date[0].getMonth() + 1;
-                        const year1 = this.date[0].getFullYear();
-
-                        const day2 = this.date[1].getDate();
-                        const month2 = this.date[1].getMonth() + 1;
-                        const year2 = this.date[1].getFullYear();
-
-                        return `${day1}/${month1}/${year1} - ${day2}/${month2}/${year2}`
+                    if(this.date){
+                        date.value = [this.date[0], this.date[1]];
                     }
+                    this.format = (date) => {
+                        if(this.date){
+                            const day1 = this.date[0].getDate();
+                            const month1 = this.date[0].getMonth() + 1;
+                            const year1 = this.date[0].getFullYear();
+    
+                            const day2 = this.date[1].getDate();
+                            const month2 = this.date[1].getMonth() + 1;
+                            const year2 = this.date[1].getFullYear();
+    
+                            return `${day1}/${month1}/${year1} - ${day2}/${month2}/${year2}`
+                        }
+                        
+                    }
+                    this.loadTransactions();
+                    
                 })
                 //.catch(err => console.error(err.message));
+        },
+
+        loadTransactions: function(){
+            if(this.filterByDate.includes("true") && this.date){
+                
+                axios.get(`http://localhost:8080/api/transactions?accountNumber=${this.account.number}&fromDate=${this.date[0].toISOString()}&thruDate=${this.date[1].toISOString()}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response =>{
+                         this.transactions = response.data.map(transaction => transaction);
+                         this.manageData();
+                    })
+                    .catch(err => console.error(err.message))
+            }
+            else {
+                console.log("object");
+                axios.get(`http://localhost:8080/api/transactions?accountNumber=${this.account.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response =>{
+                         this.transactions = response.data.map(transaction => transaction);
+                         this.manageData();
+                    })
+                    .catch(err => console.error(err.message))
+            }
+            
         },
 
 
@@ -90,26 +117,38 @@ createApp({
             let firstFilter = this.orderedTransactions.filter(transaction => this.activeChecks.some(category => category.startsWith(transaction.type)));
             this.filteredTransactions = [];
             this.dateFilter = Number.parseInt(this.dateFilter);
-            if(this.filterByDate.includes("true")){
-                if(this.date){
-                    this.filteredTransactions = firstFilter.filter(transaction => (new Date(transaction.date.slice(0,10)).getTime() >=  this.date[0].getTime()) &&
-                    (new Date(transaction.date.slice(0,10)).getTime() <=  this.date[1].getTime()));
-                }
-                else{
-                    this.date = [];
-                    this.date.push(new Date(new Date().setDate(new Date().getDate()-7)));
-                    this.date.push(new Date(new Date().setDate(this.date[0].getDate() + 7)));
-                    const date = Vue.ref();
-                    date.value = [this.date[0], this.date[1]];
-                    this.filteredTransactions = [];
-                }
-            }
-            else{
+            // if(this.filterByDate.includes("true")){
+            //     if(this.date){
+            //         this.filteredTransactions = firstFilter.filter(transaction => (new Date(transaction.date.slice(0,10)).getTime() >=  this.date[0].getTime()) &&
+            //         (new Date(transaction.date.slice(0,10)).getTime() <=  this.date[1].getTime()));
+            //     }
+            //     else{
+            //         this.date = [];
+            //         this.date.push(new Date(new Date().setDate(new Date().getDate()-7)));
+            //         this.date.push(new Date(new Date().setDate(this.date[0].getDate() + 7)));
+            //         const date = Vue.ref();
+            //         date.value = [this.date[0], this.date[1]];
+            //         this.filteredTransactions = [];
+            //     }
+            // }
+            // else{
+            //     let i = 0;
+            //     while(i < this.dateFilter && i < firstFilter.length){
+            //         this.filteredTransactions.push(firstFilter[i]);
+            //         i++;
+            //     };
+            // }
+            if(this.filterByDate.includes("false")){
+
+                console.log(this.dateFilter);
                 let i = 0;
                 while(i < this.dateFilter && i < firstFilter.length){
                     this.filteredTransactions.push(firstFilter[i]);
                     i++;
                 };
+            }
+            else{
+                this.filteredTransactions = firstFilter;
             }
             
             this.renderTransactions();

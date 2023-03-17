@@ -24,17 +24,19 @@ public class Loan {
     private List<Integer> payments = new ArrayList<>();
     @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+    private Double interestRate;
 
 
     //CONSTRUCTORS
 
     public Loan(){};
 
-    public Loan(String name, double maxAmount, List<Integer> payments){
+    public Loan(String name, double maxAmount, List<Integer> payments, Double interestRate){
 
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interestRate = interestRate;
     }
 
 
@@ -78,6 +80,11 @@ public class Loan {
         this.payments = payments;
     }
 
+    public void setInterestRate(Double interestRate){
+
+        this.interestRate = interestRate;
+    }
+
 
     //GETTER METHODS
 
@@ -104,5 +111,10 @@ public class Loan {
     public List<Client> getClients() {
 
         return this.clientLoans.stream().map(clientLoan -> clientLoan.getClient()).collect(toList());
+    }
+
+    public Double getInterestRate(){
+
+        return this.interestRate;
     }
 }

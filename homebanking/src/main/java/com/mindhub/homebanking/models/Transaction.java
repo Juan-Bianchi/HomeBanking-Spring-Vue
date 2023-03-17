@@ -19,6 +19,7 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Account account;
+    private double accountBalance;
 
 
     //CONSTRUCTORS
@@ -60,6 +61,11 @@ public class Transaction {
         this.account = account;
     }
 
+    public void setAccountBalance(double accountBalance){
+
+        this.accountBalance = accountBalance;
+    }
+
 
     //GETTER METHODS
 
@@ -91,5 +97,10 @@ public class Transaction {
     public Account getAccount() {
 
         return account;
+    }
+
+    public double getAccountBalance(){
+
+        return accountBalance;
     }
 }

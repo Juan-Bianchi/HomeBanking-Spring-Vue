@@ -29,8 +29,13 @@ createApp({
             Promise.all([client, cards])
                     .then(response => {
                             this.client = {... response[0].data};
+                            console.log(response[1].data);
                             this.cards = response[1].data.map(card => ({... card,
-                                                                        isExpired: Date}));
+                                         isExpired: new Date().getTime() > new Date(card.thruDate).getTime(), 
+                                         isAboutToExpire: new Date(card.thruDate).getTime() - new Date().getTime() < 30 * 3600 * 24 * 1000 &&
+                                                          new Date(card.thruDate).getTime() - new Date().getTime() > 0,
+                                        })
+                            );                                     
                             this.manageData();
                     })
         },
@@ -65,13 +70,39 @@ createApp({
             let arrayDate = date.split('-');
             return arrayDate[1] + "/" + arrayDate[0];
         },
+        
+
+        // WHEN MOUNTED
+
+        onResize(event) {
+            this.windowWidth = screen.width;
+        },
+
+        canAddCreditCard: function(){
+            let canAdd = false;
+            let allowedCards = this.creditCards.filter(card => card.isAboutToExpire || card.isExpired);
+            if(this.creditCards.length - allowedCards.length < 3){
+                canAdd = true;
+            }
+
+            return canAdd;
+        },
+
+        canAddDebitCard: function(){
+            let canAdd = false;
+            let allowedCards = this.debitCards.filter(card => card.isAboutToExpire || card.isExpired);
+            if(this.debitCards.length - allowedCards.length < 3){
+                canAdd = true;
+            }
+
+            return canAdd;
+        },
 
         cancelCard: function(card){
-            card.isActive = false;
             Swal.fire({
                 customClass: 'modal-sweet-alert',
                 title: 'Please confirm the card cancellation',
-                text: "If you accept the card will be cancelled. You will not be able to make future purchases with the card, and it will not be available in your homebanking anymore. If you want to cancel the request, just click 'Close' button.",
+                text: `If you accept the card number ${card.number} will be cancelled. You will not be able to make future purchases with the card, and it will not be available in your homebanking anymore. If you want to cancel the request, just click 'Close' button.`,
                 icon: 'warning',
                 showCancelButton: true,          
                 cancelButtonColor: '#d33',
@@ -79,6 +110,7 @@ createApp({
                 confirmButtonText: 'Accept'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    card.isActive = false;
                     axios.patch('/api/clients/current/cards',`cardNumber=${card.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(response => {
                         Swal.fire({
@@ -102,13 +134,6 @@ createApp({
                     })
                 }
               })
-        },
-        
-
-        // WHEN MOUNTED
-
-        onResize(event) {
-            this.windowWidth = screen.width;
         },
 
         logout(){

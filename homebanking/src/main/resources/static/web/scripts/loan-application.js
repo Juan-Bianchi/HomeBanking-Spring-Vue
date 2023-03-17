@@ -161,7 +161,7 @@ createApp({
             }
             else{
                 console.log(this.stringAmount);
-                this.loanApplicationDTO.amount = this.stringAmount;
+                this.loanApplicationDTO.amount = Number(this.stringAmount);
                 this.stringAmount =  Number(this.stringAmount).toLocaleString("es-AR", {style:"currency",currency:"USD"});
             }
             
@@ -191,7 +191,7 @@ createApp({
                             icon: 'success',
                             confirmButtonText: 'Accept'
                         }).then((result) => {
-                            window.location.href = "http://localhost:8080/web/loan-application.html?"; 
+                            location.reload(); 
                         })
                     })
                     .catch(err =>{

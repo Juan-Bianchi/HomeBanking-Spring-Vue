@@ -19,7 +19,7 @@ createApp( {
             visibleNavNumbers: [],
             emptyLinesAmount: undefined,
             currentNavModulus: 0,
-
+            accountType: undefined,
         }
     },
     created() {
@@ -35,10 +35,11 @@ createApp( {
         //WHEN CREATED
 
         loadData(){
-            axios.get("http://localhost:8080/api/clients/current")
-                .then(response => {
-                    this.client = {... response.data};
-                    this.accounts = this.client.accounts.map(account => account);
+            let client = axios.get("http://localhost:8080/api/clients/current")
+            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            Promise.all([client, accounts]).then(response => {
+                    this.client = {... response[0].data};
+                    this.accounts = response[1].data.map(account => account);
                     this.loans = this.client.loans.map(loan => loan);
                     this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
                     this.manageData();
@@ -194,8 +195,74 @@ createApp( {
         createAccount(){
             Swal.fire({
                 customClass: 'modal-sweet-alert',
-                title: 'Please confirm the account creation',
-                text: "If you accept the account will be created. If you want to cancel the request, just click 'Close' button.",
+                icon: 'warning',
+                title: 'Please select the type of your new account',
+                html:
+                    '<div>' +
+                        '<input class="form-check-input me-2" type="radio" name="accountType" id="saving" value="SAVINGS" checked>' +
+                        '<label class="form-check-label me-4" for="saving">' +
+                            'Savings Account' +
+                        '</label>' +
+
+                        '<input class="form-check-input me-2" type="radio" name="accountType" id="current" value="CURRENT">' +
+                        '<label class="form-check-label" for="current">' +
+                            'Current Account' +
+                        '</label>' +
+                    '</div>',
+
+                showCloseButton: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                accountType = document.querySelector('.swal2-container input[name="accountType"]');
+                this.accountType = accountType.value;
+                console.log([accountType]);
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        customClass: 'modal-sweet-alert',
+                        title: 'Please confirm the account creation',
+                        text: "If you accept the account will be created. If you want to cancel the request, just click 'Close' button.",
+                        icon: 'warning',
+                        showCancelButton: true,          
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Close',
+                        confirmButtonText: 'Accept'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            axios.post(`/api/clients/current/accounts`,`accountType=${this.accountType}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                            .then(response => {
+                                Swal.fire({
+                                    customClass: 'modal-sweet-alert',
+                                    text: "Account created!",
+                                    icon: 'success',
+                                    confirmButtonText: 'Accept'
+                                }).then((result) => {
+                                    location.reload();
+                                })
+                            })
+                            .catch(err =>{
+                            console.log([err])
+                
+                            Swal.fire({
+                                customClass: 'modal-sweet-alert',
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: err.message.includes('403')? err.response.data: err.message,
+                            })
+                            })
+                        }
+                    })
+                }
+            })
+        },
+
+        cancelAccount: function(account){
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'Please confirm the account cancellation',
+                text: `If you accept the account ${account.number} will be cancelled. You will not be able to make future transactions with the account, and it will not be available in your homebanking anymore. If you want to cancel the request, just click 'Close' button.`,
                 icon: 'warning',
                 showCancelButton: true,          
                 cancelButtonColor: '#d33',
@@ -203,15 +270,16 @@ createApp( {
                 confirmButtonText: 'Accept'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post(`/api/clients/current/accounts`)
+                    account.isActive = false;
+                    axios.patch('/api/clients/current/accounts',`number=${account.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(response => {
                         Swal.fire({
                             customClass: 'modal-sweet-alert',
-                            text: "Account created!",
+                            text: "Account cancelled",
                             icon: 'success',
                             confirmButtonText: 'Accept'
                         }).then((result) => {
-                            location.reload();
+                            location.reload(); 
                         })
                     })
                     .catch(err =>{
@@ -221,7 +289,7 @@ createApp( {
                            customClass: 'modal-sweet-alert',
                            icon: 'error',
                            title: 'Oops...',
-                           text: err.message,
+                           text: err.message.includes('403')? err.response.data: err.message,
                        })
                     })
                 }

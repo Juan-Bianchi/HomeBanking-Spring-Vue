@@ -34,7 +34,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
             Client client = clientRepository.findByEmail(email);
 
             if(client != null){
-                if(client.getEmail().equals("admin@mindhub.com") && client.getFirstName().toUpperCase().equals("ADMIN")) {
+                if(client.getEmail().equals("admin@mindhub.com") && client.getFirstName().equalsIgnoreCase("ADMIN")) {
                     return new User(client.getEmail(), client.getPassword(), AuthorityUtils.createAuthorityList("ADMIN"));
                 }
                 else{
