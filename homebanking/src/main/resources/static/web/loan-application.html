@@ -426,7 +426,7 @@
                                         <div v-if="availableAmounts.some(ln => ln.name.includes(loan.name))">
                                           <input v-model="loanApplicationDTO.idLoan" class="form-check-input me-2" type="radio" name="LoanName" id="nameChecked" :value="loan.id">
                                           <label class="form-check-label" for="nameChecked">
-                                            {{loan.name}}
+                                            {{loan.name}} (Interest rate: {{loan.interestRate}}%)
                                           </label>
                                         </div>
                                         <div v-else class="form-check">
@@ -442,8 +442,9 @@
                                     <h5>Please, inform the amount you want to apply for.</h5>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="input-amount-loan">Loan Amount</span>
-                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="stringAmount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be between U$S 10.000 and U$S ' + availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available" >
+                                        <input @focus="numberWhenUsing()" @blur="formatAmountInput()" v-model="stringAmount" type="currency" class="form-control amount-input" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" :placeholder="'Amount has to be between U$S 10.000,00 - ' + availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available.toLocaleString('es-AR', {style:'currency',currency:'USD'})" >
                                     </div> 
+                                    <p class="red-color" v-if="loanApplicationDTO.amount > availableAmounts.find(loan => loan.id == loanApplicationDTO.idLoan).available">Please, check the loan application amount. You cannot apply more than the allowed limit.</p>
                                   </section>
 
                                   <section class="type-debit-card-create font2-color">
@@ -467,6 +468,12 @@
                                         </select>
                                     </template>
                                   </section>
+
+                                  <div class="font2-color" v-if="loanApplicationDTO.idLoan && loanApplicationDTO.amount && loanApplicationDTO.payments && loanApplicationDTO.associatedAccountNumber">
+                                    <p>You are about to apply a loan for {{loanApplicationDTO.amount.toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</p>
+                                    <p>This loan interest rate is {{genericLoans.find(loan => loan.id == loanApplicationDTO.idLoan).interestRate.toFixed(2)}}%. As a result, you will repay {{(loanApplicationDTO.amount + loanApplicationDTO.amount * genericLoans.find(loan => loan.id == loanApplicationDTO.idLoan).interestRate / 100).toLocaleString("es-AR", {style:"currency",currency:"USD"})}}</p>
+                                    <p>You have selected {{loanApplicationDTO.payments}} payments to repay the loan. Therefore, each payment will be of {{((loanApplicationDTO.amount + loanApplicationDTO.amount * genericLoans.find(loan => loan.id == loanApplicationDTO.idLoan).interestRate / 100) / loanApplicationDTO.payments).toLocaleString("es-AR", {style:"currency",currency:"USD"})}}.</p>
+                                  </div>
                                   
                                   <button type="button" class="btn btn-primary" @click="triggerConfirmApplicationModal()">
                                       Apply
@@ -663,7 +670,7 @@
     </div>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/loan-application.js"></script>

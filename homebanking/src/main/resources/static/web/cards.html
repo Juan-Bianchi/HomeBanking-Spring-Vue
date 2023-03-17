@@ -295,15 +295,16 @@
 
                     <section class="d-flex flex-column credit-section mb-5">
                         <h2 class="font2-color">Credit Cards</h2>
-                        <div class="d-flex credit-card-wrapper align-items-center">
+                        <div class="d-flex credit-card-wrapper align-items-start">
                           <div v-if="creditCards.length" v-for="card of creditCards" class="d-flex flex-column align-items-center gap-2">
                             <div class="flip-card">
                               <div class="card cardCredit flip-card-inner">
                                   <div class="flip-card-front" :class="'card-'+card.color.toLowerCase()">
-                                      <figure class="card__figure">
-                                        <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
-                                        <span class="card__figureName">{{card.color}}</span>
-                                      </figure>
+                                    <img v-if="card.isExpired" class="expired" src="./images/expired.png" alt="expired">
+                                    <figure class="card__figure">
+                                      <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
+                                      <span class="card__figureName">{{card.color}}</span>
+                                    </figure>
                                     <div class="card__reader">
                                       <div class="card__reader--risk card__reader--risk-one"></div>
                                       <div class="card__reader--risk card__reader--risk-two"></div>
@@ -324,6 +325,7 @@
                                   </div>
 
                                   <div class="flip-card-back" :class="'card-'+card.color.toLowerCase()">
+                                      <img v-if="card.isExpired" class="expired" src="./images/expired.png" alt="expired">
                                       <div class="magnetic-band"></div>
                                       <div class="cvv-andSignature d-flex justify-content-evenly">
                                           <span>cvv: {{showInfoCards? card.cvv :'•••'}}</span>
@@ -338,8 +340,18 @@
                             </div>
 
                             <button class="btn btn-loans btn-background" @click="cancelCard(card)">
-                              CANCEL CARD
+                              DELETE CARD
                             </button>
+
+                            <div v-if="card.isAboutToExpire" class="d-flex gap-2">
+                              <img class="alert-icon" src="./images/alert.png" alt="alert">
+                              <span class="font2-color">This card is about to expire. Add a new card!</span>
+                            </div>
+
+                            <div v-if="card.isExpired" class="d-flex gap-2">
+                              <img class="alert-icon" src="./images/danger.png" alt="alert">
+                              <span class="font2-color">This card has expired. You can delete it.</span>
+                            </div>
                             <!-- <button class="btn btn-loans btn-background accordion-button accordion-but collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapse' + transaction.id" aria-expanded="false" :aria-controls="'flush-collapse' + transaction.id">
                               See details
                               <i class="ms-3 fa-solid fa-ellipsis-vertical"></i>
@@ -359,7 +371,7 @@
                           </div>
                             
                         
-                            <div v-if="creditCards.length < 3">
+                            <div v-if="canAddCreditCard()">
                                 <h5 class="font2-color">Available Credit Card</h5>
                                 <p>Ask for a Credit card to achieve your goals!</p>
                                 <div class="new-account">
@@ -378,32 +390,34 @@
                     
                     <section class="d-flex flex-column debit-section mb-5">
                         <h2 class="font2-color">Debit Cards</h2>
-                        <div class="d-flex credit-card-wrapper align-items-center">
+                        <div class="d-flex credit-card-wrapper align-items-start">
                           <div class="d-flex flex-column align-items-center gap-2" v-if="debitCards.length" v-for="card of debitCards">
                             <div class="flip-card">
                               <div class="card cardCredit flip-card-inner">
                                   <div class="flip-card-front" :class="'card-'+card.color.toLowerCase()">
-                                      <figure class="card__figure">
-                                          <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img>
-                                          <span class="card__figureName">{{card.color}}</span>
-                                      </figure>
-                                      <div class="card__reader">
-                                          <div class="card__reader--risk card__reader--risk-one"></div>
-                                          <div class="card__reader--risk card__reader--risk-two"></div>
-                                          <div class="card__reader--risk card__reader--risk-three"></div>
-                                          <div class="card__reader--risk card__reader--risk-four"></div>
-                                      </div>
-                                      <p class="card__number">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
-                                      <div class="card__dates">
-                                          <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
-                                          <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
-                                      </div>
-                                      <span class="card__name">{{card.cardHolder.toUpperCase()}}</span>
-                                      <img class="visa-icon" src="./images/visa.png" alt="visa">
-                                      <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
+                                    <img v-if="card.isExpired" class="expired" src="./images/expired.png" alt="expired">
+                                    <figure class="card__figure">
+                                        <img src="./images/darkModeLgIncon.png" class="card__figure--logo"></img> 
+                                        <span class="card__figureName">{{card.color}}</span>
+                                    </figure>
+                                    <div class="card__reader">
+                                        <div class="card__reader--risk card__reader--risk-one"></div>
+                                        <div class="card__reader--risk card__reader--risk-two"></div>
+                                        <div class="card__reader--risk card__reader--risk-three"></div>
+                                        <div class="card__reader--risk card__reader--risk-four"></div>
+                                    </div>
+                                    <p class="card__number">{{(showInfoCards)? splitNumber(card.number): hideCardNumber(card.number)}}</p>
+                                    <div class="card__dates">
+                                        <span class="card__dates--first">{{ getCardDate(card.fromDate) }}</span>
+                                        <span class="card__dates--second">{{ getCardDate(card.thruDate) }}</span>
+                                    </div>
+                                    <span class="card__name">{{card.cardHolder.toUpperCase()}}</span>
+                                    <img class="visa-icon" src="./images/visa.png" alt="visa">
+                                    <img class="contactless-icon" src="./images/contactless.png" alt="contactless">
                                   </div>
 
                                   <div class="flip-card-back" :class="'card-'+card.color.toLowerCase()">
+                                    <img v-if="card.isExpired" class="expired" src="./images/expired.png" alt="expired">
                                       <div class="magnetic-band"></div>
                                       <div class="cvv-andSignature d-flex justify-content-evenly">
                                           <span>cvv: {{showInfoCards? card.cvv :'•••'}}</span>
@@ -417,12 +431,20 @@
                               </div>
                             </div>
                             <button class="btn btn-loans btn-background" @click="cancelCard(card)">
-                              CANCEL CARD
+                              DELETE CARD
                             </button>
+                            <div v-if="card.isAboutToExpire" class="d-flex gap-2">
+                              <img class="alert-icon" src="./images/alert.png" alt="alert">
+                              <span class="font2-color">This card is about to expire. Add a new card!</span>
+                            </div>
+                            <div v-if="card.isExpired" class="d-flex gap-2">
+                              <img class="alert-icon" src="./images/danger.png" alt="alert">
+                              <span class="font2-color">This card has expired. You can delete it.</span>
+                            </div>
                           </div>
                             
 
-                            <div v-if="debitCards.length < 3">
+                            <div v-if="canAddDebitCard()">
                                 <h5 class="font2-color">Available Debit Card</h5>
                                 <p>Ask for a Debit card to achieve your goals!</p>
                                 <div class="new-account">
@@ -536,7 +558,7 @@
     </div>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/cards.js"></script>

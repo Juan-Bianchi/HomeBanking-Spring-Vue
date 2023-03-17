@@ -412,7 +412,7 @@
                           <div class="d-flex flex-column checks-create-cards-wrapper">
                               <section class="type-credit-card-create font2-color">
                                   <h3>Select the type of your new card.</h3>
-                                  <div v-if=" debitCards.length < 3 &&  !createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color))" class="form-check">
+                                  <div v-if="!createdCombinations.some(comb => comb.type.includes('DEBIT') && comb.color.includes(color) && !comb.anoterAllowed)" class="form-check">
                                       <input v-if="type.includes('DEBIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT" checked>
                                       <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="debitChecked" value="DEBIT">
                                       <label class="form-check-label" for="debitChecked">
@@ -425,7 +425,7 @@
                                         Debit
                                       </label>
                                   </div>
-                                  <div v-if="creditCards.length < 3 && !createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color))" class="form-check">
+                                  <div v-if="!createdCombinations.some(comb => comb.type.includes('CREDIT') && comb.color.includes(color) && !comb.anoterAllowed)" class="form-check">
                                       <input v-if="type.includes('CREDIT')" v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT" checked>
                                       <input v-else v-model="type" class="form-check-input" type="radio" name="cardType" id="creditChecked" value="CREDIT">
                                       <label class="form-check-label" for="creditChecked">
@@ -442,11 +442,12 @@
       
                               <section class="type-debit-card-create font2-color">
                                   <h3>Select the color of your new card.</h3>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type))" class="form-check">
+                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('SILVER') && comb.type.includes(type) && !comb.anoterAllowed)" class="form-check">
                                       <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="silverChecked" value="SILVER">
                                       <label class="form-check-label" for="silverChecked">
                                         Silver
                                       </label>
+                                      
                                   </div>
                                   <div v-else class="form-check">
                                       <input class="form-check-input" type="radio" name="flexRadioDisabled" id="silverDisabled" disabled>
@@ -454,7 +455,7 @@
                                         Silver
                                       </label>
                                   </div>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type))" class="form-check">
+                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('GOLD') && comb.type.includes(type) && !comb.anoterAllowed)" class="form-check">
                                       <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="goldChecked" value="GOLD">
                                       <label class="form-check-label" for="goldChecked">
                                         Gold
@@ -466,7 +467,7 @@
                                         Gold
                                       </label>
                                   </div>
-                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type))" class="form-check">
+                                  <div v-if="!createdCombinations.some(comb => comb.color.includes('TITANIUM') && comb.type.includes(type) && !comb.anoterAllowed)" class="form-check">
                                       <input v-model="color" class="form-check-input" type="radio" name="cardColor" id="titaniumChecked" value="TITANIUM">
                                       <label class="form-check-label" for="titaniumChecked">
                                         Titanium
@@ -659,7 +660,7 @@
     </div>
       
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/create-cards.js"></script>

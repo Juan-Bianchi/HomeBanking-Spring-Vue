@@ -2,10 +2,11 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,11 @@ import static com.mindhub.homebanking.utils.Utilitary.createAccountNumber;
 @RequestMapping("/api")
 public class ClientController {
 
-    @Autowired
-    private ClientRepository clientRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private ClientService clientService;
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,19 +40,19 @@ public class ClientController {
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
 
-        return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
+        return clientService.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
     }
 
     @GetMapping("clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
-        return clientRepository.findById(id).map(client-> new ClientDTO(client)).orElse(null);
+        return new ClientDTO(clientService.findById(id));
     }
 
     @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication) {
 
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO(clientService.findByEmail(authentication.getName()));
     }
 
     @PostMapping("/clients")
@@ -60,7 +61,7 @@ public class ClientController {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
             String errorMessage = "⋆ Please, fill the following fields: ";
-            Boolean moreThanOne = false;
+            boolean moreThanOne = false;
 
             if (firstName.isEmpty()){
                 errorMessage += "first names";
@@ -93,16 +94,16 @@ public class ClientController {
             errorMessage += ".";
             return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
         }
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientService.findByEmail(email) !=  null) {
             return new ResponseEntity<>("⋆ Email already in use", HttpStatus.FORBIDDEN);
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        String accountNumber = createAccountNumber(accountRepository);
-        Account account = new Account(accountNumber, LocalDateTime.now(), 0);
+        String accountNumber = createAccountNumber(accountService);
+        Account account = new Account(accountNumber, LocalDateTime.now(), 0, AccountType.SAVINGS);
         client.addAccount(account);
-        clientRepository.save(client);
-        accountRepository.save(account);
+        clientService.save(client);
+        accountService.save(account);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

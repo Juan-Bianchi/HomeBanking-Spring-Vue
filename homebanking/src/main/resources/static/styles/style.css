@@ -8,13 +8,13 @@ main {
     justify-content: center;
     flex-wrap: wrap;
     gap: 5vh;
-    background: linear-gradient(#eaeaea9d, #75d481);
+    background: linear-gradient(to right, #2980b9, #2c3e50);
     min-height: 87vh;
 }
 
 header{
     justify-content: center;
-    background-color: #038554;
+    background-color: #256D85;
     min-height: 13vh;
 }
 
@@ -32,7 +32,7 @@ header{
 }
 
 h2{
-    color: #038554;
+    color: #256D85;
 }
 
 h1, h3, h4, h5{
@@ -60,12 +60,12 @@ table {
 }
 
 th {
-    border-bottom: 3px solid #038554;
+    border-bottom: 3px solid #256D85;
     text-align: center;
 }
 
 td {
-    border-bottom: 1px solid #038554;
+    border-bottom: 1px solid #256D85;
     text-align: center;
 }
 
@@ -77,13 +77,13 @@ td {
 }
 
 code {
-    color: #038554;
+    color: #256D85;
 }
 
 .json {
     width: 95%;
     align-self: center;
-    border: 2px solid #038554;
+    border: 2px solid #256D85;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.683);
     box-shadow: 5px 6px 5px 3px rgba(0, 0, 0, 0.49);
@@ -97,18 +97,23 @@ code {
 
 .form-1{
     margin-top: 5vh;
-    border: 2px solid #038554;
+    border: 2px solid #256D85;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.683);
     box-shadow: 5px 6px 5px 3px rgba(0, 0, 0, 0.49);
 }
 
 .modal {
-    --bs-modal-bg: #75d482cf;
+    --bs-modal-bg: #256d8597;
 }
 
 .iconGreenGif {
     width: 10%;
+}
+
+.logo-and-user-account{
+    top: 0;
+    right: 0;
 }
 
 @media (max-width: 340px){

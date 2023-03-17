@@ -22,17 +22,21 @@ public class Account {
     private Client client;
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
+    Boolean isActive;
+    AccountType type;
 
 
     // CONSTRUCTORS
 
     public Account(){}
 
-    public Account( String number, LocalDateTime creationDate, double balance){
+    public Account( String number, LocalDateTime creationDate, double balance, AccountType accountType){
 
         this.number = number;
         this.balance = balance;
         this.creationDate = creationDate;
+        this.isActive = true;
+        this.type = accountType;
     }
 
 
@@ -48,7 +52,7 @@ public class Account {
     }
 
     public void addTransaction(Transaction transaction) {
-
+        transaction.setAccountBalance(this.getBalance());
         transaction.setAccount(this);
         transactions.add(transaction);
     }
@@ -75,6 +79,17 @@ public class Account {
 
         this.client = client;
     }
+
+    public void setIsActive(Boolean isActive){
+
+        this.isActive = isActive;
+    }
+
+    public void setType(AccountType accountType){
+
+        this.type = accountType;
+    }
+
 
     // GETTER METHODS
     public long getId(){
@@ -105,5 +120,15 @@ public class Account {
     public Set<Transaction> getTransactions() {
 
         return transactions;
+    }
+
+    public Boolean getIsActive(){
+
+        return isActive;
+    }
+
+    public AccountType getType(){
+
+        return type;
     }
 }

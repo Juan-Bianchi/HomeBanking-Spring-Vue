@@ -38,18 +38,23 @@ createApp({
             const urlString = location.search;
             const parameters = new URLSearchParams(urlString);
             this.type = parameters.get('type');
-            
+            this.filterCards();
         },
 
         loadData: function(){
-            axios.get('/api/clients/current')
-                 .then(response => {
-                    this.client = {... response.data};
-                    this.cards = [... this.client.cards.map(card => ({... card}))];
-                    this.filterCards();
-                    this.manageData();
-                    
-                 })
+            let client = axios.get(`http://localhost:8080/api/clients/current`)
+            let cards = axios.get('http://localhost:8080/api/clients/current/activeCards')
+            Promise.all([client, cards])
+                    .then(response => {
+                            this.client = {... response[0].data};
+                            console.log(response[1].data);
+                            this.cards = response[1].data.map(card => ({... card, 
+                                                                            anotherAllowed: new Date(card.thruDate).getTime() - new Date().getTime() < 30 * 3600 * 24 * 1000
+                                                                        })
+                            );
+                            console.log(this.cards);                                     
+                            this.manageData();
+                    })
         },
 
         loadNewCard: function(){
@@ -68,8 +73,9 @@ createApp({
                 return {
                     type: card.type,
                     color: card.color,
+                    anoterAllowed: card.anotherAllowed,
                 }
-            } );          
+            } );       
         },
 
         createCard: function(){
@@ -102,7 +108,7 @@ createApp({
                            customClass: 'modal-sweet-alert',
                            icon: 'error',
                            title: 'Oops...',
-                           text: err.message,
+                           text: err.message.includes('403')? err.response.data: err.message,
                        })
                     })
                 }
@@ -147,6 +153,26 @@ createApp({
         toggleChevron(id){
             let button = document.getElementById(`toggleChevron${id}`);
             (button.style.transform === "") ? button.style.transform = "rotateX(180deg)": button.style.transform = "";
+        },
+
+        canAddCreditCard: function(){
+            let canAdd = false;
+            let allowedCards = this.creditCards.filter(card => card.isAboutToExpire || card.isExpired);
+            if(this.creditCards.length - allowedCards.length < 3){
+                canAdd = true;
+            }
+
+            return canAdd;
+        },
+
+        canAddDebitCard: function(){
+            let canAdd = false;
+            let allowedCards = this.debitCards.filter(card => card.isAboutToExpire || card.isExpired);
+            if(this.debitCards.length - allowedCards.length < 3){
+                canAdd = true;
+            }
+            
+            return canAdd;
         },
 
 
