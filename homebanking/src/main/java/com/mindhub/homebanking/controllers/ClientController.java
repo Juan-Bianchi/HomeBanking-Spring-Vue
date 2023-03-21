@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
-import static com.mindhub.homebanking.utils.Utilitary.createAccountNumber;
+import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +40,7 @@ public class ClientController {
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
 
-        return clientService.findAll().stream().map(client -> new ClientDTO(client)).collect(toList());
+        return clientService.findAll().stream().map(ClientDTO::new).collect(toList());
     }
 
     @GetMapping("clients/{id}")
@@ -109,6 +109,19 @@ public class ClientController {
     }
 
 
+    @PostMapping("/clients/current/lastLogin")
+    public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate){
+
+        Client client = clientService.findByEmail(email);
+        if(client == null){
+            return new ResponseEntity<>("Client does not exist.", HttpStatus.FORBIDDEN);
+        }
+        client.setLastLogin(lastLoginDate);
+        client.setNewLogin(newloginDate);
+        clientService.save(client);
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 
 
 }

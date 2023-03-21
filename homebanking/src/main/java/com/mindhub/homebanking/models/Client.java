@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,8 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
     private String password;
+    private String lastLogin;
+    private String newLogin;
 
 
     //CONSTRUCTORS
@@ -106,6 +109,16 @@ public class Client {
         return this.clientLoans;
     }
 
+    public String getLastLogin(){
+
+        return this.lastLogin;
+    }
+
+    public String getNewLogin(){
+
+        return this.newLogin;
+    }
+
     @JsonIgnore
     public Set<Loan> getGenericLoan() {
 
@@ -146,6 +159,15 @@ public class Client {
         this.password = password;
     }
 
+    public void setLastLogin(String lastLogin){
+
+        this.lastLogin = lastLogin;
+    }
+
+    public void setNewLogin(String newLogin){
+
+        this.newLogin = newLogin;
+    }
 }
 
 

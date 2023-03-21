@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanCreationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
@@ -147,6 +148,8 @@ public class LoanController {
         transactionService.save(transaction);
         clientLoanService.save(clientLoan);
         accountService.save(account);
+
+        ClientLoanDTO clientLoanDTO = new ClientLoanDTO(clientLoan);
 
         return new ResponseEntity<>("Loan has been created and approved.", HttpStatus.CREATED);
     }
