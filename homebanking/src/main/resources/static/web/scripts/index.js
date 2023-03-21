@@ -30,7 +30,7 @@ createApp({
     mounted(){
         window.addEventListener('scroll', this.scrollFunction);
         this.manageAutoTyping(); 
-        this.controlCarousel();
+        // this.controlCarousel();
     },
 
     methods: {
@@ -41,18 +41,27 @@ createApp({
             axios.post('/api/login',`email=${this.emailLog}&password=${this.passwordLog}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                  .then(response => {
                     console.log('signed in!!!');
-                    console.log([response])
-                    this.errorFound = false;
-                    this.emailLog = undefined;
-                    this.passwordLog = undefined;
-                    window.location.href = "http://localhost:8080/web/accounts.html"
+
+                    axios.get('/api/clients/current')
+                         .then(response => {
+                             this.client = {... response.data};
+                             console.log(this.client);
+                             if(!this.client.newLogin){
+                                this.client.newLogin = new Date().toLocaleString();
+                                console.log(this.client.newLogin);
+                            }
+                            axios.post(`http://localhost:8080/api/clients/current/lastLogin`,`email=${this.emailLog}&newloginDate=${new Date().toLocaleString()}&lastLoginDate=${this.client.newLogin}`)
+                                .then(response => window.location.href = "http://localhost:8080/web/accounts.html")
+                                .catch(err => console.log([err]));
+                         })
+                         .catch(err => console.error(err.message));
+                    
+                    
                 })
                  .catch(err => {
                     console.error(err.message);
                     this.errorFound = true;
                 });
-            this.emailLog = undefined;
-            this.passwordLog = undefined;
         },
 
 

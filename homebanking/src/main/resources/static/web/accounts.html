@@ -27,24 +27,24 @@
       <div v-show = "client" v-cloak>
         <header>
           <div v-if="client" class="header-options flexAfter768 justify-content-around">
-            <a class="a-header-options flexAfter768 font1-color" href="">FAQs</a>
-            <a class="a-header-options flexAfter768 font1-color" href="">Costumer Attention</a>
-            <a class="a-header-options flexAfter768 font1-color position-relative" href="">
+            <!-- <a class="a-header-options flexAfter768 font1-color" href="">FAQs</a> -->
+            <a class="a-header-options flexAfter768 font1-color" href="#costServ">Costumer Attention</a>
+            <a class="a-header-options flexAfter768 font1-color position-relative" @click="manageNotifications()" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell-ringing-2 me-2" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
                 <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
               </svg>
-              <span class="position-absolute translate-middle badge rounded-pill bg-danger notifications">
-                1
+              <span v-if="notifCounter" class="position-absolute translate-middle badge rounded-pill bg-danger notifications">
+                {{notifCounter}}
                 <span class="visually-hidden">unread messages</span>
               </span>
               Notifications
             </a>
-            <p href="#" class="a-header-options flexAfter768 font1-color">
-              <img class="avatar1 me-2" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+            <a href="#" class="a-header-options flexAfter768 font1-color">
+              <img class="img-user" src="./images/user.png" alt="user">
               {{client.firstName}}
-            </p>
+            </a>
             <p @click="logout()" class="a-header-options flexAfter768 font1-color log-out">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -84,7 +84,7 @@
                   <div class="offcanvas offcanvas-start menu-logged-in" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" v-if="client">
                     <div class="offcanvas-header">
                       <h3 class="menu-h3 font1-color">
-                        <img class="avatar" id="avatarPanda" src="./images/pandaFace.png" alt="avatarPanda" title="avatarPanda">
+                        <img class="img-user" src="./images/user.png" alt="user">
                         Welcome {{client.firstName + " " + client.lastName + "!"}}
                       </h3>
                       
@@ -121,6 +121,12 @@
                           </a>
                         </li>
                         <li class="nav-item">
+                          <a @click="chooseAccount('account')" class="nav-link a-menu font1-color" href="#">
+                            <i class="fa-solid fa-magnifying-glass-dollar fa-lg ms-1 me-1"></i>
+                            Money movements
+                          </a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link a-menu font1-color" href="./cards.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -133,19 +139,9 @@
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <line x1="3" y1="21" x2="21" y2="21" />
-                              <line x1="3" y1="10" x2="21" y2="10" />
-                              <polyline points="5 6 12 3 19 6" />
-                              <line x1="4" y1="10" x2="4" y2="21" />
-                              <line x1="20" y1="10" x2="20" y2="21" />
-                              <line x1="8" y1="14" x2="8" y2="17" />
-                              <line x1="12" y1="14" x2="12" y2="17" />
-                              <line x1="16" y1="14" x2="16" y2="17" />
-                            </svg>
-                            Investments
+                          <a @click="chooseAccount('transfer')" class="nav-link a-menu font1-color ms-1" href="#">
+                            <i class="fa-solid fa-money-bill-transfer fa-lg"></i>
+                            Transfer
                           </a>
                         </li>
                         <li class="nav-item">
@@ -163,50 +159,17 @@
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-dollar" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
-                              <path d="M12 3v3m0 12v3" />
-                            </svg>
-                            Foreign Currency Exchange
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
+                          <a class="nav-link a-menu font1-color" href="./security.html">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shield-lock" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
                               <circle cx="12" cy="11" r="1" />
                               <line x1="12" y1="12" x2="12" y2="14.5" />
                             </svg>
-                            Insurance
+                            Security
                           </a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-discount" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <line x1="9" y1="15" x2="15" y2="9" />
-                              <circle cx="9.5" cy="9.5" r=".5" fill="currentColor" />
-                              <circle cx="14.5" cy="14.5" r=".5" fill="currentColor" />
-                              <circle cx="12" cy="12" r="9" />
-                            </svg>
-                            Comerce Promotions
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link a-menu font1-color" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-receipt-tax" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <line x1="9" y1="14" x2="15" y2="8" />
-                              <circle cx="9.5" cy="8.5" r=".5" fill="currentColor" />
-                              <circle cx="14.5" cy="13.5" r=".5" fill="currentColor" />
-                              <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
-                            </svg>
-                            Payments
-                          </a>
-                        </li>
+                        
                         <li class="nav-item">
                           <a class="nav-link a-menu font1-color" href="#">
                             ----------------------------------
@@ -255,13 +218,13 @@
 
           <!-- CARRUSEL -->
 
-          <div id="carousel-top-main" class="carousel slide" data-bs-ride="carousel">
+          <div v-if="client" id="carousel-top-main" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <p class="p-car font1-color">Your last log-in was on...</p>
+                <p class="p-car font1-color">Your last log-in was on {{client.lastLogin}}</p>
               </div>
               <div class="carousel-item">
-                <a class="a-car font1-color" href="#">How to protect yourself from pishing?</a>
+                <a class="a-car font1-color" href="./security.html">How to protect yourself from pishing?</a>
               </div>
               <div class="carousel-item">
                 <a class="a-car font1-color" href="./loan-application.html">A preferencial rate loan just for you!</a>
@@ -281,7 +244,7 @@
                     <!-- RENDER ACCOUNTS -->
                     <div id="carousel-accounts" class="carousel slide">
                       <div id="carousel-inner-accounts" class="carousel-inner">
-                        <div class="carousel-item" v-for="(account, index) of orderedAccounts" :class="index==0? 'active': ''">
+                        <div class="carousel-item" v-if="orderedAccounts.length" v-for="(account, index) of orderedAccounts" :class="index==0? 'active': ''">
                           <div class="d-flex justify-content-center">
                             <div class="card card-account">
                               <div class="card-body font1-color">
@@ -376,18 +339,6 @@
                     <button v-if="accounts.length < 3" class="btn btn-loans btn-background" v-on:click="createAccount()">New account <i class="fa-solid fa-plus"></i></button>
                     <a :href="'./transfers.html?number=' + currentAccount.number" class="font4-color"><button class="btn btn-loans btn-background">Transfer</button></a>
                     <a :href="'./account.html?id=' + currentAccount.id" class="font4-color"><button class="btn btn-loans btn-background">Transactions</button></a>
-                    <a class="nav-link font4-color" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                      <button class="btn btn-loans btn-background">
-                        More
-                        <i class="ms-3 fa-solid fa-ellipsis-vertical"></i>
-                      </button> 
-                    </a>
-                    <ul class="dropdown-menu drop-account">
-                      <li><a class="dropdown-item drop-item font4-color" href="#">Fixed-term deposit</a></li>
-                      <li><a class="dropdown-item drop-item font4-color" href="#">Share Data</a></li>
-                      <li><a class="dropdown-item drop-item font4-color" href="#">Buy Dolars</a></li>
-                      <li><a class="dropdown-item drop-item font4-color" href="#">Buy Euros</a></li>
-                    </ul>   
                     <button v-if="accounts.length" class="btn btn-loans btn-background" v-on:click="cancelAccount(currentAccount)">Cancel Account</button>                       
                   </div>     
 
@@ -555,7 +506,7 @@
                                         </div>
                                         
                                       </div>
-                                      <div class="flex-column align-items-end noneAfter768">
+                                      <div class="justify-content-end align-items-end noneAfter768">
                                         <i v-if="pageNumber > 1" @click="changePage(-1)" class="fa-solid fa-chevron-left fa-white me-2 chevron-page-transaction"></i>                          
                                         <i v-else class="fa-solid fa-chevron-left fa-grey me-2"></i>
                   
@@ -581,7 +532,7 @@
 
         <!-- FOOTER -->
 
-        <footer class="d-flex justify-content-evenly">
+        <footer class="d-flex justify-content-evenly position-relative">
 
           <div class="d-flex align-items-center">
             <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
@@ -589,7 +540,7 @@
 
           <div class="d-flex align-items-start flex-column mt-3">
 
-            <h5>Costumer Service</h5>
+            <h5 id="costServ">Costumer Service</h5>
             <p>
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -603,7 +554,7 @@
                 <rect x="3" y="5" width="18" height="14" rx="2" />
                 <polyline points="3 7 12 13 21 7" />
               </svg>
-              <a class="quickLinksA font1-color" href="mailto:info@mindhubbank.com">info@mindhubbank.com</a>
+              <a class="quickLinksA font1-color" href="mailto:juanbianchi@icloud.com">info@mindhubbank.com</a>
             </p>
 
           </div>
@@ -613,10 +564,8 @@
             <ul>
               <h5>Quick Links</h5>
               <li><a class="quickLinksA font1-color" href="./index.html">- Home</a></li>
-              <li><a class="quickLinksA font1-color" href="">- Contact Us</a></li>
-              <li><a class="quickLinksA font1-color" href="">- News</a></li>
-              <li><a class="quickLinksA font1-color" href="">- About Us</a></li>
-              <li><a class="quickLinksA font1-color" href="#">- ATMs for sightless people</a></li>
+              <li><a class="quickLinksA font1-color" href="mailto:juanbianchi@icloud.com">- Contact Us</a></li>
+              <li><a class="quickLinksA font1-color" href="https://www.wsj.com">- News</a></li>
             </ul>
 
           </div>
@@ -645,6 +594,14 @@
                   <circle cx="12" cy="12" r="3" />
                   <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
                 </svg>
+              </a>
+
+              <a class="ms-1" href="https://www.linkedin.com/in/juan-alberto-bianchi">
+                <i class="fa-brands fa-linkedin fa-white fa-lg"></i>
+              </a>
+
+              <a class="ms-1" href="https://github.com/Juan-Bianchi">
+                <i class="fa-brands fa-github fa-white fa-lg"></i>
               </a>
               
             </div>

@@ -16,6 +16,8 @@ public class ClientDTO {
     private Set<AccountDTO> accounts = new HashSet<>();
     private Set<ClientLoanDTO> loans = new HashSet<>();
     private Set<CardDTO> cards = new HashSet<>();
+    private String lastLogin;
+    private String newLogin;
 
 
     //CONSTRUCTORS
@@ -30,6 +32,8 @@ public class ClientDTO {
         this.accounts = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(toSet());
         this.loans = client.getLoans().stream().map(loan -> new ClientLoanDTO(loan)).collect(toSet());
         this.cards = client.getCards().stream().map(card -> new CardDTO(card)).collect(toSet());
+        this.lastLogin = client.getLastLogin();
+        this.newLogin = client.getNewLogin();
     }
 
     //GETTER METHODS
@@ -66,6 +70,16 @@ public class ClientDTO {
     public Set<CardDTO> getCards(){
 
         return this.cards;
+    }
+
+    public String getLastLogin(){
+
+        return this.lastLogin;
+    }
+
+    public String getNewLogin(){
+
+        return this.newLogin;
     }
 
 }

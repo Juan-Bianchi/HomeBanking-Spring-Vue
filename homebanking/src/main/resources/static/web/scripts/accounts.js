@@ -6,6 +6,7 @@ createApp( {
             client: undefined,
             windowWidth: window.innerWidth,
             accounts: [],
+            account: undefined,
             orderedAccounts: [],
             loans: [],
             orderedLoans: [],
@@ -20,6 +21,8 @@ createApp( {
             emptyLinesAmount: undefined,
             currentNavModulus: 0,
             accountType: undefined,
+            localStorage: [],
+            notifCounter: 0,
         }
     },
     created() {
@@ -35,7 +38,7 @@ createApp( {
         //WHEN CREATED
 
         loadData(){
-            let client = axios.get("http://localhost:8080/api/clients/current")
+            let client = axios.get('http://localhost:8080/api/clients/current')
             let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
             Promise.all([client, accounts]).then(response => {
                     this.client = {... response[0].data};
@@ -43,8 +46,13 @@ createApp( {
                     this.loans = this.client.loans.map(loan => loan);
                     this.totalBalance = this.accounts.reduce((total, actual)=> total + actual.balance, this.totalBalance);
                     this.manageData();
+                    let data = localStorage.getItem('notif');
+                    if(data){
+                        this.localStorage = JSON.parse(localStorage.getItem('notif'));
+                    }
+                    this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
                 })
-                .catch(err => console.error(err.message));
+                //.catch(err => console.error(err.message));
                  
         },
 
@@ -176,7 +184,6 @@ createApp( {
         changePage: function(movement){
             this.pageNumber += movement;
             this.currentNavModulus = Math.floor((this.pageNumber - 1) / 3);
-            console.log(this.currentNavModulus);
             this.renderLoans();
         },
 
@@ -185,11 +192,147 @@ createApp( {
             this.renderLoans();
         },
 
+        manageNotifications: function(){
+            this.localStorage = JSON.parse(localStorage.getItem('notif'));
+            let template ="";
+            if(this.localStorage){
+                this.localStorage.forEach(element => {
+                    template +=
+                       `<tr>                        
+                           <td>${element.number}</td>
+                           <td style="width: 40%">${element.description}</td>
+                           <td>
+                               <div class="form-check form-check-inline seen">
+                                   <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
+                                   <label class="form-check-label" for="${element.number}"> </label>
+                               </div>
+                           </td>
+                           <td>
+                               <div class="form-check form-check-inline delete">
+                                   <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
+                                   <label class="form-check-label" for="${element.number}"> </label>
+                               </div>
+                           </td>                
+                       </tr>`;
+                       
+                   });
+            
+           
+                Swal.fire({
+                    customClass: 'modal-sweet-alert',
+                    title: 'To mark as seen or to delete just click the checkboxes.',
+                    html:
+                        `<div class="d-flex justify-content-between align-items-start">
+                            <div class="container table-loan" v-if="visibleLoans.length">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-11 col-md-12 col-lg-12">
+                                        <div class="panel panelAccounts">
+                                            <div class="panel-body table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Description</th>
+                                                            <th style= "width: 20%">Read</th> 
+                                                            <th style= "width: 20%">Delete</th>                                             
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>` +
+                                                        template +                                                                
+                                                    `</tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>`,   
+                    width: 700,                             
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Close',
+                    confirmButtonText: 'Accept'
+                }).then((result) => {
+                        seen = [ ...document.querySelectorAll('.swal2-container .seen input[type="checkbox"]:checked')];
+                        del = [ ...document.querySelectorAll('.swal2-container .delete input[type="checkbox"]:checked')];
+                        if (result.isConfirmed) {
+                            this.notifCounter = this.localStorage.length - seen.length;
+                            if(seen.length){
+                                this.localStorage = this.localStorage.map( element => {
+                                    seen.forEach(el => {
+                                        if(el.value == element.number){
+                                            element.isRead = true;
+                                        }
+                                    })
+                                    return element;
+                                });
+                            }
+                            
+                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
+                            if(del.length){
+                                this.localStorage = this.localStorage.map(element => {
+                                    del.forEach(el => {
+                                        if(el.value == element.number){
+                                            element.isDeleted = true;
+                                        }
+                                    })
+                                    return element;
+                                }).filter(element => element.isDeleted == false);
+                            }
+
+                            localStorage.removeItem('notif');
+                            if(this.localStorage.length){
+                                localStorage.setItem('notif', JSON.stringify(this.localStorage));
+                            }
+                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
+                        }
+                    })
+            }
+        },
+
 
         //WHEN MOUNTED
 
         onResize(event) {
             this.windowWidth = screen.width
+        },
+
+        chooseAccount: function(destinantion){
+            let template ="";
+            this.orderedAccounts.forEach(account => {
+             template +=`<input class="form-check-input me-2" type="radio" name="account" id="${account.number}" value="${account.number}">
+                 <label class="form-check-label me-4" for=${account.number}>
+                    ${account.number}
+                </label>`;
+                
+            });
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                icon: 'warning',
+                title: 'Please select an account.',
+                html:
+                    '<div>' +
+                        template +
+                    '</div>',
+
+                showCloseButton: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                    account = [ ...document.querySelectorAll('.swal2-container input[name="account"]')].find(element => element.checked);
+                    this.account = account.value;
+                    if (result.isConfirmed) {
+                        if(destinantion.includes('transfer')){
+                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                        }
+                        else{
+                            window.location.href = `http://localhost:8080/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
+                        }
+                    }
+                })
         },
 
         createAccount(){
@@ -216,9 +359,8 @@ createApp( {
                 cancelButtonText: 'Close',
                 confirmButtonText: 'Accept'
             }).then((result) => {
-                accountType = document.querySelector('.swal2-container input[name="accountType"]');
+                accountType = [... document.querySelectorAll('.swal2-container input[name="accountType"]')].find(element => element.checked);
                 this.accountType = accountType.value;
-                console.log([accountType]);
                 if (result.isConfirmed) {
                     Swal.fire({
                         customClass: 'modal-sweet-alert',
@@ -233,6 +375,14 @@ createApp( {
                         if (result.isConfirmed) {
                             axios.post(`/api/clients/current/accounts`,`accountType=${this.accountType}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                             .then(response => {
+                                this.localStorage.push({
+                                    number: response.data.number,
+                                    description: `A ${response.data.type.slice(0,1) + response.data.type.slice(1).toLowerCase()} account with number ${response.data.number} has been created.`,
+                                    isRead: false,
+                                    isDeleted: false,
+                                })
+                                localStorage.removeItem('notif');
+                                localStorage.setItem('notif', JSON.stringify(this.localStorage));
                                 Swal.fire({
                                     customClass: 'modal-sweet-alert',
                                     text: "Account created!",
@@ -298,7 +448,6 @@ createApp( {
 
         setCurrentAccount: function(movement){
             let carouselAccounts = document.getElementById("carousel-inner-accounts");
-            console.log([carouselAccounts]);
             let item = [... carouselAccounts.children].find(element => element.className.includes("carousel-item active"));
             let previousAccountNumber = item.innerText.split('\n')[0];
             let index = this.orderedAccounts.findIndex(account => account.number.includes(previousAccountNumber));

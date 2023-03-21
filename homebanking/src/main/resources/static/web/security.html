@@ -20,14 +20,14 @@
         <header class="header-landing">
             <div class="header-wrapper w-100">
                 <a class="logo-a-landing font1-color" href="./index.html"><img class="logo-landing-page" src="./images/darkModeLgIncon.png" alt="bankIcon"></a>
-                <a class="a-header-options font1-color bigger" href="#">Personal</a>
-                <a class="a-header-options font1-color bigger" href="">Business</a>
-                <a class="a-header-options font1-color bigger" href="">Security</a>
+                <a class="a-header-options font1-color bigger" href="./index.html">Personal</a>
+                <a class="a-header-options font1-color bigger" href="#">Security</a>
                 <div class="d-flex align-items-center">
                     <a v-if="client" href="./accounts.html" class="a-header-options font3-color bigger">{{client.firstName}} {{client.lastName}}</a>
                     <a v-else href="#" data-bs-toggle="modal" data-bs-target="#modalSign" class="a-header-options font1-color bigger">Log In</a>
                     <img class="img-user" src="./images/user.png" alt="user">
                 </div>
+                <a v-if="client" class="a-header-options font1-color bigger" href="./accounts.html">Accounts</a>
                 <button v-if="client" type="button" class="btn btn-primary bigger" @click="logout()">
                     Log Out
                 </button>  
@@ -44,10 +44,11 @@
                     <div class="col d-flex align-items-center">
                         <img class="icon-security" src="./images/padlock.png" alt="padlock">
                     </div>
-                    <div class="col d-flex flex-column justify-content-center font1-color">
+                    <div class="col d-flex flex-column justify-content-center font1-color mb-5">
                         <h1 class="mb-5">Online security</h1>
                         <h3 class="mb-5">Keep you safe!!</h3>
                         <h3>Protect your assets!!</h3>
+                        <a href="#costServ" class="nav-link"><h5>If you think you have been deceived to give information just contact us!</h5></a>
                     </div>
                 </div>
                 
@@ -59,47 +60,75 @@
                 
             </div>
 
-            <h5>At Mindhub Brothers Bank, we take the security of our customers' accounts very seriously. With the rise of online banking and digital transactions, it's more important than ever to be vigilant against potential scams and phishing attempts. We want to ensure that our customers have the information and tools they need to protect their accounts and personal information. That's why we've put together these phishing prevention tips to help you stay safe online. By following these tips, you can help safeguard your accounts and prevent unauthorized access. We encourage all of our customers to take these tips to heart and contact us if you have any questions or concerns about the security of your account.</h5>
+            <div class="div-details-loans w-75">
+                <div class="d-flex justify-content-around align-items-center flex-wrap row mb-5">
+                    <h5 class="font2-color mt-5 mb-3 col col-xl-6">At Mindhub Brothers Bank, we take the security of our customers' accounts very seriously. With the rise of online banking and digital transactions, it's more important than ever to be vigilant against potential scams and phishing attempts. We want to ensure that our customers have the information and tools they need to protect their accounts and personal information. That's why we've put together these phishing prevention tips to help you stay safe online. By following these tips, you can help safeguard your accounts and prevent unauthorized access. We encourage all of our customers to take these tips to heart and contact us if you have any questions or concerns about the security of your account.</h5>
+                    <img class="col col-xl-5" src="./images/phishing.jpg" alt="pishing">
+                </div>
+                
 
-            <ul>
-                <li>
-                    <strong>Keep your computer and mobile devices secure:</strong> To protect your account, it is important to have
-                    up-to-date anti-virus and anti-malware software installed on your computer and mobile devices. Keep your
-                    operating system and software updated and use strong, unique passwords for all of your accounts.
-                </li>
-                <li>
-                    <strong>Don't click on suspicious links:</strong> Be wary of unsolicited emails or messages that ask you to
-                    click on a link or download an attachment. If you receive a message that seems suspicious, do not click on any
-                    links or download any attachments. Instead, contact us directly to verify its authenticity.
-                </li>
-                <li>
-                    <strong>Verify the sender's identity:</strong> Phishing emails often appear to come from legitimate sources, but
-                    they may actually be sent by scammers. Check the sender's email address to make sure it's legitimate before
-                    clicking on any links or downloading any attachments. If you are unsure, do not hesitate to reach out to our
-                    customer service team.
-                </li>
-                <li>
-                    <strong>Be wary of urgent requests:</strong> Scammers often use urgent language to try to get you to act quickly
-                    without thinking. If an email or message seems urgent or threatens dire consequences if you don't act
-                    immediately, it may be a phishing attempt. Always take the time to carefully review and assess any urgent
-                    requests.
-                </li>
-                <li>
-                    <strong>Always type the URL into the address bar:</strong> When accessing your online banking account, always
-                    type the URL directly into the address bar of your web browser to ensure you are visiting the legitimate site.
-                    Do not click on any links to access your account.
-                </li>
-                <li>
-                    <strong>Use two-factor authentication:</strong> We highly recommend using two-factor authentication to add an
-                    extra layer of security to your account. Two-factor authentication requires you to enter a code in addition to
-                    your password to access your account. This makes it harder for scammers to access your account.
-                </li>
-                <li>
-                    <strong>Check your account regularly:</strong> We recommend checking your account activity regularly to ensure
-                    there are no unauthorized transactions. If you notice any suspicious activity, contact us immediately. We are
-                    here to help protect your account and prevent any fraudulent activity.
-                </li>
-            </ul>
+                <ul class="loans-ul row mb-5">
+                    <div class="row d-flex align-items-center justify-content-between flex-wrap">
+                        <div class="col col-md-8">
+                            <li class="mb-2">
+                                <strong>Keep your computer and mobile devices secure:</strong> To protect your account, it is important to have
+                                up-to-date anti-virus and anti-malware software installed on your computer and mobile devices. Keep your
+                                operating system and software updated and use strong, unique passwords for all of your accounts.
+                            </li>
+                            <li class="mb-2">
+                                <strong>Don't click on suspicious links:</strong> Be wary of unsolicited emails or messages that ask you to
+                                click on a link or download an attachment. If you receive a message that seems suspicious, do not click on any
+                                links or download any attachments. Instead, contact us directly to verify its authenticity.
+                            </li>
+                        </div>
+                        <img class="col col-md-4 col-xl-3" src="./images/userWorried.png" alt="worried">
+                    </div>
+                    
+                    <div class="row d-flex align-items-center justify-content-between flex-wrap ">
+                        <div class="col-12 col-md-8">
+                            <li class="mb-2">
+                                <strong>Verify the sender's identity:</strong> Phishing emails often appear to come from legitimate sources, but
+                                they may actually be sent by scammers. Check the sender's email address to make sure it's legitimate before
+                                clicking on any links or downloading any attachments. If you are unsure, do not hesitate to reach out to our
+                                customer service team.
+                            </li>
+                            <li class="mb-2">
+                                <strong>Be wary of urgent requests:</strong> Scammers often use urgent language to try to get you to act quickly
+                                without thinking. If an email or message seems urgent or threatens dire consequences if you don't act
+                                immediately, it may be a phishing attempt. Always take the time to carefully review and assess any urgent
+                                requests.
+                            </li>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center position-relative col col-md-3">
+                            <div class="w-100 virus-static d-flex justify-content-center align-items-center">
+                                <div class="virus"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center justify-content-between flex-wrap">
+                        <div class="col-12 col-md-8">
+                            <li class="mb-2">
+                                <strong>Always type the URL into the address bar:</strong> When accessing your online banking account, always
+                                type the URL directly into the address bar of your web browser to ensure you are visiting the legitimate site.
+                                Do not click on any links to access your account.
+                            </li>
+                            <li class="mb-2">
+                                <strong>Use two-factor authentication:</strong> We highly recommend using two-factor authentication to add an
+                                extra layer of security to your account. Two-factor authentication requires you to enter a code in addition to
+                                your password to access your account. This makes it harder for scammers to access your account.
+                            </li>
+                            <li class="mb-2">
+                                <strong>Check your account regularly:</strong> We recommend checking your account activity regularly to ensure
+                                there are no unauthorized transactions. If you notice any suspicious activity, contact us immediately. We are
+                                here to help protect your account and prevent any fraudulent activity.
+                            </li>
+                        </div>
+                        <img class="col col-md-4 col-xl-3" src="./images/scammer.png" alt="scammer">
+                    </div>
+                    
+                </ul>
+            </div>
+            
             <div class="modal fade" id="modalSign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content modal-login">
@@ -195,74 +224,80 @@
 
         <footer class="d-flex justify-content-evenly">
 
-          <div class="d-flex align-items-center">
-            <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
-          </div>
-
-          <div class="d-flex align-items-start flex-column mt-3">
-
-            <h5>Costumer Service</h5>
-            <p>
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
-              </svg>
-                <a class="quickLinksA font1-color" href="tel:0800-MINDHUBBROS">0800-MINDHUBBROS</a>
-            </p>
-            <p>
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <rect x="3" y="5" width="18" height="14" rx="2" />
-                <polyline points="3 7 12 13 21 7" />
-              </svg>
-              <a class="quickLinksA font1-color" href="mailto:info@mindhubbank.com">info@mindhubbank.com</a>
-            </p>
-
-          </div>
-
-          <div class="d-flex align-items-start flex-column mt-3 footer-div">
-
-            <ul>
-              <h5>Quick Links</h5>
-              <li><a class="quickLinksA font1-color" href="./index.html">- Home</a></li>
-              <li><a class="quickLinksA font1-color" href="">- Contact Us</a></li>
-              <li><a class="quickLinksA font1-color" href="">- News</a></li>
-              <li><a class="quickLinksA font1-color" href="">- About Us</a></li>
-              <li><a class="quickLinksA font1-color" href="#">- ATMs for sightless people</a></li>
-            </ul>
-
-          </div>
-
-          <div class="d-flex align-items-start flex-column mt-3 footer-div">
-            <h5>Follow Us</h5>
-            <div class="d-flex justify-content-between w-100">
-              <a href="https://www.facebook.com">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <div class="d-flex align-items-center">
+              <img class="tree-footer" src="./images/darkModeSmIcon.png" alt="">
+            </div>
+  
+            <div class="d-flex align-items-start flex-column mt-3">
+  
+                <h5 id="costServ">Costumer Service</h5>
+                <p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                  <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
                 </svg>
-              </a>
-              
-              <a href="https://twitter.com">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <a class="quickLinksA font1-color" href="tel:0800-MINDHUBBROS">0800-MINDHUBBROS</a>
+              </p>
+              <p>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <polyline points="3 7 12 13 21 7" />
                 </svg>
-              </a>
-              
-              <a href="https://www.instagram.com">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                  <rect x="4" y="4" width="16" height="16" rx="4" />
-                  <circle cx="12" cy="12" r="3" />
-                  <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
-                </svg>
-              </a>
+                <a class="quickLinksA font1-color" href="mailto:juanbianchi@icloud.com">info@mindhubbank.com</a>
+              </p>
+  
+            </div>
+  
+            <div class="d-flex align-items-start flex-column mt-3 footer-div">
+  
+              <ul>
+                <h5>Quick Links</h5>
+                <li><a class="quickLinksA font1-color" href="./index.html">- Home</a></li>
+                <li><a class="quickLinksA font1-color" href="mailto:juanbianchi@icloud.com">- Contact Us</a></li>
+                <li><a class="quickLinksA font1-color" href="https://www.wsj.com">- News</a></li>
+              </ul>
+  
+            </div>
+  
+            <div class="d-flex align-items-start flex-column mt-3 footer-div">
+              <h5>Follow Us</h5>
+              <div class="d-flex justify-content-between w-100">
+                <a href="https://www.facebook.com">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                  </svg>
+                </a>
+                
+                <a href="https://twitter.com">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+                  </svg>
+                </a>
+                
+                <a href="https://www.instagram.com">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <rect x="4" y="4" width="16" height="16" rx="4" />
+                    <circle cx="12" cy="12" r="3" />
+                    <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+                  </svg>
+                </a>
+  
+                <a class="ms-1" href="https://www.linkedin.com/in/juan-alberto-bianchi">
+                  <i class="fa-brands fa-linkedin fa-white fa-lg"></i>
+                </a>
+  
+                <a class="ms-1" href="https://github.com/Juan-Bianchi">
+                  <i class="fa-brands fa-github fa-white fa-lg"></i>
+                </a>
+                
+              </div>
               
             </div>
-            
-          </div>
-        </footer>
+          </footer>
       
         <p class="copyright">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#06283D" fill="none" stroke-linecap="round" stroke-linejoin="round">

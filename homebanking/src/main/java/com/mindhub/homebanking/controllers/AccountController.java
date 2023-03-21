@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static com.mindhub.homebanking.utils.Utilitary.createAccountNumber;
+import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 
 @RestController
 @RequestMapping("/api")
@@ -57,7 +57,7 @@ public class AccountController {
     public ResponseEntity<Object> CreateAccount(Authentication authentication, @RequestParam AccountType accountType){
 
         Client client =  clientService.findByEmail(authentication.getName());
-        if(client.getAccounts().size() >= 3){
+        if(client.getAccounts().stream().filter(Account::getIsActive).count() >= 3){
             return new ResponseEntity<>("The max amount of accounts have been already created", HttpStatus.FORBIDDEN);
         }
 
@@ -87,6 +87,10 @@ public class AccountController {
         if(!client.getAccounts().contains(account)){
 
             return new ResponseEntity<>("This account does not belong to the current user.", HttpStatus.FORBIDDEN);
+        }
+        if(account.getBalance() > 0){
+
+            return new ResponseEntity<>("You cannot delete an account if there is money in it.", HttpStatus.FORBIDDEN);
         }
 
         account.setIsActive(false);

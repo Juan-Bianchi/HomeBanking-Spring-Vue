@@ -7,6 +7,7 @@ createApp({
             client: undefined,
             barOpen: true,
             orderedAccounts: [],
+            account: undefined,
             number: "",
             originAccount: "",
             isMyOwnAccount: undefined,
@@ -37,10 +38,11 @@ createApp({
         },
 
         loadData: function(){
-            axios.get('/api/clients/current')
-                 .then(response => {
-                    this.client = {... response.data};
-                    this.orderedAccounts = [... this.client.accounts.map(account => ({... account}))];
+            let client = axios.get('http://localhost:8080/api/clients/current');
+            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            Promise.all([client, accounts]).then(response => {
+                    this.client = {... response[0].data};
+                    this.orderedAccounts = [... response[1].data.map(account => ({... account}))];
                     this.orderedAccounts.sort((ac1, ac2)=>ac1.id - ac2.id);
                     this.manageData();
                  })
@@ -64,6 +66,43 @@ createApp({
 
 
         //METHODS USED WHEN MOUNTED
+
+        chooseAccount: function(destinantion){
+            let template ="";
+            this.orderedAccounts.forEach(account => {
+             template +=`<input class="form-check-input me-2" type="radio" name="account" id="${account.number}" value="${account.number}">
+                 <label class="form-check-label me-4" for=${account.number}>
+                    ${account.number}
+                </label>`;
+                
+            });
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                icon: 'warning',
+                title: 'Please select an account.',
+                html:
+                    '<div>' +
+                        template +
+                    '</div>',
+
+                showCloseButton: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                    account = [ ...document.querySelectorAll('.swal2-container input[name="account"]')].find(element => element.checked);
+                    this.account = account.value;
+                    if (result.isConfirmed) {
+                        if(destinantion.includes('transfer')){
+                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                        }
+                        else{
+                            window.location.href = `http://localhost:8080/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
+                        }
+                    }
+                })
+        },
 
         toggleMenu: function(){
             let sidebar = document.getElementById("sidebar");
