@@ -158,7 +158,7 @@ public class CardController {
         Account account = card.getClient().getAccounts().stream().filter(acc -> acc.getType() == AccountType.SAVINGS && acc.getBalance() >= cardTransactionDTO.getAmount()).findFirst().orElse(null);
         if(account == null){
 
-            return new ResponseEntity<>("You do not hace enough money in your accounts to complete the transaction.", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("You do not have enough money in your accounts to complete the transaction.", HttpStatus.FORBIDDEN);
         }
 
         Transaction transaction = new Transaction(TransactionType.DEBIT, cardTransactionDTO.getAmount(), cardTransactionDTO.getDescription(), LocalDateTime.now());
