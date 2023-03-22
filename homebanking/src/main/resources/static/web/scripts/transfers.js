@@ -95,10 +95,10 @@ createApp({
                     this.account = account.value;
                     if (result.isConfirmed) {
                         if(destinantion.includes('transfer')){
-                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                            window.location.href = `/web/transfers.html?number=${this.account}`
                         }
                         else{
-                            window.location.href = `http://localhost:8080/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
+                            window.location.href = `/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
                         }
                     }
                 })
