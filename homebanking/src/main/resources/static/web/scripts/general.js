@@ -39,7 +39,7 @@ createApp({
                     this.errorFound = false;
                     this.emailLog = undefined;
                     this.passwordLog = undefined;
-                    window.location.href = "http://localhost:8080/web/accounts.html"
+                    window.location.href = "/web/accounts.html"
                 })
                  .catch(err => {
                     console.error(err.message);

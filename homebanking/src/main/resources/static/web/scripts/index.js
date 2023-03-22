@@ -50,8 +50,8 @@ createApp({
                                 this.client.newLogin = new Date().toLocaleString();
                                 console.log(this.client.newLogin);
                             }
-                            axios.post(`http://localhost:8080/api/clients/current/lastLogin`,`email=${this.emailLog}&newloginDate=${new Date().toLocaleString()}&lastLoginDate=${this.client.newLogin}`)
-                                .then(response => window.location.href = "http://localhost:8080/web/accounts.html")
+                            axios.post(`/api/clients/current/lastLogin`,`email=${this.emailLog}&newloginDate=${new Date().toLocaleString()}&lastLoginDate=${this.client.newLogin}`)
+                                .then(response => window.location.href = "/web/accounts.html")
                                 .catch(err => console.log([err]));
                          })
                          .catch(err => console.error(err.message));
@@ -119,7 +119,7 @@ createApp({
             axios.post('/api/logout')
                  .then(response => {
                     console.log('signed out!!!');
-                    window.location.href = "http://localhost:8080/web/index.html";
+                    window.location.href = "/web/index.html";
             })
         },
 

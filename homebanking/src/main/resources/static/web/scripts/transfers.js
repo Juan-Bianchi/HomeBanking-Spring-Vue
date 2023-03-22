@@ -38,8 +38,8 @@ createApp({
         },
 
         loadData: function(){
-            let client = axios.get('http://localhost:8080/api/clients/current');
-            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            let client = axios.get('/api/clients/current');
+            let accounts = axios.get('/api/clients/current/activeAccounts')
             Promise.all([client, accounts]).then(response => {
                     this.client = {... response[0].data};
                     this.orderedAccounts = [... response[1].data.map(account => ({... account}))];
@@ -170,7 +170,7 @@ createApp({
                  .then(response => {
                     console.log('signed out!!!');
                     localStorage.removeItem('currentClient');
-                    window.location.href = "http://localhost:8080/web/index.html";
+                    window.location.href = "/web/index.html";
             })
         },
     },

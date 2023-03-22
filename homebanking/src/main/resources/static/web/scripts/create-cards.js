@@ -46,9 +46,9 @@ createApp({
         },
 
         loadData: function(){
-            let client = axios.get(`http://localhost:8080/api/clients/current`)
-            let cards = axios.get('http://localhost:8080/api/clients/current/activeCards')
-            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            let client = axios.get(`/api/clients/current`)
+            let cards = axios.get('/api/clients/current/activeCards')
+            let accounts = axios.get('/api/clients/current/activeAccounts')
             Promise.all([client, cards, accounts])
                     .then(response => {
                             this.client = {... response[0].data};
@@ -117,7 +117,7 @@ createApp({
                             icon: 'success',
                             confirmButtonText: 'Accept'
                         }).then((result) => {
-                            window.location.href = "http://localhost:8080/web/cards.html"; 
+                            window.location.href = "/web/cards.html"; 
                         })
                     })
                     .catch(err =>{
@@ -176,10 +176,10 @@ createApp({
                     this.account = account.value;
                     if (result.isConfirmed) {
                         if(destinantion.includes('transfer')){
-                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                            window.location.href = `/web/transfers.html?number=${this.account}`
                         }
                         else{
-                            window.location.href = `http://localhost:8080/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
+                            window.location.href = `/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
                         }
                     }
                 })
@@ -238,7 +238,7 @@ createApp({
                  .then(response => {
                     console.log('signed out!!!');
                     localStorage.removeItem('currentClient');
-                    window.location.href = "http://localhost:8080/web/index.html";
+                    window.location.href = "/web/index.html";
             })
         },
     },
