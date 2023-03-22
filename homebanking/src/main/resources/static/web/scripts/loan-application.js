@@ -309,7 +309,7 @@ createApp({
                             icon: 'success',
                             confirmButtonText: 'Accept'
                         }).then((result) => {
-                            //location.reload(); 
+                            location.reload(); 
                         })
                     })
                     .catch(err =>{
