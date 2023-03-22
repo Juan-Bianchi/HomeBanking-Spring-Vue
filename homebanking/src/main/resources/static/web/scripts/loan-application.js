@@ -47,9 +47,9 @@ createApp({
         // WHEN CREATED (TO RENDER PAGE)
 
         loadData: function(){
-            let ownLoans = axios.get('http://localhost:8080/api/clients/current');
-            let genericLoans = axios.get('http://localhost:8080/api/loans');
-            let ownAccounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            let ownLoans = axios.get('/api/clients/current');
+            let genericLoans = axios.get('/api/loans');
+            let ownAccounts = axios.get('/api/clients/current/activeAccounts')
             Promise.all([ownLoans, genericLoans, ownAccounts])
                    .then(response => {    
                         this.client = {... response[0].data};
@@ -361,10 +361,10 @@ createApp({
                     this.account = account.value;
                     if (result.isConfirmed) {
                         if(destinantion.includes('transfer')){
-                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                            window.location.href = `/web/transfers.html?number=${this.account}`
                         }
                         else{
-                            window.location.href = `http://localhost:8080/web/account.html?id=${this.accounts.find(account => account.number.includes(this.account)).id}`
+                            window.location.href = `/web/account.html?id=${this.accounts.find(account => account.number.includes(this.account)).id}`
                         }
                     }
                 })
@@ -377,7 +377,7 @@ createApp({
                  .then(response => {
                     console.log('signed out!!!');
                     localStorage.removeItem('currentClient');
-                    window.location.href = "http://localhost:8080/web/index.html";
+                    window.location.href = "/web/index.html";
             })
         },
 

@@ -45,8 +45,8 @@ createApp({
             const urlString = location.search;
             const parameters = new URLSearchParams(urlString);
             const id = parameters.get('id');
-            let client = axios.get(`http://localhost:8080/api/clients/current`)
-            let accounts = axios.get('http://localhost:8080/api/clients/current/activeAccounts')
+            let client = axios.get(`/api/clients/current`)
+            let accounts = axios.get('/api/clients/current/activeAccounts')
             Promise.all([client, accounts]).then(response => {
                     this.client = {... response[0].data};
                     this.orderedAccounts = response[1].data.sort((a1, a2) => { return a1.id > a2.id ? 1: -1; });
@@ -78,7 +78,7 @@ createApp({
         loadTransactions: function(){
             if(this.filterByDate.includes("true") && this.date){
                 
-                axios.get(`http://localhost:8080/api/transactions?accountNumber=${this.account.number}&fromDate=${this.date[0].toISOString()}&thruDate=${this.date[1].toISOString()}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                axios.get(`/api/transactions?accountNumber=${this.account.number}&fromDate=${this.date[0].toISOString()}&thruDate=${this.date[1].toISOString()}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(response =>{
                          this.transactions = response.data.map(transaction => transaction);
                          this.manageData();
@@ -87,7 +87,7 @@ createApp({
             }
             else {
                 console.log("object");
-                axios.get(`http://localhost:8080/api/transactions?accountNumber=${this.account.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                axios.get(`/api/transactions?accountNumber=${this.account.number}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
                     .then(response =>{
                          this.transactions = response.data.map(transaction => transaction);
                          this.manageData();
@@ -239,10 +239,10 @@ createApp({
                     this.account = account.value;
                     if (result.isConfirmed) {
                         if(destinantion.includes('transfer')){
-                            window.location.href = `http://localhost:8080/web/transfers.html?number=${this.account}`
+                            window.location.href = `/web/transfers.html?number=${this.account}`
                         }
                         else{
-                            window.location.href = `http://localhost:8080/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
+                            window.location.href = `/web/account.html?id=${this.orderedAccounts.find(account => account.number.includes(this.account)).id}`
                         }
                     }
                 })
@@ -306,7 +306,7 @@ createApp({
                  .then(response => {
                     console.log('signed out!!!');
                     localStorage.removeItem('currentClient');
-                    window.location.href = "http://localhost:8080/web/index.html";
+                    window.location.href = "/web/index.html";
             })
         },
 
