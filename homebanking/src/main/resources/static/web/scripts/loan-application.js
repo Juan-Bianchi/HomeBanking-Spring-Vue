@@ -63,7 +63,7 @@ createApp({
                             this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;                                 
                         this.manageData();
                    })
-                   .catch(err => console.error(err.message));
+                   //.catch(err => console.error(err.message));
         },
 
         manageData: function(){
@@ -132,7 +132,9 @@ createApp({
                 this.pageNumber = 1;
             }
             this.visibleLoans = transactionsArray[this.pageNumber - 1];
-            
+            if(!this.visibleLoans){
+                this.visibleLoans = [];
+            }
             let numbers = [];
             for(let i = 1; i <= this.totalPages; i++){
                 numbers.push(i);
