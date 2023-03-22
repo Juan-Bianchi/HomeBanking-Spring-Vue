@@ -166,7 +166,11 @@ createApp( {
             if(this.totalPages === 1){
                 this.pageNumber = 1;
             }
+            console.log(this.visibleLoans);
             this.visibleLoans = transactionsArray[this.pageNumber - 1];
+            if(!this.visibleLoans){
+                this.visibleLoans = [];
+            }
             
             let numbers = [];
             for(let i = 1; i <= this.totalPages; i++){

@@ -279,7 +279,7 @@
                   <!-- TABLE -->
 
                   <div class="d-flex justify-content-between align-items-start">
-                    <div class="container table-loan" v-if="visibleLoans.length">
+                    <div class="container table-loan" v-if="orderedAccounts.length">
                       <div class="row d-flex justify-content-center">
                           <div class="col-11 col-md-12 col-lg-12">
                               <div class="panel panelAccounts">
@@ -328,6 +328,7 @@
                               </div>
                           </div>
                       </div>
+                      
                     </div> 
                     
                     <img class="woman-sitting flexAfter768" src="./images/man-smilling.png" alt="wealth">
@@ -429,7 +430,10 @@
                 <h2 class="font2-color">Total Balance</h2>
                 <div class="d-flex justify-content-between back w-100 diagram-apex">
                   <img class="laugh-man-balance noneFrom1024to1200" src="./images/havings.png" alt="laughing">
-                  <div id="totalHavingsChart" class="d-flex justify-content-between">    
+                  <div v-show="totalBalance" id="totalHavingsChart" class="d-flex justify-content-between">    
+                  </div>
+                  <div v-if="!totalBalance" class="header-login font1-color title-no-transaction d-flex align-items-center">
+                    <h2 class="">Currently, you do not have money in yor accounts.</h2>
                   </div>
                 </div>
                 <div class="d-flex justify-content-around">
@@ -442,14 +446,15 @@
 
             <!-- LOANS -->
             <div class="d-flex justify-content-between align-items-start tree-and-loan">
-              <div class="container table-loan" v-if="visibleLoans.length">
+              <div class="container table-loan">
                 <div class="row d-flex justify-content-center">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="panel panelAccounts">
-                            <div class="panel-heading">
+                            <div class="panel-heading" >
                                 <div class="row">
                                     <div class="col col-sm-6 col-xs-12">
-                                        <h4 class="title">Active <span>Loans</span></h4>
+                                        <h4 v-if="visibleLoans.length" class="title">Active <span>Loans</span></h4>
+                                        <h4 v-else class="title">No Active <span>Loans</span></h4>
                                     </div>
                                     <div class="col-sm-6 col-xs-12 text-end">
                                         <div class="btn_group">        
@@ -459,7 +464,7 @@
                                 </div>
                             </div>
                             <div class="panel-body table-responsive">
-                                <table class="table">
+                                <table class="table" v-if="visibleLoans.length">
                                     <thead>
                                         <tr>
                                           <th>Type of loan</th>
@@ -485,6 +490,9 @@
                                       
                                     </tbody>
                                 </table>
+                                <div v-else class="header-login font1-color title-no-transaction d-flex align-items-center">
+                                  <h2 class="">Currently, there is not any active loan. Apply for a new one!</h2>
+                                </div>
                             </div>
                             <div class="panel-footer" id="table-loans-accounts">
                                 <div class="row">
