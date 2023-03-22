@@ -176,6 +176,7 @@ createApp({
                             if(this.localStorage.length){
                                 localStorage.setItem('notif', JSON.stringify(this.localStorage));
                             }
+                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
                         }
                     })
             }

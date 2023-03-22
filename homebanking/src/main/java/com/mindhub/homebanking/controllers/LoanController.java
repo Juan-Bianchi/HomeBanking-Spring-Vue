@@ -151,7 +151,7 @@ public class LoanController {
 
         ClientLoanDTO clientLoanDTO = new ClientLoanDTO(clientLoan);
 
-        return new ResponseEntity<>("Loan has been created and approved.", HttpStatus.CREATED);
+        return new ResponseEntity<>(clientLoanDTO, HttpStatus.CREATED);
     }
 
     @PostMapping("/genericLoans")

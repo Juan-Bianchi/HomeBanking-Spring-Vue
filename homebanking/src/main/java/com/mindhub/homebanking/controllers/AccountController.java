@@ -58,6 +58,7 @@ public class AccountController {
 
         Client client =  clientService.findByEmail(authentication.getName());
         if(client.getAccounts().stream().filter(Account::getIsActive).count() >= 3){
+
             return new ResponseEntity<>("The max amount of accounts have been already created", HttpStatus.FORBIDDEN);
         }
 
@@ -65,6 +66,7 @@ public class AccountController {
         Account account = new Account(accountNumber, LocalDateTime.now(), 0, accountType);
         client.addAccount(account);
         accountService.save(account);
+        clientService.save(client);
         AccountDTO accountDTO = new AccountDTO(account);
 
         return new ResponseEntity<>(accountDTO, HttpStatus.CREATED);

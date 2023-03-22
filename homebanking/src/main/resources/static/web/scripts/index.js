@@ -30,7 +30,7 @@ createApp({
     mounted(){
         window.addEventListener('scroll', this.scrollFunction);
         this.manageAutoTyping(); 
-        // this.controlCarousel();
+        this.controlCarousel();
     },
 
     methods: {

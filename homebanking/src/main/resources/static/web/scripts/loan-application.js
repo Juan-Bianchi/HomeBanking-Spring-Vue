@@ -251,6 +251,7 @@ createApp({
                             if(this.localStorage.length){
                                 localStorage.setItem('notif', JSON.stringify(this.localStorage));
                             }
+                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
                         }
                     })
             }
@@ -291,8 +292,9 @@ createApp({
                 if (result.isConfirmed) {
                     axios.post('/api/loans', { idLoan: this.loanApplicationDTO.idLoan, amount: this.loanApplicationDTO.amount, payments: this.loanApplicationDTO.payments, associatedAccountNumber: this.loanApplicationDTO.associatedAccountNumber,})
                     .then(response => {
+                        console.log([response]);
                         this.localStorage.push({
-                            number: response.data.number,
+                            number: response.data.id,
                             description: `A ${response.data.name} loan with amount U$S ${response.data.amount} has been transfered to your account.`,
                             isRead: false,
                             isDeleted: false,
@@ -305,7 +307,7 @@ createApp({
                             icon: 'success',
                             confirmButtonText: 'Accept'
                         }).then((result) => {
-                            location.reload(); 
+                            //location.reload(); 
                         })
                     })
                     .catch(err =>{
