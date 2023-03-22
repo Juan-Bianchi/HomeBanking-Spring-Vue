@@ -26,7 +26,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
     ClientRepository clientRepository;
 
-    
+
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
