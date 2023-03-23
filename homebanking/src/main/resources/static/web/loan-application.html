@@ -238,7 +238,7 @@
                 <!-- LOANS LIST -->
 
                 <div class="d-flex justify-content-between align-items-start tree-and-loan">
-                    <div class="container table-loan" v-if="filteredLoans.length">
+                    <div class="container table-loan" v-if="loans.length">
                       <div class="row d-flex justify-content-center">
                           <div class="col-12 col-md-12 col-lg-12">
                               <div class="panel">
@@ -255,7 +255,7 @@
                                       </div>
                                   </div>
                                   <div class="panel-body table-responsive">
-                                      <table class="table">
+                                      <table class="table" v-if="filteredLoans.length">
                                           <thead>
                                               <tr>
                                                 <th>Type of loan</th>
@@ -288,6 +288,9 @@
                                             
                                           </tbody>
                                       </table>
+                                      <div v-else class="header-login font1-color title-no-transaction d-flex align-items-center">
+                                        <h2 class="w-75">Currently, there is not any loan that matches your filters.</h2>
+                                      </div>
                                   </div>
                                   <div class="panel-footer">
                                       <div class="row">
