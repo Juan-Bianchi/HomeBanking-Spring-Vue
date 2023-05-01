@@ -160,102 +160,102 @@ createApp({
             this.renderLoans();
         },
 
-           manageNotifications: function(){
-            this.localStorage = JSON.parse(localStorage.getItem('notif'));
-            let template ="";
-            if(this.localStorage){
-                this.localStorage.forEach(element => {
-                    template +=
-                       `<tr>                        
-                           <td>${element.number}</td>
-                           <td style="width: 40%">${element.description}</td>
-                           <td>
-                               <div class="form-check form-check-inline seen">
-                                   <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
-                                   <label class="form-check-label" for="${element.number}"> </label>
-                               </div>
-                           </td>
-                           <td>
-                               <div class="form-check form-check-inline delete">
-                                   <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
-                                   <label class="form-check-label" for="${element.number}"> </label>
-                               </div>
-                           </td>                
-                       </tr>`;
-                       
-                   });
-            
-           
-                Swal.fire({
-                    customClass: 'modal-sweet-alert',
-                    title: 'To mark as seen or to delete just click the checkboxes.',
-                    html:
-                        `<div class="d-flex justify-content-between align-items-start">
-                            <div class="container table-loan" v-if="visibleLoans.length">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-11 col-md-12 col-lg-12">
-                                        <div class="panel panelAccounts">
-                                            <div class="panel-body table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Item</th>
-                                                            <th>Description</th>
-                                                            <th style= "width: 20%">Read</th> 
-                                                            <th style= "width: 20%">Delete</th>                                             
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>` +
-                                                        template +                                                                
-                                                    `</tbody>
-                                                </table>
-                                            </div>
+        manageNotifications: function(){
+        this.localStorage = JSON.parse(localStorage.getItem('notif'));
+        let template ="";
+        if(this.localStorage){
+            this.localStorage.forEach(element => {
+                template +=
+                    `<tr>                        
+                        <td>${element.number}</td>
+                        <td style="width: 40%">${element.description}</td>
+                        <td>
+                            <div class="form-check form-check-inline seen">
+                                <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
+                                <label class="form-check-label" for="${element.number}"> </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline delete">
+                                <input class="form-check-input check-trans" type="checkbox" id="${element.number}" value="${element.number}">
+                                <label class="form-check-label" for="${element.number}"> </label>
+                            </div>
+                        </td>                
+                    </tr>`;
+                    
+                });
+        
+        
+            Swal.fire({
+                customClass: 'modal-sweet-alert',
+                title: 'To mark as seen or to delete just click the checkboxes.',
+                html:
+                    `<div class="d-flex justify-content-between align-items-start">
+                        <div class="container table-loan" v-if="visibleLoans.length">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-11 col-md-12 col-lg-12">
+                                    <div class="panel panelAccounts">
+                                        <div class="panel-body table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Description</th>
+                                                        <th style= "width: 20%">Read</th> 
+                                                        <th style= "width: 20%">Delete</th>                                             
+                                                    </tr>
+                                                </thead>
+                                                <tbody>` +
+                                                    template +                                                                
+                                                `</tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
-                        </div>`,   
-                    width: 700,                             
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Close',
-                    confirmButtonText: 'Accept'
-                }).then((result) => {
-                        seen = [ ...document.querySelectorAll('.swal2-container .seen input[type="checkbox"]:checked')];
-                        del = [ ...document.querySelectorAll('.swal2-container .delete input[type="checkbox"]:checked')];
-                        if (result.isConfirmed) {
-                            this.notifCounter = this.localStorage.length - seen.length;
-                            if(seen.length){
-                                this.localStorage = this.localStorage.map( element => {
-                                    seen.forEach(el => {
-                                        if(el.value == element.number){
-                                            element.isRead = true;
-                                        }
-                                    })
-                                    return element;
-                                });
-                            }
-                            
-                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
-                            if(del.length){
-                                this.localStorage = this.localStorage.map(element => {
-                                    del.forEach(el => {
-                                        if(el.value == element.number){
-                                            element.isDeleted = true;
-                                        }
-                                    })
-                                    return element;
-                                }).filter(element => element.isDeleted == false);
-                            }
-
-                            localStorage.removeItem('notif');
-                            if(this.localStorage.length){
-                                localStorage.setItem('notif', JSON.stringify(this.localStorage));
-                            }
-                            this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
+                            </div>
+                        </div> 
+                    </div>`,   
+                width: 700,                             
+                showCloseButton: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Close',
+                confirmButtonText: 'Accept'
+            }).then((result) => {
+                    seen = [ ...document.querySelectorAll('.swal2-container .seen input[type="checkbox"]:checked')];
+                    del = [ ...document.querySelectorAll('.swal2-container .delete input[type="checkbox"]:checked')];
+                    if (result.isConfirmed) {
+                        this.notifCounter = this.localStorage.length - seen.length;
+                        if(seen.length){
+                            this.localStorage = this.localStorage.map( element => {
+                                seen.forEach(el => {
+                                    if(el.value == element.number){
+                                        element.isRead = true;
+                                    }
+                                })
+                                return element;
+                            });
                         }
-                    })
+                        
+                        this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
+                        if(del.length){
+                            this.localStorage = this.localStorage.map(element => {
+                                del.forEach(el => {
+                                    if(el.value == element.number){
+                                        element.isDeleted = true;
+                                    }
+                                })
+                                return element;
+                            }).filter(element => element.isDeleted == false);
+                        }
+
+                        localStorage.removeItem('notif');
+                        if(this.localStorage.length){
+                            localStorage.setItem('notif', JSON.stringify(this.localStorage));
+                        }
+                        this.notifCounter = this.localStorage.filter(element => element.isRead == false).length;
+                    }
+                })
             }
         },
 

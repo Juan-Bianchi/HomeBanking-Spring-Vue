@@ -143,7 +143,7 @@ createApp({
         scrollFunction() {
 
             let icon = document.querySelector(".logo-landing-page");
-
+            console.log(document.documentElement.scrollTop);
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
                 if(screen.width >= 768){
                     icon.style.height  = "55px";
