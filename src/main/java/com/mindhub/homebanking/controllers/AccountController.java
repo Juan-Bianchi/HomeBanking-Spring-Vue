@@ -22,46 +22,44 @@ import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 @RequestMapping("/api")
 public class AccountController {
 
-    @Autowired
-    AccountService accountService;
+    private final AccountService accountService;
+    private final ClientService clientService;
 
-    @Autowired
-    ClientService clientService;
+
+    public AccountController(AccountService accountService, ClientService clientService){
+        this.accountService = accountService;
+        this.clientService = clientService;
+    }
+
 
     @GetMapping("/accounts")
     public Set<AccountDTO> getAccounts() {
-
         return accountService.findAll();
     }
 
     @GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id) {
-
         return new AccountDTO(accountService.findById(id));
     }
 
     @GetMapping("/clients/current/accounts")
     public Set<AccountDTO> getAccounts(Authentication authentication){
-
         return clientService.getAccountsDTO(clientService.findByEmail(authentication.getName()));
     }
 
     @GetMapping("/clients/current/activeAccounts")
     public Set<AccountDTO> getActiveAccounts(Authentication authentication){
-
         return clientService.getAccountsDTO(clientService.findByEmail(authentication.getName()));
     }
 
 
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> CreateAccount(Authentication authentication, @RequestParam AccountType accountType){
-
         return accountService.createAccount(authentication, accountType);
     }
 
     @PatchMapping("/clients/current/accounts")
     public ResponseEntity<Object> cancelAccount(@RequestParam String number, Authentication authentication){
-
         return accountService.cancelAccount(number, authentication);
     }
 
