@@ -11,6 +11,7 @@ import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class ClientServiceImplementation implements ClientService {
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
-    public ClientServiceImplementation (ClientRepository clientRepository, AccountService accountService, PasswordEncoder passwordEncoder){
+    public ClientServiceImplementation (ClientRepository clientRepository, @Lazy AccountService accountService, PasswordEncoder passwordEncoder){
         this.clientRepository = clientRepository;
         this.accountService = accountService;
         this.passwordEncoder = passwordEncoder;
@@ -77,7 +78,7 @@ public class ClientServiceImplementation implements ClientService {
     }
 
     @Override
-    public ResponseEntity<Object> register(String firstName, String lastName, String email, String password) {
+    public void register(String firstName, String lastName, String email, String password) {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
             String errorMessage = "⋆ Please, fill the following fields: ";
             boolean moreThanOne = false;
@@ -111,10 +112,10 @@ public class ClientServiceImplementation implements ClientService {
                 errorMessage += "password";
             }
             errorMessage += ".";
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+            throw new RuntimeException(errorMessage);
         }
         if (this.findByEmail(email) !=  null) {
-            return new ResponseEntity<>("⋆ Email already in use", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("⋆ Email already in use");
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
@@ -123,21 +124,17 @@ public class ClientServiceImplementation implements ClientService {
         client.addAccount(account);
         this.save(client);
         accountService.save(account);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<?> updateLastLogin(String email, String newloginDate, String lastLoginDate) {
+    public void updateLastLogin(String email, String newloginDate, String lastLoginDate) {
         Client client = this.findByEmail(email);
         if(client == null){
-            return new ResponseEntity<>("Client does not exist.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("Client does not exist.");
         }
         client.setLastLogin(lastLoginDate);
         client.setNewLogin(newloginDate);
         this.save(client);
-
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 

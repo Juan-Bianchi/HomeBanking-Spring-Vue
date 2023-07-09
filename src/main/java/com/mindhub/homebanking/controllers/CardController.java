@@ -7,6 +7,7 @@ import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,12 +39,23 @@ public class CardController {
 
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(CardType cardType, CardColor cardColor, Authentication authentication){
-        return  cardService.createCard(cardType, cardColor, authentication);
+        try{
+            return new ResponseEntity<>(cardService.createCard(cardType, cardColor, authentication), HttpStatus.CREATED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @PatchMapping("/clients/current/cards")
     public ResponseEntity<Object> cancelCard(@RequestParam String cardNumber, Authentication authentication){
-        return cardService.cancelCard(cardNumber, authentication);
+        try{
+            cardService.cancelCard(cardNumber, authentication);
+            return new ResponseEntity<>("The card has been cancelled.", HttpStatus.ACCEPTED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 
@@ -51,6 +63,12 @@ public class CardController {
     @CrossOrigin
     @Transactional
     public ResponseEntity<Object> addCardTransaction(@RequestBody CardTransactionDTO cardTransactionDTO) {
-        return cardService.addCardTransaction(cardTransactionDTO);
+        try{
+            cardService.addCardTransaction(cardTransactionDTO);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 }

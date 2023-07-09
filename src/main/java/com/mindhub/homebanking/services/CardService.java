@@ -14,7 +14,7 @@ public interface CardService {
     void save(Card card);
     Card getCardByNumber(String cardNumber);
     boolean existsCardByNumber(String cardNumber);
-    ResponseEntity<Object> createCard(CardType cardType, CardColor cardColor, Authentication authentication);
-    ResponseEntity<Object> cancelCard(String cardNumber, Authentication authentication);
-    ResponseEntity<Object> addCardTransaction(@RequestBody CardTransactionDTO cardTransactionDTO);
+    Object createCard(CardType cardType, CardColor cardColor, Authentication authentication);
+    void cancelCard(String cardNumber, Authentication authentication);
+    void addCardTransaction(@RequestBody CardTransactionDTO cardTransactionDTO);
 }

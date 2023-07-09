@@ -18,8 +18,8 @@ public interface ClientService {
     Set<AccountDTO> getActiveAccountsDTO(Client client);
     Set<CardDTO> getCurrentCardsDTO(Client client);
     Set<CardDTO> getCurrentActiveCardsDTO(Client client);
-    ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,
+    void register(@RequestParam String firstName, @RequestParam String lastName,
                                     @RequestParam String email, @RequestParam String password);
-    public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate);
+    void updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate);
 }
 

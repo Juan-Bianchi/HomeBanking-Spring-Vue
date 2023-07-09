@@ -57,11 +57,11 @@ public class AccountServiceImplementation implements AccountService {
     }
 
     @Override
-    public ResponseEntity<Object> createAccount(Authentication authentication, AccountType accountType) {
+    public Object createAccount(Authentication authentication, AccountType accountType) {
         Client client =  clientService.findByEmail(authentication.getName());
 
         if(client.getAccounts().stream().filter(Account::getIsActive).count() >= 3){
-            return new ResponseEntity<>("The max amount of accounts have been already created", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("The max amount of accounts have been already created");
         }
 
         String accountNumber = createAccountNumber(this);
@@ -71,30 +71,27 @@ public class AccountServiceImplementation implements AccountService {
         clientService.save(client);
         AccountDTO accountDTO = new AccountDTO(account);
 
-        return new ResponseEntity<>(accountDTO, HttpStatus.CREATED);
-
+        return accountDTO;
     }
 
     @Override
-    public ResponseEntity<Object> cancelAccount(String number, Authentication authentication) {
+    public void cancelAccount(String number, Authentication authentication) {
         if(number.isEmpty()){
-            return new ResponseEntity<>("Account number is empty. It must be provided.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("Account number is empty. It must be provided.");
         }
         Client client =  clientService.findByEmail(authentication.getName());
         Account account = this.findAccountByNumber(number);
         if(account == null){
-            return new ResponseEntity<>("The account does not exist.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("The account does not exist.");
         }
         if(!client.getAccounts().contains(account)){
-            return new ResponseEntity<>("This account does not belong to the current user.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("This account does not belong to the current user.");
         }
         if(account.getBalance() > 0){
-            return new ResponseEntity<>("You cannot delete an account if there is money in it.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("You cannot delete an account if there is money in it.");
         }
 
         account.setIsActive(false);
         this.save(account);
-
-        return new ResponseEntity<>("The account was cancelled", HttpStatus.ACCEPTED);
     }
 }

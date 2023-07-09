@@ -55,12 +55,23 @@ public class AccountController {
 
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> CreateAccount(Authentication authentication, @RequestParam AccountType accountType){
-        return accountService.createAccount(authentication, accountType);
+        try{
+            return new ResponseEntity<>(accountService.createAccount(authentication, accountType), HttpStatus.FORBIDDEN);
+        }
+        catch(RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @PatchMapping("/clients/current/accounts")
     public ResponseEntity<Object> cancelAccount(@RequestParam String number, Authentication authentication){
-        return accountService.cancelAccount(number, authentication);
+        try{
+            accountService.cancelAccount(number, authentication);
+            return new ResponseEntity<>("The account was cancelled", HttpStatus.ACCEPTED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 }

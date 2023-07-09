@@ -50,13 +50,25 @@ public class ClientController {
     @PostMapping("/clients")
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,
                                            @RequestParam String email, @RequestParam String password) {
-        return  clientService.register(firstName, lastName, email, password);
+        try{
+            clientService.register(firstName, lastName, email, password);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 
     @PostMapping("/clients/current/lastLogin")
     public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate){
-        return clientService.updateLastLogin(email, newloginDate, lastLoginDate);
+        try{
+            clientService.updateLastLogin(email, newloginDate, lastLoginDate);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 

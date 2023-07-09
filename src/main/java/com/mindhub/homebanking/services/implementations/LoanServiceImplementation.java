@@ -54,34 +54,33 @@ public class LoanServiceImplementation implements LoanService {
     }
 
     @Override
-    public ResponseEntity<Object> createClientLoan(LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
+    public ClientLoanDTO createClientLoan(LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
         Client client = clientService.findByEmail(authentication.getName());
         Loan loan = this.findById(loanApplicationDTO.getIdLoan());
 
         if (thereIsANullField(loanApplicationDTO)) {
             String errorMessage = verifyNullFields(loanApplicationDTO);
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+            throw new RuntimeException(errorMessage);
         }
         if(loan == null){
-            return new ResponseEntity<>("There is not any loan with the given id.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("There is not any loan with the given id.");
         }
         if(someFieldIsNotValid(loanApplicationDTO, loan)){
-            String errorMessage = verifyNotValidFields(loanApplicationDTO, loan);
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+            verifyNotValidFields(loanApplicationDTO, loan);
         }
 
         Account account = accountService.findAccountByNumber(loanApplicationDTO.getAssociatedAccountNumber());
         if(account == null){
-            return new ResponseEntity<>("The given account does not exist.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("The given account does not exist.");
         }
         if(!client.getAccounts().contains(account)) {
-            return new ResponseEntity<>("The given account is not related to the correct Client", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("The given account is not related to the correct Client");
         }
         List<Double> previousClientLoansDuplicated = client.getLoans().stream().filter(ln-> ln.getLoan().getId() == loan.getId()).map(ln -> ln.getAmount()).collect(toList());
         if(previousClientLoansDuplicated.size() > 0){
             double previousLoanAmounts = previousClientLoansDuplicated.stream().reduce(0.0, (accumulator, amount) -> accumulator + amount);
             if(loanApplicationDTO.getAmount() +  previousLoanAmounts > loan.getMaxAmount()){
-                return new ResponseEntity<>("Max amount for this type of loan cannot be exceeded. You already have previous loans of the same type. Please, be sure not to exceed the max amount.", HttpStatus.FORBIDDEN);
+                throw new RuntimeException("Max amount for this type of loan cannot be exceeded. You already have previous loans of the same type. Please, be sure not to exceed the max amount.");
             }
         }
 
@@ -98,30 +97,25 @@ public class LoanServiceImplementation implements LoanService {
         clientLoanService.save(clientLoan);
         accountService.save(account);
 
-        ClientLoanDTO clientLoanDTO = new ClientLoanDTO(clientLoan);
-
-        return new ResponseEntity<>(clientLoanDTO, HttpStatus.CREATED);
+        return new ClientLoanDTO(clientLoan);
     }
 
     @Override
-    public ResponseEntity<Object> setGenericLoan(LoanCreationDTO genericLoan, Authentication authentication) {
+    public void setGenericLoan(LoanCreationDTO genericLoan, Authentication authentication) {
         Client admin = clientService.findByEmail(authentication.getName());
         if(!admin.getEmail().equals("admin@mindhub.com") || !admin.getFirstName().equalsIgnoreCase("admin")){
-            return new ResponseEntity<>("Only ADMIN can set a new loan.", HttpStatus.FORBIDDEN);
+            throw new RuntimeException("Only ADMIN can set a new loan.");
         }
         if (thereIsANullField(genericLoan)) {
             String errorMessage = verifyNullFields(genericLoan);
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+            throw new RuntimeException(errorMessage);
         }
         if(someFiledIsNotValid(genericLoan)) {
-            String errorMessage = verifyNotValidFields(genericLoan);
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+            verifyNotValidFields(genericLoan);
         }
 
         Loan loan = new Loan(genericLoan.getName(), genericLoan.getMaxAmount(), genericLoan.getPayments(), genericLoan.getInterestRate());
         this.save(loan);
-
-        return new ResponseEntity<>("Loan created.", HttpStatus.OK);
     }
 
 
@@ -183,24 +177,22 @@ public class LoanServiceImplementation implements LoanService {
         return notValid;
     }
 
-    private String verifyNotValidFields(LoanApplicationDTO loanApplicationDTO, Loan loan){
-        String error = "";
+    private void verifyNotValidFields(LoanApplicationDTO loanApplicationDTO, Loan loan){
         if(loanApplicationDTO.getAmount() < 10000){
-            error = "The loan amount must not be lower than U$S 10.0000 .";
+            throw new RuntimeException("The loan amount must not be lower than U$S 10.0000 .");
         }
         if(loan.getMaxAmount() < loanApplicationDTO.getAmount()){
-            error = "The requested amount cannot exceed the current max amount for the selected loan.";
+            throw new RuntimeException("The requested amount cannot exceed the current max amount for the selected loan.");
         }
         Integer min = loan.getPayments().stream().min(Integer::compareTo).orElse(null);
         Integer max = loan.getPayments().stream().max(Integer::compareTo).orElse(null);
         boolean notValid = min == null || max == null;
         if(notValid || loanApplicationDTO.getPayments() < min || loanApplicationDTO.getPayments() > max){
-            error = "The payments number must among "+ min + " and " + max;
+            throw new RuntimeException("The payments number must among "+ min + " and " + max);
         }
         if(!loan.getPayments().contains(loanApplicationDTO.getPayments())){
-            error = "The selected payment is not among the allowed payment options.";
+            throw new RuntimeException("The selected payment is not among the allowed payment options.");
         }
-        return error;
     }
 
     private String verifyNullFields(LoanCreationDTO genericLoan){
@@ -245,21 +237,18 @@ public class LoanServiceImplementation implements LoanService {
         return genericLoan.getMaxAmount() < 10000 || genericLoan.getInterestRate() < 0 || genericLoan.getInterestRate() > 100 || genericLoan.getPayments().stream().anyMatch(payment -> payment < 0 || payment > 60) || this.existsLoanByName(genericLoan.getName());
     }
 
-    private String verifyNotValidFields(LoanCreationDTO genericLoan) {
-        String error = "";
+    private void verifyNotValidFields(LoanCreationDTO genericLoan) {
         if(genericLoan.getMaxAmount() < 10000){
-            error = "Loan must be at least of 10000 dolars";
+            throw new RuntimeException("Loan must be at least of 10000 dolars");
         }
         if(genericLoan.getInterestRate() < 0 || genericLoan.getInterestRate() > 100){
-            error = "The interest rate must be between 0% and 100%";
+            throw new RuntimeException("The interest rate must be between 0% and 100%");
         }
         if(genericLoan.getPayments().stream().anyMatch(payment -> payment < 0 || payment > 60)){
-            error = "Payment options must be higher than 0 and lower than 60.";
+            throw new RuntimeException("Payment options must be higher than 0 and lower than 60.");
         }
         if(this.existsLoanByName(genericLoan.getName())){
-            error = "There cannot be two loans with the same name";
+            throw new RuntimeException("There cannot be two loans with the same name");
         }
-
-        return error;
     }
 }

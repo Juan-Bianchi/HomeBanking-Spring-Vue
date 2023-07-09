@@ -39,12 +39,24 @@ public class LoanController {
     @PostMapping("/loans")
     @Transactional
     public ResponseEntity<Object> createClientLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication){
-        return loanService.createClientLoan(loanApplicationDTO, authentication);
+        try{
+            return new ResponseEntity<>(loanService.createClientLoan(loanApplicationDTO, authentication), HttpStatus.CREATED);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @PostMapping("/genericLoans")
     public ResponseEntity<Object> setGenericLoan(@RequestBody LoanCreationDTO genericLoan, Authentication authentication){
-        return loanService.setGenericLoan(genericLoan, authentication);
+        try{
+            loanService.setGenericLoan(genericLoan, authentication);
+            return new ResponseEntity<>("Loan created.", HttpStatus.OK);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+
     }
 
 

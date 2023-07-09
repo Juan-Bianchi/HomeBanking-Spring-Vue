@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.services;
 
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanCreationDTO;
 import com.mindhub.homebanking.models.Loan;
@@ -15,7 +16,7 @@ public interface LoanService {
     Loan findById(Long id);
     boolean existsLoanByName(String name);
     void save(Loan loan);
-    ResponseEntity<Object> createClientLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication);
-    ResponseEntity<Object> setGenericLoan(@RequestBody LoanCreationDTO genericLoan, Authentication authentication);
+    ClientLoanDTO createClientLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication);
+    void setGenericLoan(@RequestBody LoanCreationDTO genericLoan, Authentication authentication);
 
 }
