@@ -17,6 +17,6 @@ public interface AccountService {
     void save(Account account);
     boolean existsAccountByNumber(String number);
     Account findAccountByNumber(String number);
-    ResponseEntity<Object> createAccount(Authentication authentication, AccountType accountType);
-    ResponseEntity<Object> cancelAccount(String number, Authentication authentication);
+    AccountDTO createAccount(Authentication authentication, AccountType accountType);
+    void cancelAccount(String number, Authentication authentication);
 }
