@@ -27,31 +27,28 @@ import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 @RequestMapping("/api")
 public class ClientController {
 
+    private final ClientService clientService;
+    private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private ClientService clientService;
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    public ClientController(ClientService clientService, AccountService accountService, PasswordEncoder passwordEncoder){
+        this.clientService = clientService;
+        this.accountService = accountService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/clients")
     public List<ClientDTO> getClients(){
-
         return clientService.findAll().stream().map(ClientDTO::new).collect(toList());
     }
 
     @GetMapping("clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
-
         return new ClientDTO(clientService.findById(id));
     }
 
     @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication) {
-
         return new ClientDTO(clientService.findByEmail(authentication.getName()));
     }
 
@@ -59,68 +56,25 @@ public class ClientController {
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,
                                            @RequestParam String email, @RequestParam String password) {
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            String errorMessage = "⋆ Please, fill the following fields: ";
-            boolean moreThanOne = false;
-
-            if (firstName.isEmpty()){
-                errorMessage += "first names";
-                moreThanOne = true;
-            }
-            if (lastName.isEmpty()){
-                if(moreThanOne){
-                    errorMessage += ", ";
-                }
-                else {
-                    moreThanOne = true;
-                }
-                errorMessage += "last names";
-            }
-            if (email.isEmpty()){
-                if(moreThanOne){
-                    errorMessage += ", ";
-                }
-                else {
-                    moreThanOne = true;
-                }
-                errorMessage += "email";
-            }
-            if (password.isEmpty()){
-                if(moreThanOne) {
-                    errorMessage += ", ";
-                }
-                errorMessage += "password";
-            }
-            errorMessage += ".";
-            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+        try{
+            clientService.register(firstName, lastName, email, password);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
-        if (clientService.findByEmail(email) !=  null) {
-            return new ResponseEntity<>("⋆ Email already in use", HttpStatus.FORBIDDEN);
+        catch(RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
-
-        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        String accountNumber = createAccountNumber(accountService);
-        Account account = new Account(accountNumber, LocalDateTime.now(), 0, AccountType.SAVINGS);
-        client.addAccount(account);
-        clientService.save(client);
-        accountService.save(account);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @PostMapping("/clients/current/lastLogin")
     public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate){
-
-        Client client = clientService.findByEmail(email);
-        if(client == null){
-            return new ResponseEntity<>("Client does not exist.", HttpStatus.FORBIDDEN);
+        try{
+            clientService.updateLastLogin(email, newloginDate, lastLoginDate);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
-        client.setLastLogin(lastLoginDate);
-        client.setNewLogin(newloginDate);
-        clientService.save(client);
-
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        catch(RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 
