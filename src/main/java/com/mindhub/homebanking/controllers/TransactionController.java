@@ -1,11 +1,9 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.TransactionDTO;
-import com.mindhub.homebanking.models.*;
+
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,23 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
 
-    private final ClientService clientService;
-    private final AccountService accountService;
     private final TransactionService transactionService;
 
     public TransactionController(ClientService clientService, AccountService accountService, TransactionService transactionService){
-        this.accountService = accountService;
         this.transactionService = transactionService;
-        this.clientService = clientService;
     }
 
 

@@ -6,8 +6,6 @@ import com.mindhub.homebanking.dtos.LoanCreationDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.LoanRepository;
 import com.mindhub.homebanking.services.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 

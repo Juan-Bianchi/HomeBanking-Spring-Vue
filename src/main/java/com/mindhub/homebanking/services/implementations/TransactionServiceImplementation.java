@@ -1,16 +1,12 @@
 package com.mindhub.homebanking.services.implementations;
 
-import com.mindhub.homebanking.dtos.LoanApplicationDTO;
-import com.mindhub.homebanking.dtos.LoanCreationDTO;
+
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
