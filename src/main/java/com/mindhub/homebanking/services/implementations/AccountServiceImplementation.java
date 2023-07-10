@@ -8,6 +8,7 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ public class AccountServiceImplementation implements AccountService {
     private final AccountRepository accountRepository;
     private final ClientService clientService;
 
-    public AccountServiceImplementation(AccountRepository accountRepository, ClientService clientService){
+    public AccountServiceImplementation(AccountRepository accountRepository, @Lazy  ClientService clientService){
         this.clientService = clientService;
         this.accountRepository = accountRepository;
     }

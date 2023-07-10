@@ -47,7 +47,6 @@ public class LoanDTO {
     }
 
     public double getInterestRate(){
-
         return interestRate;
     }
 }

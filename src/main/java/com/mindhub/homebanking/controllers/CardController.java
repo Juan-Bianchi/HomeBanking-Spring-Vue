@@ -3,24 +3,18 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.dtos.CardTransactionDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
-import com.mindhub.homebanking.utils.CardUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static com.mindhub.homebanking.utils.CardUtils.getCardNumber;
 
 @RestController
 @RequestMapping("/api")
@@ -28,14 +22,9 @@ public class CardController {
 
     private final ClientService clientService;
     private final CardService cardService;
-    private final AccountService accountService;
-    private final TransactionService transactionService;
 
-
-    public CardController(ClientService clientService, CardService cardService, AccountService accountService, TransactionService transactionService){
+    public CardController(ClientService clientService, CardService cardService, TransactionService transactionService){
         this.cardService = cardService;
-        this.transactionService = transactionService;
-        this.accountService = accountService;
         this.clientService = clientService;
     }
 
@@ -62,6 +51,7 @@ public class CardController {
     @PatchMapping("/clients/current/cards")
     public ResponseEntity<Object> cancelCard(@RequestParam String cardNumber, Authentication authentication){
         try{
+            cardService.cancelCard(cardNumber, authentication);
             return new ResponseEntity<>("The card has been cancelled.", HttpStatus.ACCEPTED);
         }
         catch(RuntimeException e){
@@ -75,6 +65,7 @@ public class CardController {
     @Transactional
     public ResponseEntity<Object> addCardTransaction(@RequestBody CardTransactionDTO cardTransactionDTO) {
         try{
+            cardService.addCardTransaction(cardTransactionDTO);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         catch(RuntimeException e){

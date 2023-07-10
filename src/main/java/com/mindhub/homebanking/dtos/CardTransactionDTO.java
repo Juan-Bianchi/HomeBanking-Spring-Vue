@@ -1,7 +1,5 @@
 package com.mindhub.homebanking.dtos;
 
-import com.sun.istack.NotNull;
-
 public class CardTransactionDTO {
 
     private String number;

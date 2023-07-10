@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientLoanServiceImplementation implements ClientLoanService {
 
-    @Autowired
-    ClientLoanRepository clientLoanRepository;
+    private final ClientLoanRepository clientLoanRepository;
 
+    public ClientLoanServiceImplementation(ClientLoanRepository clientLoanRepository){
+        this.clientLoanRepository = clientLoanRepository;
+    }
 
     @Override
     public void save(ClientLoan clientLoan) {
-
         clientLoanRepository.save(clientLoan);
     }
 }

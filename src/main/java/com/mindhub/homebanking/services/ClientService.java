@@ -1,10 +1,7 @@
 package com.mindhub.homebanking.services;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
