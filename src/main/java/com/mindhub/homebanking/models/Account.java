@@ -1,11 +1,14 @@
 package com.mindhub.homebanking.models;
 
+import net.bytebuddy.matcher.EqualityMatcher;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import static java.time.temporal.ChronoUnit.HOURS;
 
 @Entity
 public class Account {
@@ -130,5 +133,19 @@ public class Account {
     public AccountType getType(){
 
         return type;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Account other = (Account) obj;
+        return this.number.equals(other.number) && this.isActive == other.isActive
+                && Double.doubleToLongBits(balance) == Double.doubleToLongBits(other.balance)
+                && this.creationDate.truncatedTo(HOURS).isEqual(other.creationDate.truncatedTo(HOURS)) && this.id == other.id;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.HOURS;
+
 @Entity
 public class Card {
 
@@ -139,5 +141,17 @@ public class Card {
     public Boolean getIsActive(){
 
         return isActive;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Card other = (Card) obj;
+        return this.id == other.id;
     }
 }
