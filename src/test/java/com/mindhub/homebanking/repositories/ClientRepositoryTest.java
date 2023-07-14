@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 class ClientRepositoryTest {
@@ -22,7 +23,7 @@ class ClientRepositoryTest {
         //Act
         Client obtained = clientRepository.findByEmail(expected.getEmail());
         //Assert
-        assertThat(expected, equalTo(obtained));
+        assertThat(expected, is(obtained));
         //Annihilate
         clientRepository.delete(expected);
         expected = null;

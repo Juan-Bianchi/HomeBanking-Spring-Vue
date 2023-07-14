@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 class LoanRepositoryTest {
@@ -43,7 +43,7 @@ class LoanRepositoryTest {
         //Act
         boolean obtained = loanRepository.existsLoanById(onTest.getId());
         //Assert
-        assertThat(obtained, equalTo(true));
+        assertThat(obtained, is(true));
     }
 
     @Test
@@ -51,7 +51,7 @@ class LoanRepositoryTest {
         //Act
         Loan obtained = loanRepository.findLoanById(onTest.getId());
         //Assert
-        assertThat(obtained, equalTo(onTest));
+        assertThat(obtained, is(onTest));
         //Annihilate
         obtained = null;
     }
@@ -61,6 +61,6 @@ class LoanRepositoryTest {
         //Act
         boolean obtained = loanRepository.existsLoanByName(onTest.getName());
         //Assert
-        assertThat(obtained,equalTo(true));
+        assertThat(obtained,is(true));
     }
 }

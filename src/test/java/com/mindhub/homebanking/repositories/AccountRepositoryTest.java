@@ -9,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
+
 
 @SpringBootTest
 class AccountRepositoryTest {
@@ -26,7 +27,7 @@ class AccountRepositoryTest {
         //Act
         boolean obtained = accountRepository.existsAccountByNumber(account.getNumber());
         //Assert
-        assertThat(obtained, equalTo(true));
+        assertThat(obtained, is(true));
     }
 
     @Test
@@ -37,6 +38,6 @@ class AccountRepositoryTest {
         //Act
         Account obtained = accountRepository.findAccountByNumber(expected.getNumber());
         //Assert
-        assertThat(obtained, equalTo(expected));
+        assertThat(obtained, is(expected));
     }
 }

@@ -16,4 +16,5 @@ public interface AccountService {
     Account findAccountByNumber(String number);
     AccountDTO createAccount(Authentication authentication, AccountType accountType);
     void cancelAccount(String number, Authentication authentication);
+    String createAccountNumber();
 }

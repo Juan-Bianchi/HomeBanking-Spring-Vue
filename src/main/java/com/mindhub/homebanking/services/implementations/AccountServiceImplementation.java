@@ -7,18 +7,13 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
-import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 import static java.util.stream.Collectors.toSet;
 
 @Service
@@ -27,7 +22,7 @@ public class AccountServiceImplementation implements AccountService {
     private final AccountRepository accountRepository;
     private final ClientService clientService;
 
-    public AccountServiceImplementation(AccountRepository accountRepository, @Lazy  ClientService clientService){
+    public AccountServiceImplementation(AccountRepository accountRepository, @Lazy ClientService clientService){
         this.clientService = clientService;
         this.accountRepository = accountRepository;
     }
@@ -64,7 +59,7 @@ public class AccountServiceImplementation implements AccountService {
             throw new RuntimeException("The max amount of accounts have been already created");
         }
 
-        String accountNumber = createAccountNumber(this);
+        String accountNumber = createAccountNumber();
         Account account = new Account(accountNumber, LocalDateTime.now(), 0, accountType);
         client.addAccount(account);
         this.save(account);
@@ -92,5 +87,14 @@ public class AccountServiceImplementation implements AccountService {
 
         account.setIsActive(false);
         this.save(account);
+    }
+
+    public String createAccountNumber(){
+        String numberAccount = "VIN" + String.format("%08d", (int)(Math.random()*99999999));
+        while(existsAccountByNumber(numberAccount)){
+            numberAccount = "VIN" + String.format("%08d", (int)(Math.random()*999999));
+        }
+
+        return numberAccount;
     }
 }

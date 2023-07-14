@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 class CardRepositoryTest {
@@ -40,7 +41,7 @@ class CardRepositoryTest {
         //Act
         boolean obtained = cardRepository.existsCardByNumber(expected);
         //Assert
-        assertThat(obtained,equalTo(true));
+        assertThat(obtained,is(true));
     }
 
     @Test
@@ -48,6 +49,6 @@ class CardRepositoryTest {
         //Act
         Card obtained = cardRepository.getCardByNumber(card.getNumber());
         //Assert
-        assertThat(obtained,equalTo(card));
+        assertThat(obtained,is(card));
     }
 }

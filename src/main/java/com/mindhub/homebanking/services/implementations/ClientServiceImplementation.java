@@ -1,26 +1,19 @@
 package com.mindhub.homebanking.services.implementations;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
-import com.mindhub.homebanking.dtos.CardTransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import static com.mindhub.homebanking.utils.AccountUtils.createAccountNumber;
 import static java.util.stream.Collectors.toSet;
 
 @Service
@@ -77,7 +70,7 @@ public class ClientServiceImplementation implements ClientService {
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        String accountNumber = createAccountNumber(accountService);
+        String accountNumber = accountService.createAccountNumber();
         Account account = new Account(accountNumber, LocalDateTime.now(), 0, AccountType.SAVINGS);
         client.addAccount(account);
         this.save(client);
