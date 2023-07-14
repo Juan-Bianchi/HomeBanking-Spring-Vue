@@ -89,11 +89,12 @@ public class AccountServiceImplementation implements AccountService {
         this.save(account);
     }
 
+    @Override
     public String createAccountNumber(){
-        String numberAccount = "VIN" + String.format("%08d", (int)(Math.random()*99999999));
-        while(existsAccountByNumber(numberAccount)){
+        String numberAccount;
+        do {
             numberAccount = "VIN" + String.format("%08d", (int)(Math.random()*999999));
-        }
+        } while(existsAccountByNumber(numberAccount));
 
         return numberAccount;
     }

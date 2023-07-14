@@ -8,17 +8,12 @@ import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
-import com.mindhub.homebanking.utils.CardUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.mindhub.homebanking.utils.CardUtils.getCardNumber;
 
 @Service
 public class CardServiceImplementation implements CardService {
@@ -70,7 +65,7 @@ public class CardServiceImplementation implements CardService {
             }
         }
 
-        Card card = new Card(cardType, cardColor, client.getFirstName() + " " + client.getLastName(), getCardNumber(this), CardUtils.getCVV(), LocalDate.now(), LocalDate.now().plusYears(5));
+        Card card = new Card(cardType, cardColor, client.getFirstName() + " " + client.getLastName(), getCardNumber(), getCVV(), LocalDate.now(), LocalDate.now().plusYears(5));
         client.addCard(card);
         clientService.save(client);
         this.save(card);
@@ -126,6 +121,27 @@ public class CardServiceImplementation implements CardService {
         transactionService.save(transaction);
     }
 
+    @Override
+    public String getCardNumber(){
+        String cardNumber;
+
+        do{
+            cardNumber = String.format("%04d", (int)(Math.random()*9999)) + "-" +
+                    String.format("%04d", (int)(Math.random()*9999)) + "-" +
+                    String.format("%04d", (int)(Math.random()*9999)) + "-" +
+                    String.format("%04d", (int)(Math.random()*9999));
+        }while(this.existsCardByNumber(cardNumber));
+
+        return cardNumber;
+    }
+
+    @Override
+    public int getCVV() {
+        return (int) (Math.random() * 899 + 100);
+    }
+
+
+
     //AUXILIARY METHODS
     private boolean thereIsNullField(CardTransactionDTO cardTransactionDTO){
         return cardTransactionDTO.getAmount() == null || cardTransactionDTO.getCvv() == null || cardTransactionDTO.getDescription().isEmpty() || cardTransactionDTO.getNumber() == null;
@@ -168,4 +184,6 @@ public class CardServiceImplementation implements CardService {
 
         return stringBuilder.toString();
     }
+
+
 }

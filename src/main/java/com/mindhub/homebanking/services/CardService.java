@@ -17,4 +17,6 @@ public interface CardService {
     CardDTO createCard(CardType cardType, CardColor cardColor, Authentication authentication);
     void cancelCard(@RequestParam String cardNumber, Authentication authentication);
     void addCardTransaction(@RequestBody CardTransactionDTO cardTransactionDTO);
+    int getCVV();
+    String getCardNumber();
 }
