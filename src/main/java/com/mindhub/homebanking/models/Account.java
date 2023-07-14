@@ -34,7 +34,6 @@ public class Account {
     public Account(){}
 
     public Account( String number, LocalDateTime creationDate, double balance, AccountType accountType){
-
         this.number = number;
         this.balance = balance;
         this.creationDate = creationDate;
@@ -46,7 +45,6 @@ public class Account {
     //OTHER METHODS
     @Override
     public String toString(){
-
         return "Account: { \n\t" +
                         "number: " + this.number + ",\n\t" +
                         "creationDate: " + this.creationDate + ",\n\t" +
@@ -64,74 +62,60 @@ public class Account {
     // SETTER METHODS
 
     public void setNumber (String number){
-
         this.number = number;
     }
 
     public void setCreationDate (LocalDateTime creationDate) {
-
         this.creationDate = creationDate;
     }
 
     public void setBalance (double balance) {
-
         this.balance = balance;
     }
 
     public void setClient(Client client) {
-
         this.client = client;
     }
 
     public void setIsActive(Boolean isActive){
-
         this.isActive = isActive;
     }
 
     public void setType(AccountType accountType){
-
         this.type = accountType;
     }
 
 
     // GETTER METHODS
     public long getId(){
-
         return this.id;
     }
 
     public String getNumber(){
-
         return  this.number;
     }
 
     public double getBalance(){
-
         return this.balance;
     }
 
     public LocalDateTime getCreationDate(){
-
         return this.creationDate;
     }
 
     public Client getClient() {
-
         return this.client;
     }
 
     public Set<Transaction> getTransactions() {
-
         return transactions;
     }
 
     public Boolean getIsActive(){
-
         return isActive;
     }
 
     public AccountType getType(){
-
         return type;
     }
 
