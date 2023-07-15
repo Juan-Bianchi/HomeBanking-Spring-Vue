@@ -37,7 +37,7 @@ public class LoanServiceImplementation implements LoanService {
 
     @Override
     public Loan findById(Long id) {
-        return loanRepository.findById(id).orElse(null);
+        return loanRepository.findLoanById(id);
     }
 
     @Override
@@ -54,12 +54,12 @@ public class LoanServiceImplementation implements LoanService {
     public ClientLoanDTO createClientLoan(LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
 
         Client client = clientService.findByEmail(authentication.getName());
-        Loan loan = this.findById(loanApplicationDTO.getIdLoan());
 
         if (thereIsNullField(loanApplicationDTO)) {
             String errorMessage = verifyNullFields(loanApplicationDTO);
             throw new RuntimeException(errorMessage);
         }
+        Loan loan = this.findById(loanApplicationDTO.getIdLoan());
         verifyNotValidFields(loanApplicationDTO, loan);
         Account account = accountService.findAccountByNumber(loanApplicationDTO.getAssociatedAccountNumber());
         if(account == null){
@@ -118,8 +118,7 @@ public class LoanServiceImplementation implements LoanService {
             throw new RuntimeException("There cannot be two loans with the same name");
         }
 
-        Loan loan = new Loan(genericLoan.getName(), genericLoan.getMaxAmount(), genericLoan.getPayments(), genericLoan.getInterestRate());
-        this.save(loan);
+        this.save(new Loan(genericLoan.getName(), genericLoan.getMaxAmount(), genericLoan.getPayments(), genericLoan.getInterestRate()));
     }
 
     //AUXILIARY METHODS
@@ -171,16 +170,10 @@ public class LoanServiceImplementation implements LoanService {
             throw new RuntimeException("There is not any loan with the given id.");
         }
         if(loanApplicationDTO.getAmount() < 10000){
-            throw new RuntimeException("The loan amount must not be bigger than U$S 10.0000 .");
+            throw new RuntimeException("The loan amount must not be lower than U$S 10.0000 .");
         }
         if(loan.getMaxAmount() < loanApplicationDTO.getAmount()){
             throw new RuntimeException("The requested amount cannot exceed the current max amount for the selected loan.");
-        }
-
-        Integer min = loan.getPayments().stream().min(Integer::compareTo).orElse(null);
-        Integer max = loan.getPayments().stream().max(Integer::compareTo).orElse(null);
-        if(min == null || max == null || loanApplicationDTO.getPayments() < min || loanApplicationDTO.getPayments() > max){
-            throw new RuntimeException("The payments number must among "+ min + " and " + max);
         }
     }
 

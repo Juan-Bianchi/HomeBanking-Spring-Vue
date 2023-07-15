@@ -85,9 +85,9 @@ public class HomebankingApplication {
 			acc2.setBalance(acc2.getBalance() + tr14.getAmount());
 
 
-			Loan ln1 = new Loan("Mortgage", 500000, Arrays.asList(6,12,24,36,48,60), 8.0);
-			Loan ln2 = new Loan("Personal", 100000, Arrays.asList(6,12,24), 24.0);
-			Loan ln3 = new Loan("Automotive", 300000, Arrays.asList(6,12,24,36), 20.0);
+			Loan ln1 = new Loan("Mortgage", 500000.0, Arrays.asList(6,12,24,36,48,60), 8.0);
+			Loan ln2 = new Loan("Personal", 100000.0, Arrays.asList(6,12,24), 24.0);
+			Loan ln3 = new Loan("Automotive", 300000.0, Arrays.asList(6,12,24,36), 20.0);
 
 			ClientLoan clLoan1 = new ClientLoan(cli1, ln1, 400000, 60);
 			ClientLoan clLoan2 = new ClientLoan(cli1, ln2, 50000, 12);

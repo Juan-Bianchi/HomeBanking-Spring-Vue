@@ -27,7 +27,7 @@ class LoanRepositoryTest {
         payments.add(6);
         payments.add(12);
         payments.add(24);
-        onTest = new Loan("Simulated", 50000, payments, 1.3);
+        onTest = new Loan("Simulated", 50000.0, payments, 1.3);
         loanRepository.save(onTest);
     }
 

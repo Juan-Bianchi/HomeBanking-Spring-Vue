@@ -9,9 +9,9 @@ public class LoanApplicationDTO {
 
 
     //CONSTRUCTOR
-    LoanApplicationDTO(){}
+    public LoanApplicationDTO(){}
 
-    LoanApplicationDTO(Long id, Double amount, Integer payments, String associatedAccountNumber){
+    public LoanApplicationDTO(Long id, Double amount, Integer payments, String associatedAccountNumber){
         this.idLoan = id;
         this.amount = amount;
         this.payments = payments;
