@@ -47,6 +47,7 @@ public class TransactionServiceImplementation implements TransactionService {
             String errorMessage = verifyNullFields(amount, description, origAccountNumb, destAccountNumb);
             throw new RuntimeException(errorMessage);
         }
+        verifyNotValidFields(amount, description, origAccountNumb, destAccountNumb);
         Account originAccount = accountService.findAccountByNumber(origAccountNumb);
         if(!originAccount.getIsActive()){
             throw new RuntimeException("The origin account is not active, therefore not transactions can be made.");
