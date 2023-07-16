@@ -20,7 +20,6 @@ public class TransactionDTO {
     public TransactionDTO(){}
 
     public TransactionDTO(Transaction transaction){
-
         this.id = transaction.getId();
         this.type = transaction.getType();
         this.amount = transaction.getAmount();
@@ -30,35 +29,27 @@ public class TransactionDTO {
     }
 
     //GETTER METHODS
-
-
     public long getId() {
-
         return id;
     }
 
     public TransactionType getType() {
-
         return type;
     }
 
     public double getAmount() {
-
         return amount;
     }
 
     public String getDescription() {
-
         return description;
     }
 
     public LocalDateTime getDate() {
-
         return date;
     }
 
     public double getAccountBalance(){
-
         return  accountBalance;
     }
 
