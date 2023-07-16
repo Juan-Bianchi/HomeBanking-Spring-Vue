@@ -35,7 +35,7 @@ public class ClientController {
     }
 
     @GetMapping("/clients/current")
-    public ClientDTO getClient(Authentication authentication) {
+    public ClientDTO getCurrentClient(Authentication authentication) {
         return new ClientDTO(clientService.findByEmail(authentication.getName()));
     }
 
@@ -54,9 +54,9 @@ public class ClientController {
 
 
     @PostMapping("/clients/current/lastLogin")
-    public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newloginDate, @RequestParam String lastLoginDate){
+    public ResponseEntity<?> updateLastLogin(@RequestParam String email, @RequestParam String newLoginDate, @RequestParam String lastLoginDate){
         try{
-            clientService.updateLastLogin(email, newloginDate, lastLoginDate);
+            clientService.updateLastLogin(email, newLoginDate, lastLoginDate);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         catch(RuntimeException e){
