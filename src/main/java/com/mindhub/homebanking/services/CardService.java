@@ -9,8 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Set;
+
 public interface CardService {
 
+    Set<CardDTO> getCurrentCards(Authentication authentication);
+    Set<CardDTO> getCurrentActiveCards(Authentication authentication);
     void save(Card card);
     Card getCardByNumber(String cardNumber);
     boolean existsCardByNumber(String cardNumber);

@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
-
 @RestController
 @RequestMapping("/api")
 public class CardController {
@@ -30,12 +28,12 @@ public class CardController {
 
     @GetMapping("/clients/current/cards")
     public Set<CardDTO> getCurrentCards(Authentication authentication){
-        return clientService.findByEmail(authentication.getName()).getCards().stream().map(CardDTO::new).collect(toSet());
+        return cardService.getCurrentCards(authentication);
     }
 
     @GetMapping("/clients/current/activeCards")
     public Set<CardDTO> getCurrentActiveCards(Authentication authentication){
-        return clientService.findByEmail(authentication.getName()).getCards().stream().filter(Card::getIsActive).map(CardDTO::new).collect(toSet());
+        return cardService.getCurrentActiveCards(authentication);
     }
 
     @PostMapping("/clients/current/cards")

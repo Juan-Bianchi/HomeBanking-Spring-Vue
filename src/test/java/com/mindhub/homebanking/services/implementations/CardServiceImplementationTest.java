@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.services.implementations;
 
+import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.dtos.CardTransactionDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,6 +43,39 @@ class CardServiceImplementationTest {
     @BeforeEach
     public void arrange(){
         underTest = new CardServiceImplementation(cardRepository, clientService, transactionService, accountService);
+    }
+
+    @Test
+    void shouldGetCurrentCards(){
+        // Arrange
+        Client client = new Client();
+        Card card = new Card();
+        Authentication authentication = mock(Authentication.class);
+
+        // Act
+        client.addCard(card);
+        given(clientService.findByEmail(authentication.getName())).willReturn(client);
+        Set<CardDTO> obtainedCards = underTest.getCurrentCards(authentication);
+
+        // Assert
+        assertThat(obtainedCards.size(), is(not(0)));
+    }
+
+    @Test
+    void shouldGetActiveCards(){
+        // Arrange
+        Client client = new Client();
+        Card card = new Card();
+        card.setIsActive(true);
+        Authentication authentication = mock(Authentication.class);
+
+        // Act
+        client.addCard(card);
+        given(clientService.findByEmail(authentication.getName())).willReturn(client);
+        Set<CardDTO> obtainedCards = underTest.getCurrentActiveCards(authentication);
+
+        // Assert
+        assertThat(obtainedCards.size(), is(not(0)));
     }
 
     @Test

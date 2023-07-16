@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 
 @Service
@@ -30,6 +33,14 @@ public class CardServiceImplementation implements CardService {
         this.accountService = accountService;
     }
 
+    @Override
+    public Set<CardDTO> getCurrentCards(Authentication authentication) {
+        return clientService.findByEmail(authentication.getName()).getCards().stream().map(CardDTO::new).collect(toSet());
+    }
+    @Override
+    public Set<CardDTO> getCurrentActiveCards(Authentication authentication) {
+        return clientService.findByEmail(authentication.getName()).getCards().stream().filter(Card::getIsActive).map(CardDTO::new).collect(toSet());
+    }
 
     @Override
     public void save(Card card) {
