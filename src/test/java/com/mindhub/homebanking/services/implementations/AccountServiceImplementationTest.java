@@ -101,6 +101,23 @@ class AccountServiceImplementationTest {
     }
 
     @Test
+    public void shouldThrowWhenAccountTypeIsNotOk(){
+        // Arrange
+        Authentication authentication = mock(Authentication.class);
+        Client client = new Client();
+
+        // Act
+        given(clientService.findByEmail(authentication.getName())).willReturn(client);
+
+        // Assert
+        assertThatThrownBy(() -> underTest.createAccount(authentication, null))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Account type is not correct.");
+
+        verify(accountRepository, never()).save(any());
+    }
+
+    @Test
     public void shouldThrowWhenClientAccountsMoreThan3(){
         // Arrange / Act
         Authentication authentication = mock(Authentication.class);

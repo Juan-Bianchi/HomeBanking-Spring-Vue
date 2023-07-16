@@ -58,6 +58,9 @@ public class AccountServiceImplementation implements AccountService {
         if(client.getAccounts().stream().filter(Account::getIsActive).count() >= 3){
             throw new RuntimeException("The max amount of accounts have been already created");
         }
+        if(accountType == null){
+            throw new RuntimeException("Account type is not correct.");
+        }
 
         String accountNumber = createAccountNumber();
         Account account = new Account(accountNumber, LocalDateTime.now(), 0, accountType);

@@ -8,7 +8,6 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;

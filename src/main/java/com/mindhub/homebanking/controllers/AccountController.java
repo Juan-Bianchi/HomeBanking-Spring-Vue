@@ -50,7 +50,7 @@ public class AccountController {
 
 
     @PostMapping("/clients/current/accounts")
-    public ResponseEntity<Object> CreateAccount(Authentication authentication, @RequestParam AccountType accountType){
+    public ResponseEntity<Object> createAccount(Authentication authentication, @RequestParam AccountType accountType){
         try{
             return new ResponseEntity<>(accountService.createAccount(authentication, accountType), HttpStatus.CREATED);
         }
