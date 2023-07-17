@@ -50,7 +50,7 @@ createApp({
                                 this.client.newLogin = new Date().toLocaleString();
                                 console.log(this.client.newLogin);
                             }
-                            axios.post(`/api/clients/current/lastLogin`,`email=${this.emailLog}&newloginDate=${new Date().toLocaleString()}&lastLoginDate=${this.client.newLogin}`)
+                            axios.post(`/api/clients/current/lastLogin`,`email=${this.emailLog}&newLoginDate=${new Date().toLocaleString()}&lastLoginDate=${this.client.newLogin}`)
                                 .then(response => window.location.href = "/web/accounts.html")
                                 .catch(err => console.log([err]));
                          })
